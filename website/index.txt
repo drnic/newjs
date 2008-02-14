@@ -159,7 +159,6 @@ h2. Forum
 
 "http://groups.google.com/group/javascript-project-generator":http://groups.google.com/group/javascript-project-generator
 
-TODO - create Google Group - newjs
 
 h2. How to submit patches
 
