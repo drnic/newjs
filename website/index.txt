@@ -94,6 +94,16 @@ test HTML files, ready to rock and roll.
 Now edit <code>test/some_lib_test.html</code> and follow the comments
 that tell you what to do to write your unit tests.
 
+h2. Running unit tests
+
+Each test HTML file should be self-executable: just open it in a target
+browser. That is, to run the <code>test/some_lib_test.html</code> tests
+in Firefox, open the file in Firefox. 
+
+It will print out a beautiful log success/error messages for each test.
+
+
+
 h2. Distribution of library
 
 Your project comes with the ability to concatenate all your <code>src/*.js</code>
