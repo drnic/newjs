@@ -1,1 +1,9 @@
+config = File.dirname(__FILE__) + "../config/javascript_test_autotest.yml"
+unless File.exists?(config)
+  puts <<-EOS
+Edit config/javascript_test_autotest.yml for the browser(s) to use for autotesting.
+See config/javascript_test_autotest.yml.sample for examples.
+EOS
+  exit
+end
 script/rstakeout "rake test:recent:javascript" test/*_test.html src/*.js
