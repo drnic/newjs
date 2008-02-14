@@ -1,4 +1,4 @@
-h1. newjs
+h1. JavaScript Project Generator
 
 h1. &#x2192; 'newjs'
 
@@ -7,6 +7,12 @@ h2. What
 
 
 h2. Installing
+
+Installation and maintenance of generated JavaScript projects
+requires the installation of "Ruby":http://www.ruby-lang.org/ and "RubyGems":http://rubygems.org/.
+
+The command-line application <code>newjs</code> is installed as below, 
+for any operating system:
 
 <pre syntax="ruby">sudo gem install newjs</pre>
 
