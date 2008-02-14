@@ -1,14 +1,11 @@
 h1. <%= name.gsub(/\W+/,' ') %>
 
-h1. &#x2192; '<%= name %>'
-
-
 h2. What
 
 
-h2. Installing
+h2. Downloading
 
-<pre syntax="ruby">sudo gem install <%= name %></pre>
+TODO - where to download the library file?
 
 h2. The basics
 
