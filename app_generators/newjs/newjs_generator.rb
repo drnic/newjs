@@ -8,7 +8,7 @@ class NewjsGenerator < RubiGen::Base
                   :version     => '0.0.1'
   
   
-  attr_reader :name
+  attr_reader :name, :module_name
   attr_reader :version, :version_str, :author, :email
   
   
@@ -17,6 +17,7 @@ class NewjsGenerator < RubiGen::Base
     usage if args.empty?
     @destination_root = File.expand_path(args.shift)
     @name = base_name
+    @module_name = name.camelize
     extract_options
   end
 
@@ -35,8 +36,11 @@ class NewjsGenerator < RubiGen::Base
       m.file_copy_each %w[unittest.css unittest.js prototype.js], "test/assets"
       m.file_copy_each %w[javascript_test_autotest_tasks.rake], "tasks"
       m.file_copy_each %w[javascript_test_autotest.yml.sample], "config"
-      m.file_copy_each %w[Rakefile README.txt]
-      m.template_copy_each %w[History.txt License.txt]
+      m.file_copy_each %w[protodoc.rb], "lib"
+      m.file_copy_each %w[README.txt]
+      m.template_copy_each %w[Rakefile History.txt License.txt]
+      m.template_copy_each %w[HEADER.erb], "src"
+      m.template "src/library.js.erb", "src/#{name}.js"
       
       %w[rstakeout js_autotest].each do |file|
         m.template "script/#{file}",        "script/#{file}", script_options

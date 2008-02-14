@@ -9,3 +9,40 @@ end
 require 'rake/clean'
 
 Dir['tasks/**/*.rake'].each { |rake| load rake }
+
+require 'rake'
+require 'rake/packagetask'
+
+APP_ROOT     ||= File.expand_path(File.dirname(__FILE__))
+APP_SRC_DIR  = File.join(APP_ROOT, 'src')
+APP_DIST_DIR = File.join(APP_ROOT, 'dist')
+APP_PKG_DIR  = File.join(APP_ROOT, 'pkg')
+APP_VERSION  = '<%= version_str %>'
+
+task :default => [:dist, :package, :clean_package_source]
+
+desc "Builds the distribution"
+task :dist do
+  $:.unshift File.join(APP_ROOT, 'lib')
+  require 'protodoc'
+  require 'fileutils'
+  FileUtils.mkdir_p APP_DIST_DIR
+  
+  Dir.chdir(APP_SRC_DIR) do
+    File.open(File.join(APP_DIST_DIR, '<%= name %>.js'), 'w+') do |dist|
+      dist << Protodoc::Preprocessor.new('<%= name %>.js')
+    end
+  end
+end
+
+Rake::PackageTask.new('<%= name %>', APP_VERSION) do |package|
+  package.need_tar_gz = true
+  package.package_dir = APP_PKG_DIR
+  package.package_files.include(
+    '[A-Z]*',
+    'dist/<%= name %>.js',
+    'lib/**',
+    'src/**',
+    'test/**'
+  )
+end
