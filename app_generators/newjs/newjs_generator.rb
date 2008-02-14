@@ -52,7 +52,7 @@ class NewjsGenerator < RubiGen::Base
       end
       
       m.dependency "install_rubigen_scripts", 
-        [destination_root, 'javascript', 'javascript_test', 'newjs', 'newgem', 'newgem_theme'], 
+        [destination_root, 'javascript', 'javascript_test', 'newjs', 'newjs_theme'], 
         :shebang => options[:shebang], :collision => :force
     end
   end

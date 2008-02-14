@@ -1,0 +1,19 @@
+8
+
+dir
+140
+svn+ssh://nicwilliams@rubyforge.org/var/svn/newgem/trunk/newgem_theme_generators/plain_theme/templates
+svn+ssh://nicwilliams@rubyforge.org/var/svn/newgem
+
+
+
+2007-08-22T07:34:04.522417Z
+107
+nicwilliams
+
+
+svn:special svn:externals svn:needs-lock
+
+website
+dir
+

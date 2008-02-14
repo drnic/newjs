@@ -1,0 +1,55 @@
+8
+
+dir
+140
+svn+ssh://nicwilliams@rubyforge.org/var/svn/newgem/trunk/newgem_generators/install_website
+svn+ssh://nicwilliams@rubyforge.org/var/svn/newgem
+
+
+
+2007-10-13T22:47:08.977476Z
+119
+nicwilliams
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+b8dfb574-5f1f-0410-9469-b441dc4e948f
+
+install_website_generator.rb
+file
+
+
+
+
+2007-09-07T07:29:03.000000Z
+d531f15281d08c9387e15664ba32a3da
+2007-09-07T07:55:04.934053Z
+113
+nicwilliams
+
+USAGE
+file
+
+
+
+
+2007-08-18T18:51:29.000000Z
+bb050ae7bf9504137f628e21d037a6a3
+2007-08-20T07:13:43.220319Z
+101
+nicwilliams
+
+templates
+dir
+
