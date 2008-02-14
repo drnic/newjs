@@ -15,6 +15,9 @@ app_generators/newjs/templates/test/assets/unittest.js
 bin/newjs
 config/hoe.rb
 config/requirements.rb
+javascript_generators/javascript_test/USAGE
+javascript_generators/javascript_test/javascript_test_generator.rb
+javascript_generators/javascript_test/templates/test/test.html.erb
 lib/newjs.rb
 lib/newjs/version.rb
 log/debug.log
@@ -27,6 +30,7 @@ tasks/environment.rake
 tasks/website.rake
 test/test_generator_helper.rb
 test/test_helper.rb
+test/test_javascript_test_generator.rb
 test/test_newjs.rb
 test/test_newjs_generator.rb
 website/index.html
