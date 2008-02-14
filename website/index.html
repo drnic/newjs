@@ -72,7 +72,7 @@ requires the installation of <a href="http://www.ruby-lang.org/">Ruby</a> and <a
 
 
 	<p>The command-line application <code>newjs</code> is installed as below, 
-for any operating system:</p>
+for any operating system (except the &#8216;sudo&#8217; part &#8211; use as necessary):</p>
 
 
 <pre>sudo gem install newjs</pre>
@@ -146,6 +146,14 @@ test <span class="caps">HTML</span> files, ready to rock and roll.</p>
 	<p>Now edit <code>test/some_lib_test.html</code> and follow the comments
 that tell you what to do to write your unit tests.</p>
 
+
+	<p>Want to name your test file something different? Specify the target
+library as an additional parameter.</p>
+
+
+<pre>$ script/generate javascript_test my_library_tests some_lib
+  exists  test
+  create  test/my_library_tests_test.html</pre>
 
 	<h2>Running unit tests</h2>
 
@@ -223,9 +231,6 @@ and you&#8217;ll love every minute of it.</p>
 
 
 	<p><a href="http://groups.google.com/group/javascript-project-generator">http://groups.google.com/group/javascript-project-generator</a></p>
-
-
-	<p><span class="caps">TODO</span> &#8211; create Google Group &#8211; newjs</p>
 
 
 	<h2>How to submit patches</h2>
