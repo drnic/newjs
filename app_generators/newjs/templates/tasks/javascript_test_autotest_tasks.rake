@@ -1,5 +1,5 @@
 TEST_CHANGES_SINCE = Time.now - 600
-APP_ROOT = File.dirname(__FILE__) + "/.."
+APP_ROOT = File.expand_path(File.dirname(__FILE__) + "/..")
 
 namespace :test do
   namespace :recent do

@@ -10,8 +10,11 @@ app_generators/newjs/templates/License.txt
 app_generators/newjs/templates/README.txt
 app_generators/newjs/templates/Rakefile
 app_generators/newjs/templates/config/javascript_test_autotest.yml.sample
+app_generators/newjs/templates/lib/protodoc.rb
 app_generators/newjs/templates/script/js_autotest
 app_generators/newjs/templates/script/rstakeout
+app_generators/newjs/templates/src/HEADER.erb
+app_generators/newjs/templates/src/library.js.erb
 app_generators/newjs/templates/tasks/javascript_test_autotest_tasks.rake
 app_generators/newjs/templates/test/assets/prototype.js
 app_generators/newjs/templates/test/assets/unittest.css

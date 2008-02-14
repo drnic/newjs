@@ -18,6 +18,7 @@ class NewjsGenerator < RubiGen::Base
     @destination_root = File.expand_path(args.shift)
     @name = base_name
     @module_name = name.camelize
+    p [name, module_name]
     extract_options
   end
 
