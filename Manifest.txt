@@ -9,6 +9,9 @@ app_generators/newjs/templates/History.txt
 app_generators/newjs/templates/License.txt
 app_generators/newjs/templates/README.txt
 app_generators/newjs/templates/Rakefile
+app_generators/newjs/templates/script/js_autotest
+app_generators/newjs/templates/script/rstakeout
+app_generators/newjs/templates/tasks/javascript_test_autotest_tasks.rake
 app_generators/newjs/templates/test/assets/prototype.js
 app_generators/newjs/templates/test/assets/unittest.css
 app_generators/newjs/templates/test/assets/unittest.js
@@ -31,7 +34,6 @@ tasks/website.rake
 test/test_generator_helper.rb
 test/test_helper.rb
 test/test_javascript_test_generator.rb
-test/test_newjs.rb
 test/test_newjs_generator.rb
 website/index.html
 website/index.txt
