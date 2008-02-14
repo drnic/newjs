@@ -45,7 +45,7 @@ newjs_theme_generators/plain_theme/USAGE
 newjs_theme_generators/plain_theme/plain_theme_generator.rb
 newjs_theme_generators/plain_theme/templates/website/javascripts/rounded_corners_lite.inc.js
 newjs_theme_generators/plain_theme/templates/website/stylesheets/screen.css
-newjs_theme_generators/plain_theme/templates/website/template.rhtml
+newjs_theme_generators/plain_theme/templates/website/template.html.erb
 script/destroy
 script/generate
 script/txt2html

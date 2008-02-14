@@ -2,6 +2,7 @@ h1. <%= name.gsub(/\W+/,' ') %>
 
 h2. What
 
+This JavaScript project ...
 
 h2. Downloading
 
