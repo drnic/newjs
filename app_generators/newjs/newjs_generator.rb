@@ -30,7 +30,7 @@ class NewjsGenerator < RubiGen::Base
       # m.template "template.rb",  "some_file_after_erb.rb"
       # m.file     "file",         "some_file_copied"
       m.file_copy_each %w[unittest.css unittest.js prototype.js], "test/assets"
-      m.file_copy_each %w[Rakefile README.txt License.txt]
+      m.file_copy_each %w[Rakefile README.txt]
       m.template_copy_each %w[History.txt License.txt]
       
       m.dependency "install_rubigen_scripts", [destination_root, 'javascript', 'newjs'], 
