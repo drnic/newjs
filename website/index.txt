@@ -29,7 +29,7 @@ Installation and maintenance of generated JavaScript projects
 requires the installation of "Ruby":http://www.ruby-lang.org/ and "RubyGems":http://rubygems.org/.
 
 The command-line application <code>newjs</code> is installed as below, 
-for any operating system:
+for any operating system (except the 'sudo' part - use as necessary):
 
 <pre>sudo gem install newjs</pre>
 
@@ -93,6 +93,13 @@ test HTML files, ready to rock and roll.
   
 Now edit <code>test/some_lib_test.html</code> and follow the comments
 that tell you what to do to write your unit tests.
+
+Want to name your test file something different? Specify the target
+library as an additional parameter.
+
+<pre>$ script/generate javascript_test my_library_tests some_lib
+  exists  test
+  create  test/my_library_tests_test.html</pre>
 
 h2. Running unit tests
 
