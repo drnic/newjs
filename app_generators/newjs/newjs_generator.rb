@@ -33,7 +33,6 @@ class NewjsGenerator < RubiGen::Base
       # m.template "template.rb",  "some_file_after_erb.rb"
       # m.file     "file",         "some_file_copied"
       m.file_copy_each %w[unittest.css unittest.js prototype.js], "test/assets"
-      m.file_copy_each %w[rstakeout js_autotest], "script"
       m.file_copy_each %w[javascript_test_autotest_tasks.rake], "tasks"
       m.file_copy_each %w[Rakefile README.txt]
       m.template_copy_each %w[History.txt License.txt]
