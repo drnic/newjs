@@ -102,7 +102,7 @@ in Firefox, open the file in Firefox.
 
 It will print out a beautiful log success/error messages for each test.
 
-
+<img src="images/example-unittest-log.jpg" width="647" height="427" alt="Example Unittest Log">
 
 h2. Distribution of library
 
