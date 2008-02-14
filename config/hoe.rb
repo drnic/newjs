@@ -49,7 +49,7 @@ end
 hoe = Hoe.new(GEM_NAME, VERS) do |p|
   p.developer(AUTHOR, EMAIL)
   p.description = p.paragraphs_of("README.txt", 0..2).join("\n\n")
-  p.summary = DESCRIPTION
+  p.summary = p.paragraphs_of("README.txt", 0..0).join("\n\n")
   p.url = HOMEPATH
   p.rubyforge_name = RUBYFORGE_PROJECT if RUBYFORGE_PROJECT
   p.test_globs = ["test/**/test_*.rb"]

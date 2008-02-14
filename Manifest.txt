@@ -3,6 +3,16 @@ License.txt
 Manifest.txt
 README.txt
 Rakefile
+app_generators/newjs/USAGE
+app_generators/newjs/newjs_generator.rb
+app_generators/newjs/templates/History.txt
+app_generators/newjs/templates/License.txt
+app_generators/newjs/templates/README.txt
+app_generators/newjs/templates/Rakefile
+app_generators/newjs/templates/test/assets/prototype.js
+app_generators/newjs/templates/test/assets/unittest.css
+app_generators/newjs/templates/test/assets/unittest.js
+bin/newjs
 config/hoe.rb
 config/requirements.rb
 lib/newjs.rb
@@ -15,8 +25,10 @@ setup.rb
 tasks/deployment.rake
 tasks/environment.rake
 tasks/website.rake
+test/test_generator_helper.rb
 test/test_helper.rb
 test/test_newjs.rb
+test/test_newjs_generator.rb
 website/index.html
 website/index.txt
 website/javascripts/rounded_corners_lite.inc.js
