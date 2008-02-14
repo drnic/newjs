@@ -41,6 +41,29 @@
 	<h2>What</h2>
 
 
+	<p>A simple command-line tool to create the folders and helper files
+for a new JavaScript project/library. As a bonus, you can quickly
+create a website to promote your project.</p>
+
+
+	<p>When you start a new JavaScript library, how do you layout the source files,
+the tests, the distribution files? Do you have support scripts to
+generate distributions from source files? Run your JavaScript unit tests?
+Generators to create new unit test <span class="caps">HTML</span> files?</p>
+
+
+	<p><strong>No? Me neither</strong>, so I created the JavaScript Project Generator.</p>
+
+
+	<p>Once <code>newjs</code> has finished helping you write your source libraries,
+write test <span class="caps">HTML</span> files, providing autotesting scripts to make <span class="caps">TDD</span> a piece of cake,
+it finally helps you bundle all your source files into a single JavaScript file
+for distribution.</p>
+
+
+	<p>What a nice helpful tool it is!</p>
+
+
 	<h2>Installing</h2>
 
 
@@ -52,19 +75,140 @@ requires the installation of <a href="http://www.ruby-lang.org/">Ruby</a> and <a
 for any operating system:</p>
 
 
-	<p><pre class='syntax'><span class="ident">sudo</span> <span class="ident">gem</span> <span class="ident">install</span> <span class="ident">newjs</span></pre></p>
+<pre>sudo gem install newjs</pre>
+
+	<h2>Getting started</h2>
 
 
-	<h2>The basics</h2>
+	<p>To kick-off your new project/library, run the command-line app <code>newjs</code>:</p>
 
 
-	<h2>Demonstration of usage</h2>
+<pre>$ newjs mylib
+        create  config
+        create  lib
+        create  src
+        create  script
+        create  tasks
+        create  test/assets
+        create  test/assets/unittest.css
+        create  test/assets/unittest.js
+        create  test/assets/prototype.js
+        create  tasks/javascript_test_autotest_tasks.rake
+        create  tasks/environment.rake
+        create  config/javascript_test_autotest.yml.sample
+        create  lib/protodoc.rb
+        create  README.txt
+        create  Rakefile
+        create  History.txt
+        create  License.txt
+        create  src/HEADER
+        create  src/mylib.js
+        create  script/rstakeout
+        create  script/js_autotest
+    dependency  install_rubigen_scripts
+        exists    script
+        create    script/generate
+        create    script/destroy
+</pre>
+
+	<p>Look at all that! In there is unit test support (using the <code>unittest.js</code> library 
+developed within <a href="http://www.prototypejs.org/">prototypejs</a>, but should
+support JavaScript development using any non-prototype.js libraries).</p>
+
+
+	<p>Your raw, unconcatenated library/source files go in <code>src/</code></p>
+
+
+	<p>Your unit test <span class="caps">HTML</span> files, go in <code>test/</code> (see test generator below).</p>
+
+
+When you&#8217;ve got a new version to release, edit <code>Rakefile</code> and modify the
+<code>APP_VERSION</code> string (see Distribution section below).
+
+	<h2>Generating test <span class="caps">HTML</span> files</h2>
+
+
+	<p>If you have a <code>src/some_lib.js</code> file, then you&#8217;ll want a unit
+test file(s). By default you&#8217;d call it <code>test/some_lib_test.html</code>.</p>
+
+
+	<p>And then what? Personally, I can never remember what basic <span class="caps">HTML</span> + JavaScript
+goes in the test <span class="caps">HTML</span> files. I quite like the <a href="http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/">javascript_test plugin</a> for <a href="http://www.rubyonrails.org/">Ruby 
+on Rails</a> so I&#8217;ve included a version of it
+here. That is, your JavaScript project comes with a generator to create new
+test <span class="caps">HTML</span> files, ready to rock and roll.</p>
+
+
+<pre>$ script/generate javascript_test some_lib
+  exists  test
+  create  test/some_lib_test.html</pre>
+
+	<p>Now edit <code>test/some_lib_test.html</code> and follow the comments
+that tell you what to do to write your unit tests.</p>
+
+
+	<h2>Distribution of library</h2>
+
+
+	<p>Your project comes with the ability to concatenate all your <code>src/*.js</code>
+files into a single file for distribution, as <code>dist/project_name.js</code>.</p>
+
+
+	<p>First, edit <code>src/HEADER</code> with information that will be included
+at the top of the generated distribution file.</p>
+
+
+	<p>Second, edit <code>src/project_name.js</code> to include the names of
+all the <code>src/</code> files that will be concatenated together
+in your required order.</p>
+
+
+	<p>Finally, run the command:</p>
+
+
+<pre>rake dist</pre>
+
+	<h2>Create a website for your project</h2>
+
+
+	<p>You can quickly create a clean, readable website for your project
+that prominently displays the current version number (which is a 
+clickable link through to the download page), just like this page.</p>
+
+
+<pre>script/generate install_website</pre>
+
+	<p>Now edit the generated <code>website/index.txt</code> file (<a href="http://www.textism.com/tools/textile/">Textile</a> format).</p>
+
+
+	<p>To convert it to <span class="caps">HTML</span>, run:</p>
+
+
+<pre>rake website_generate</pre>
+
+	<p>And open <code>website/index.html</code> in your browser to preview.
+The project&#8217;s version number is automatically inserted into the page
+(change version numbers via <code>APP_VERSION</code> in <code>Rakefile</code>).</p>
+
+
+	<p>To upload the website (and its <span class="caps">CSS</span>)</p>
+
+
+	<h2>Screencast coming soon</h2>
+
+
+	<p>A hard-core, &#8220;how to do JavaScript unit testing&#8221; screencast will
+soon be published by <a href="http://peepcode.com/">PeepCode</a>. It will cost $9
+and you&#8217;ll love every minute of it.</p>
+
+
+	<p>Subscribe to PeepCode&#8217;s blog for announcement details.</p>
 
 
 	<h2>Forum</h2>
 
 
-	<p><a href="http://groups.google.com/group/newjs">http://groups.google.com/group/newjs</a></p>
+	<p><a href="http://groups.google.com/group/new-javascript-generator">http://groups.google.com/group/new-javascript-generator</a></p>
 
 
 	<p><span class="caps">TODO</span> &#8211; create Google Group &#8211; newjs</p>
@@ -76,7 +220,7 @@ for any operating system:</p>
 	<p>Read the <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/">8 steps for fixing other people&#8217;s code</a> and for section <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/#8b-google-groups">8b: Submit patch to Google Groups</a>, use the Google Group above.</p>
 
 
-	<p>The trunk repository is <code>svn://rubyforge.org/var/svn/newjs/trunk</code> for anonymous access.</p>
+	<p>The source project is a <a href="http://git.or.cz/">Git</a> repository. See Dr Nic&#8217;s <a href="http://github.com/drnic/newjs/tree/master">master branch</a> for clone/checkout details.</p>
 
 
 	<h2>License</h2>
@@ -88,7 +232,7 @@ for any operating system:</p>
 	<h2>Contact</h2>
 
 
-	<p>Comments are welcome. Send an email to <a href="mailto:drnicwilliams@gmail.com">Dr Nic Williams</a> via the <a href="http://groups.google.com/group/newjs">forum</a></p>
+	<p>Comments are welcome. Send an email to <a href="mailto:drnicwilliams@gmail.com">Dr Nic Williams</a> via the <a href="http://groups.google.com/group/new-javascript-generator">forum</a></p>
     <p class="coda">
       <a href="drnicwilliams@gmail.com">Dr Nic Williams</a>, 14th February 2008<br>
       Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>

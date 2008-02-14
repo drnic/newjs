@@ -5,6 +5,23 @@ h1. &#x2192; 'newjs'
 
 h2. What
 
+A simple command-line tool to create the folders and helper files
+for a new JavaScript project/library. As a bonus, you can quickly
+create a website to promote your project.
+
+When you start a new JavaScript library, how do you layout the source files,
+the tests, the distribution files? Do you have support scripts to
+generate distributions from source files? Run your JavaScript unit tests?
+Generators to create new unit test HTML files?
+
+*No? Me neither*, so I created the JavaScript Project Generator. 
+
+Once <code>newjs</code> has finished helping you write your source libraries,
+write test HTML files, providing autotesting scripts to make TDD a piece of cake,
+it finally helps you bundle all your source files into a single JavaScript file
+for distribution.
+
+What a nice helpful tool it is!
 
 h2. Installing
 
@@ -14,18 +31,116 @@ requires the installation of "Ruby":http://www.ruby-lang.org/ and "RubyGems":htt
 The command-line application <code>newjs</code> is installed as below, 
 for any operating system:
 
-<pre syntax="ruby">sudo gem install newjs</pre>
+<pre>sudo gem install newjs</pre>
 
-h2. The basics
+h2. Getting started
 
+To kick-off your new project/library, run the command-line app <code>newjs</code>:
 
-h2. Demonstration of usage
+<pre>$ newjs mylib
+        create  config
+        create  lib
+        create  src
+        create  script
+        create  tasks
+        create  test/assets
+        create  test/assets/unittest.css
+        create  test/assets/unittest.js
+        create  test/assets/prototype.js
+        create  tasks/javascript_test_autotest_tasks.rake
+        create  tasks/environment.rake
+        create  config/javascript_test_autotest.yml.sample
+        create  lib/protodoc.rb
+        create  README.txt
+        create  Rakefile
+        create  History.txt
+        create  License.txt
+        create  src/HEADER
+        create  src/mylib.js
+        create  script/rstakeout
+        create  script/js_autotest
+    dependency  install_rubigen_scripts
+        exists    script
+        create    script/generate
+        create    script/destroy
+</pre>
 
+Look at all that! In there is unit test support (using the <code>unittest.js</code> library 
+developed within "prototypejs":http://www.prototypejs.org/, but should
+support JavaScript development using any non-prototype.js libraries).
 
+Your raw, unconcatenated library/source files go in <code>src/</code>
+
+Your unit test HTML files, go in <code>test/</code> (see test generator below).
+
+When you've got a new version to release, edit <code>Rakefile</code> and modify the
+<code>APP_VERSION</code> string (see Distribution section below).
+
+h2. Generating test HTML files
+
+If you have a <code>src/some_lib.js</code> file, then you'll want a unit
+test file(s). By default you'd call it <code>test/some_lib_test.html</code>.
+
+And then what? Personally, I can never remember what basic HTML + JavaScript
+goes in the test HTML files. I quite like the "javascript_test plugin":http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/ for "Ruby 
+on Rails":http://www.rubyonrails.org/ so I've included a version of it
+here. That is, your JavaScript project comes with a generator to create new
+test HTML files, ready to rock and roll.
+
+<pre>$ script/generate javascript_test some_lib
+  exists  test
+  create  test/some_lib_test.html</pre>
+  
+Now edit <code>test/some_lib_test.html</code> and follow the comments
+that tell you what to do to write your unit tests.
+
+h2. Distribution of library
+
+Your project comes with the ability to concatenate all your <code>src/*.js</code>
+files into a single file for distribution, as <code>dist/project_name.js</code>.
+
+First, edit <code>src/HEADER</code> with information that will be included
+at the top of the generated distribution file.
+
+Second, edit <code>src/project_name.js</code> to include the names of
+all the <code>src/</code> files that will be concatenated together
+in your required order.
+
+Finally, run the command:
+
+<pre>rake dist</pre>
+
+h2. Create a website for your project
+
+You can quickly create a clean, readable website for your project
+that prominently displays the current version number (which is a 
+clickable link through to the download page), just like this page.
+
+<pre>script/generate install_website</pre>
+
+Now edit the generated <code>website/index.txt</code> file ("Textile":http://www.textism.com/tools/textile/ format).
+
+To convert it to HTML, run:
+
+<pre>rake website_generate</pre>
+
+And open <code>website/index.html</code> in your browser to preview.
+The project's version number is automatically inserted into the page
+(change version numbers via <code>APP_VERSION</code> in <code>Rakefile</code>).
+
+To upload the website (and its CSS)
+
+h2. Screencast coming soon
+
+A hard-core, "how to do JavaScript unit testing" screencast will
+soon be published by "PeepCode":http://peepcode.com/. It will cost $9
+and you'll love every minute of it.
+
+Subscribe to PeepCode's blog for announcement details.
 
 h2. Forum
 
-"http://groups.google.com/group/newjs":http://groups.google.com/group/newjs
+"http://groups.google.com/group/javascript-project-generator":http://groups.google.com/group/javascript-project-generator
 
 TODO - create Google Group - newjs
 
@@ -33,7 +148,7 @@ h2. How to submit patches
 
 Read the "8 steps for fixing other people's code":http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/ and for section "8b: Submit patch to Google Groups":http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/#8b-google-groups, use the Google Group above.
 
-The trunk repository is <code>svn://rubyforge.org/var/svn/newjs/trunk</code> for anonymous access.
+The source project is a "Git":http://git.or.cz/ repository. See Dr Nic's "master branch":http://github.com/drnic/newjs/tree/master for clone/checkout details.
 
 h2. License
 
@@ -41,5 +156,5 @@ This code is free to use under the terms of the MIT license.
 
 h2. Contact
 
-Comments are welcome. Send an email to "Dr Nic Williams":mailto:drnicwilliams@gmail.com via the "forum":http://groups.google.com/group/newjs
+Comments are welcome. Send an email to "Dr Nic Williams":mailto:drnicwilliams@gmail.com via the "forum":http://groups.google.com/group/javascript-project-generator
 
