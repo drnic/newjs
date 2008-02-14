@@ -20,7 +20,7 @@ class NewjsGenerator < RubiGen::Base
     @name = base_name
     @module_name = name.camelize
     extract_options
-    @title ||= @name.humanize
+    @title ||= @name.titleize
     @url   ||= "http://NOTE-ENTER-URL.com"
   end
 
