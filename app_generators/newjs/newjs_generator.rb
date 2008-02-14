@@ -1,9 +1,9 @@
 class NewjsGenerator < RubiGen::Base
-  
   DEFAULT_SHEBANG = File.join(Config::CONFIG['bindir'],
                               Config::CONFIG['ruby_install_name'])
   
-  default_options :author => nil,
+  default_options :shebang => DEFAULT_SHEBANG,
+                  :author => nil,
                   :email       => nil,
                   :version     => '0.0.1'
   
@@ -21,6 +21,9 @@ class NewjsGenerator < RubiGen::Base
   end
 
   def manifest
+    script_options     = { :chmod => 0755, :shebang => options[:shebang] == DEFAULT_SHEBANG ? nil : options[:shebang] }
+    windows            = (RUBY_PLATFORM =~ /dos|win32|cygwin/i) || (RUBY_PLATFORM =~ /(:?mswin|mingw)/)
+    
     record do |m|
       # Ensure appropriate folder(s) exists
       m.directory ''
@@ -34,6 +37,12 @@ class NewjsGenerator < RubiGen::Base
       m.file_copy_each %w[javascript_test_autotest_tasks.rake], "tasks"
       m.file_copy_each %w[Rakefile README.txt]
       m.template_copy_each %w[History.txt License.txt]
+      
+      %w[rstakeout js_autotest].each do |file|
+        m.template "script/#{file}",        "script/#{file}", script_options
+        m.template "script/win_script.cmd", "script/#{file}.cmd", 
+          :assigns => { :filename => file } if windows
+      end
       
       m.dependency "install_rubigen_scripts", [destination_root, 'javascript', 'newjs'], 
         :shebang => options[:shebang], :collision => :force
