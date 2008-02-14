@@ -51,7 +51,8 @@ class NewjsGenerator < RubiGen::Base
           :assigns => { :filename => file } if windows
       end
       
-      m.dependency "install_rubigen_scripts", [destination_root, 'javascript', 'newjs'], 
+      m.dependency "install_rubigen_scripts", 
+        [destination_root, 'javascript', 'javascript_test', 'newjs'], 
         :shebang => options[:shebang], :collision => :force
     end
   end
