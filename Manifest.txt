@@ -5,10 +5,10 @@ README.txt
 Rakefile
 app_generators/newjs/USAGE
 app_generators/newjs/newjs_generator.rb
-app_generators/newjs/templates/History.txt
-app_generators/newjs/templates/License.txt
+app_generators/newjs/templates/History.txt.erb
+app_generators/newjs/templates/License.txt.erb
 app_generators/newjs/templates/README.txt
-app_generators/newjs/templates/Rakefile
+app_generators/newjs/templates/Rakefile.erb
 app_generators/newjs/templates/config/javascript_test_autotest.yml.sample
 app_generators/newjs/templates/lib/protodoc.rb
 app_generators/newjs/templates/script/js_autotest
