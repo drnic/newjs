@@ -2,7 +2,6 @@ require 'newjs/version'
 
 AUTHOR = 'Dr Nic Williams'  # can also be an array of Authors
 EMAIL = "drnicwilliams@gmail.com"
-DESCRIPTION = "description of gem"
 GEM_NAME = 'newjs' # what ppl will type to install your gem
 RUBYFORGE_PROJECT = 'newjs' # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
@@ -49,7 +48,7 @@ end
 # Run 'rake -T' to see list of generated tasks (from gem root directory)
 hoe = Hoe.new(GEM_NAME, VERS) do |p|
   p.developer(AUTHOR, EMAIL)
-  p.description = DESCRIPTION
+  p.description = p.paragraphs_of("README.txt", 0..2).join("\n\n")
   p.summary = DESCRIPTION
   p.url = HOMEPATH
   p.rubyforge_name = RUBYFORGE_PROJECT if RUBYFORGE_PROJECT
@@ -58,7 +57,13 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
   
   # == Optional
   p.changes = p.paragraphs_of("History.txt", 0..1).join("\n\n")
-  #p.extra_deps = []     # An array of rubygem dependencies [name, version], e.g. [ ['active_support', '>= 1.3.1'] ]
+  p.extra_deps = [
+    ['hoe', '>=1.5.0'],
+    ['RedCloth','>=3.0.4'],
+    ['syntax','>=1.0.0'],
+    ['activesupport','>=2.0.2'],
+    ['rubigen','>=1.1.1']
+  ]
   
   #p.spec_extras = {}    # A hash of extra values to set in the gemspec.
   
