@@ -30,6 +30,7 @@ USAGE: #{$0} #{spec.name} name [library_name]"
 NOTES:
 * name - creates a file test/name_test.html
 * library_name - is for a file src/library_name.js
+
 EOS
     end
 
