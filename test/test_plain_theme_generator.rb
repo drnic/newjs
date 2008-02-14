@@ -32,6 +32,6 @@ class TestPlainThemeGenerator < Test::Unit::TestCase
   end
   
   def generator_path
-    "newgem_theme_generators"
+    "newjs_theme_generators"
   end
 end

@@ -11,10 +11,10 @@ end
 require 'redcloth'
 require 'syntax/convertors/html'
 require 'erb'
-require File.dirname(__FILE__) + '/../lib/<%= gem_name %>/version.rb'
+load File.dirname(__FILE__) + '/../Rakefile'
 
-version  = <%= module_name %>::VERSION::STRING
-download = 'http://rubyforge.org/projects/<%= gem_name %>'
+version  = APP_VERSION
+download = 'http://rubyforge.org/projects/<%= name %>'
 
 class Fixnum
   def ordinal

@@ -9,15 +9,15 @@ class InstallWebsiteGenerator < RubiGen::Base
                   :author  => "TODO",
                   :email   => nil
   
-  attr_reader :gem_name, :module_name
+  attr_reader :name, :module_name
   attr_reader :author, :email
   
   def initialize(runtime_args, runtime_options = {})
     super
     @destination_root = File.expand_path(destination_root)
-    @gem_name = base_name
+    @name = base_name
     
-    @module_name  = @gem_name.camelcase
+    @module_name  = @name.camelcase
     extract_options
   end
 
