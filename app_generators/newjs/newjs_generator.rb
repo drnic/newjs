@@ -10,6 +10,7 @@ class NewjsGenerator < RubiGen::Base
   
   attr_reader :name, :module_name
   attr_reader :version, :version_str, :author, :email
+  attr_reader :title, :url
   
   
   def initialize(runtime_args, runtime_options = {})
@@ -19,11 +20,13 @@ class NewjsGenerator < RubiGen::Base
     @name = base_name
     @module_name = name.camelize
     extract_options
+    @title ||= @name.humanize
+    @url   ||= "http://NOTE-ENTER-URL.com"
   end
 
   def manifest
-    script_options     = { :chmod => 0755, :shebang => options[:shebang] == DEFAULT_SHEBANG ? nil : options[:shebang] }
-    windows            = (RUBY_PLATFORM =~ /dos|win32|cygwin/i) || (RUBY_PLATFORM =~ /(:?mswin|mingw)/)
+    script_options = { :chmod => 0755, :shebang => options[:shebang] == DEFAULT_SHEBANG ? nil : options[:shebang] }
+    windows        = (RUBY_PLATFORM =~ /dos|win32|cygwin/i) || (RUBY_PLATFORM =~ /(:?mswin|mingw)/)
     
     record do |m|
       # Ensure appropriate folder(s) exists
@@ -72,6 +75,11 @@ EOS
       opts.on("-e", "--email=\"your@email.com\"", String,
               "Your email to be inserted into generated files.",
               "Default: ~/.rubyforge/user-config.yml[email]") { |x| options[:email] = x }
+      opts.on("-t", "--title=\"Project Title\"", String,
+              "Human-readable/marketing name for project.",
+              "Default: Project Name") { |x| options[:title] = x }
+      opts.on("-u", "--url=\"http://url-to-project.com\"", String,
+              "Default: http://NOTE-ENTER-URL.com") { |x| options[:url] = x }
       opts.on("-v", "--version", "Show the #{File.basename($0)} version number and quit.")
       opts.on("-V", "--set-version=X.Y.Z", String,
               "Initial version of the project you are creating.",
