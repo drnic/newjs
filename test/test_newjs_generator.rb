@@ -29,6 +29,7 @@ class TestNewjsGenerator < Test::Unit::TestCase
     run_generator('newjs', [APP_ROOT], sources)
     assert_directory_exists "lib"
     assert_directory_exists "src"
+    assert_directory_exists "tasks"
     assert_directory_exists "test/assets"
     assert_generated_file   "test/assets/unittest.css"
     assert_generated_file   "test/assets/unittest.js"
