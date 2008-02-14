@@ -1,20 +1,29 @@
+TEST_CHANGES_SINCE = Time.now - 600
+APP_ROOT = File.dirname(__FILE__) + "/.."
+
 namespace :test do
   namespace :recent do
     desc "Open recently modified files into browser"
-    task :javascript => :environment do
+    task :javascript do
+      require 'rubygems'
+      gem 'activesupport'
+      require 'active_support'
+
       since = TEST_CHANGES_SINCE
       touched = FileList[
-        'test/javascript/*_test.html', 
-        'public/javascripts/*.js'].select { |path| File.mtime(path) > since }
+        'test/*_test.html', 
+        'src/*.js'].select { |path| File.mtime(path) > since }
       next if touched.blank?
       
-      require File.dirname(__FILE__) + "/../lib/javascript_test_ext"
+      gem 'newjs'
+      require 'newjs'
+      require 'newjs/autotest'
       
       touched.each do |file|
         if file =~ /\/([^\/]+)\.js$/
-          file = "test/javascript/#{$1}_test.html"
+          file = "test/#{$1}_test.html"
         end
-        file = "#{RAILS_ROOT}/#{file}"
+        file = "#{APP_ROOT}/#{file}"
         unless File.exists?(file)
           puts "Notice: Test file does not exist: #{file}"
           next

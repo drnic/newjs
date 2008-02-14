@@ -22,6 +22,11 @@ javascript_generators/javascript_test/USAGE
 javascript_generators/javascript_test/javascript_test_generator.rb
 javascript_generators/javascript_test/templates/test/test.html.erb
 lib/newjs.rb
+lib/newjs/autotest.rb
+lib/newjs/autotest/javascript_test_autotest.rb
+lib/newjs/autotest/javascript_test_autotest/config.rb
+lib/newjs/autotest/javascript_test_ext.rb
+lib/newjs/jstest.rb
 lib/newjs/version.rb
 log/debug.log
 script/destroy

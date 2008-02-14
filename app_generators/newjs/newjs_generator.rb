@@ -34,6 +34,7 @@ class NewjsGenerator < RubiGen::Base
       # m.file     "file",         "some_file_copied"
       m.file_copy_each %w[unittest.css unittest.js prototype.js], "test/assets"
       m.file_copy_each %w[javascript_test_autotest_tasks.rake], "tasks"
+      m.file_copy_each %w[javascript_test_autotest.yml.sample], "config"
       m.file_copy_each %w[Rakefile README.txt]
       m.template_copy_each %w[History.txt License.txt]
       
@@ -89,6 +90,7 @@ EOS
     # Installation skeleton.  Intermediate directories are automatically
     # created so don't sweat their absence here.
     BASEDIRS = %w(
+      config
       lib
       src
       script

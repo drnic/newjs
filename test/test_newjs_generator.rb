@@ -28,6 +28,7 @@ class TestNewjsGenerator < Test::Unit::TestCase
   def test_generator_without_options
     run_generator('newjs', [APP_ROOT], sources)
     assert_directory_exists "lib"
+    assert_directory_exists "config"
     assert_directory_exists "src"
     assert_directory_exists "script"
     assert_directory_exists "tasks"
@@ -42,6 +43,7 @@ class TestNewjsGenerator < Test::Unit::TestCase
     assert_generated_file   "script/rstakeout"
     assert_generated_file   "script/js_autotest"
     assert_generated_file   "tasks/javascript_test_autotest_tasks.rake"
+    assert_generated_file   "config/javascript_test_autotest.yml.sample"
   end
   
   private
