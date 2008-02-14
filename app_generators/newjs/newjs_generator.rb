@@ -18,7 +18,6 @@ class NewjsGenerator < RubiGen::Base
     @destination_root = File.expand_path(args.shift)
     @name = base_name
     @module_name = name.camelize
-    p [name, module_name]
     extract_options
   end
 
@@ -39,7 +38,7 @@ class NewjsGenerator < RubiGen::Base
       m.file_copy_each %w[javascript_test_autotest.yml.sample], "config"
       m.file_copy_each %w[protodoc.rb], "lib"
       m.file_copy_each %w[README.txt]
-      m.template_copy_each %w[Rakefile History.txt License.txt]
+      m.template_copy_each %w[Rakefile.erb History.txt.erb License.txt.erb]
       m.template_copy_each %w[HEADER.erb], "src"
       m.template "src/library.js.erb", "src/#{name}.js"
       
