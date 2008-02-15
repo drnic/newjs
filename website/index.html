@@ -220,7 +220,14 @@ The project&#8217;s version number is automatically inserted into the page
 (change version numbers via <code>APP_VERSION</code> in <code>Rakefile</code>).</p>
 
 
-	<p>To upload the website (and its <span class="caps">CSS</span>)</p>
+	<p>To upload the website (and its <span class="caps">CSS</span> etc) run:</p>
+
+
+<pre>rake website</pre>
+
+	<p>The default <code>tasks/website.rake</code> file pushes the files
+to a <a href="http://rubyforge.org">rubyforge.org</a> project account. Modify it
+to rsync files elsewhere.</p>
 
 
 	<h2>Screencast coming soon</h2>

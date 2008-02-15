@@ -150,7 +150,13 @@ And open <code>website/index.html</code> in your browser to preview.
 The project's version number is automatically inserted into the page
 (change version numbers via <code>APP_VERSION</code> in <code>Rakefile</code>).
 
-To upload the website (and its CSS)
+To upload the website (and its CSS etc) run:
+
+<pre>rake website</pre>
+
+The default <code>tasks/website.rake</code> file pushes the files
+to a "rubyforge.org":http://rubyforge.org project account. Modify it
+to rsync files elsewhere.
 
 h2. Screencast coming soon
 
