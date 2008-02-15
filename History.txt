@@ -1,4 +1,11 @@
-== 0.0.1 2008-02-14
+== 1.0.1 2008-02-15
+
+* 1 major bugfix:
+  * install_website: 
+    * website_upload now works
+    * uses config/website.yml
+
+== 1.0.0 2008-02-14
 
 * 1 major enhancement:
   * Initial release
