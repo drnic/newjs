@@ -33,7 +33,7 @@
     <h1>JavaScript Project Generator</h1>
     <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/newjs"; return false'>
       <p>Get Version</p>
-      <a href="http://rubyforge.org/projects/newjs" class="numbers">0.4.0</a>
+      <a href="http://rubyforge.org/projects/newjs" class="numbers">1.0.0</a>
     </div>
     <h1>&#x2192; &#8216;newjs&#8217;</h1>
 
@@ -134,13 +134,14 @@ When you&#8217;ve got a new version to release, edit <code>Rakefile</code> and m
 	<h2>Generating test <span class="caps">HTML</span> files</h2>
 
 
-	<p>If you have a <code>src/some_lib.js</code> file, then you&#8217;ll want a unit
+	<p>If you are going to have a <code>src/some_lib.js</code> file, then you&#8217;ll want a unit
 test file(s). By default you&#8217;d call it <code>test/some_lib_test.html</code>.</p>
 
 
 	<p>And then what? Personally, I can never remember what basic <span class="caps">HTML</span> + JavaScript
 goes in the test <span class="caps">HTML</span> files. I quite like the <a href="http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/">javascript_test plugin</a> for <a href="http://www.rubyonrails.org/">Ruby 
-on Rails</a> so I&#8217;ve included a version of it
+on Rails</a>, which allows you to generate a
+test <span class="caps">HTML</span> stub. So I&#8217;ve included a version of it
 here. That is, your JavaScript project comes with a generator to create new
 test <span class="caps">HTML</span> files, ready to rock and roll.</p>
 
