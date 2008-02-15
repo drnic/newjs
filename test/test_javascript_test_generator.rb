@@ -38,6 +38,6 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
   end
   
   def generator_path
-    "javascript_generators"
+    "javascript_test_generators"
   end
 end
