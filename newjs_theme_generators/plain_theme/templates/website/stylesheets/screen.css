@@ -1,5 +1,5 @@
 body {
-  background-color: #E1D1F1;
+  background-color: #8DBD82;
   font-family: "Georgia", sans-serif;
   font-size: 16px;
   line-height: 1.6em;
@@ -24,7 +24,7 @@ li {
 }
 a {
   color: #5E5AFF;
-	background-color: #DAC;
+	background-color: #A1DDB1;
   font-weight: normal;
   text-decoration: underline;
 }
@@ -39,7 +39,7 @@ blockquote {
 }
 
 #main {
-  width: 45em;
+  width: 50em;
   padding: 0;
   margin: 0 auto;
 }
@@ -101,12 +101,12 @@ pre, code {
   text-align: right;
   font-family: sans-serif;
   font-weight: normal;
-  background-color: #B3ABFF;
+  background-color: #9A5535;
   color: #141331;
   padding: 15px 20px 10px 20px;
   margin: 0 auto;
 	margin-top: 15px;
-  border: 3px solid #141331;
+  border: 3px solid #7E393E;
 }
 
 #version .numbers {
@@ -119,16 +119,16 @@ pre, code {
 
 #version p {
   text-decoration: none;
-	color: #141331;
-	background-color: #B3ABFF;
+	color: #F1F4FF;
+	background-color: #9A5535;
 	margin: 0;
 	padding: 0;
 }
 
 #version a {
   text-decoration: none;
-	color: #141331;
-	background-color: #B3ABFF;
+	color: #F1F4FF;
+	background-color: #9A5535;
 }
 
 .clickable {
