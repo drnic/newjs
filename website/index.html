@@ -33,7 +33,7 @@
     <h1>JavaScript Project Generator</h1>
     <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/newjs"; return false'>
       <p>Get Version</p>
-      <a href="http://rubyforge.org/projects/newjs" class="numbers">1.0.1</a>
+      <a href="http://rubyforge.org/projects/newjs" class="numbers">1.0.2</a>
     </div>
     <h1>&#x2192; &#8216;newjs&#8217;</h1>
 
@@ -196,6 +196,68 @@ in your required order.</p>
 
 
 <pre>rake dist</pre>
+
+	<p>Two files are added into the <code>dist/</code> folder:</p>
+
+
+<pre>$ ls dist/
+drnic_js_test_helpers-0.5.0.js  drnic_js_test_helpers.js</pre>
+
+	<p>One with a version number, and one without.</p>
+
+
+	<h3>Upload library to rubyforge</h3>
+
+
+	<p>Assuming you don&#8217;t really care where your package/library is uploaded
+and made available for downloading, <code>newjs</code> projects comes
+pre-built ready to upload them to <code>rubyforge</code>.</p>
+
+
+	<p>First, you&#8217;ll need a rubyforge account.</p>
+
+
+	<p>Second, create a rubyforge project. It can take 12-48hrs for confirmation
+to come back.</p>
+
+
+	<p>Third, use the <code>rubyforge</code> command-line app to 
+store your rubyforge project information locally.</p>
+
+
+<pre>$ rubyforge setup  # first time only
+$ rubyforge login
+$ rubyforge config
+$ rubyforge create_package project_name project_name
+</pre>
+
+	<p>Note, if you are placing your JavaScript project within an existing
+rubyforge project, then the two <code>project_name</code> values
+are different:</p>
+
+
+	<ol>
+	<li>The rubyforge project name (e.g. drnicutilities) </li>
+		<li>The JavaScript project/library name (e.g. drnic_js_test_helpers)</li>
+	</ol>
+
+
+	<p>Finally, each time you want to release a new version of your library you do 
+two things:</p>
+
+
+	<ol>
+	<li>Update Rakefile&#8217;s <code>APP_VERSION</code> value to the new version number</li>
+		<li>Run <code>rake release VERSION=X.Y.Z</code></li>
+	</ol>
+
+
+	<p>Your files are now available for download via rubyforge.org.</p>
+
+
+	<p>If you use the generated website (below), it comes with a link to these
+files when you click the large version number.</p>
+
 
 	<h2>Create a website for your project</h2>
 

@@ -132,6 +132,51 @@ Finally, run the command:
 
 <pre>rake dist</pre>
 
+Two files are added into the <code>dist/</code> folder:
+
+<pre>$ ls dist/
+drnic_js_test_helpers-0.5.0.js  drnic_js_test_helpers.js</pre>
+
+One with a version number, and one without.
+
+h3. Upload library to rubyforge
+
+Assuming you don't really care where your package/library is uploaded
+and made available for downloading, <code>newjs</code> projects comes
+pre-built ready to upload them to <code>rubyforge</code>.
+
+First, you'll need a rubyforge account.
+
+Second, create a rubyforge project. It can take 12-48hrs for confirmation
+to come back.
+
+Third, use the <code>rubyforge</code> command-line app to 
+store your rubyforge project information locally.
+
+<pre>$ rubyforge setup  # first time only
+$ rubyforge login
+$ rubyforge config
+$ rubyforge create_package project_name project_name
+</pre>
+
+Note, if you are placing your JavaScript project within an existing
+rubyforge project, then the two <code>project_name</code> values
+are different:
+
+# The rubyforge project name (e.g. drnicutilities) 
+# The JavaScript project/library name (e.g. drnic_js_test_helpers)
+
+Finally, each time you want to release a new version of your library you do 
+two things:
+
+# Update Rakefile's <code>APP_VERSION</code> value to the new version number
+# Run <code>rake release VERSION=X.Y.Z</code>
+
+Your files are now available for download via rubyforge.org. 
+
+If you use the generated website (below), it comes with a link to these
+files when you click the large version number (e.g. "Get Version X.Y.Z").
+
 h2. Create a website for your project
 
 You can quickly create a clean, readable website for your project
