@@ -166,6 +166,14 @@ and you'll love every minute of it.
 
 Subscribe to PeepCode's blog for announcement details.
 
+h2. Examples
+
+The development of <code>newjs</code> was done in parallel with
+"Dr Nic's JavaScript Test Helpers":http://drnicutilities.rubyforge.org/drnic_js_test_helpers/
+(source: "git":http://github.com/drnic/drnic_js_test_helpers/tree/master).
+
+Checkout this project to see examples of unit tests, configuration etc.
+
 h2. Forum
 
 "http://groups.google.com/group/javascript-project-generator":http://groups.google.com/group/javascript-project-generator
