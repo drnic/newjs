@@ -67,10 +67,15 @@ EOS
       # at the top of the file next to "default_options"
       opts.on("-a", "--author=\"Your Name\"", String,
               "You. The author of this RubyGem. You name goes in in the website.",
-              "Default: 'TODO'") { |options[:author]| }
+              "Default: 'TODO'") { |x| options[:author] = x }
       opts.on("-e", "--email=your@email.com", String,
               "Your email for people to contact you.",
-              "Default: nil") { |options[:author]| }
+              "Default: nil") { |x| options[:email] = x}
+      opts.on("-u", "--username=rubyforge_username", String,
+              "RubyForge username (if required)",
+              "Default: nil") { |x| options[:username] = x }
+      opts.on("-p", "--path=project_name", String,
+              "Default: nil") { |x| options[:path] = x }
     end
     
     def extract_options
