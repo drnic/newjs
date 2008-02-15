@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>define (JavaScriptTestTask)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/newjs/jstest.rb, line 296</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">define</span>
+    <span class="ruby-identifier">task</span> <span class="ruby-ivar">@name</span> <span class="ruby-keyword kw">do</span>
+      <span class="ruby-identifier">trap</span>(<span class="ruby-value str">&quot;INT&quot;</span>) { <span class="ruby-ivar">@server</span>.<span class="ruby-identifier">shutdown</span> }
+      <span class="ruby-identifier">t</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> { <span class="ruby-ivar">@server</span>.<span class="ruby-identifier">start</span> }
+      
+      <span class="ruby-comment cmt"># run all combinations of browsers and tests</span>
+      <span class="ruby-ivar">@browsers</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">browser</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">browser</span>.<span class="ruby-identifier">supported?</span>
+          <span class="ruby-identifier">t0</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+          <span class="ruby-identifier">results</span> = {<span class="ruby-identifier">:tests</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">:assertions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">:failures</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>, <span class="ruby-identifier">:errors</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>}
+          <span class="ruby-identifier">errors</span> = []
+          <span class="ruby-identifier">failures</span> = []
+          <span class="ruby-identifier">browser</span>.<span class="ruby-identifier">setup</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\nStarted tests in #{browser}&quot;</span>
+          <span class="ruby-ivar">@tests</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">test</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">params</span> = <span class="ruby-value str">&quot;resultsURL=http://localhost:4711/results&amp;t=&quot;</span> <span class="ruby-operator">+</span> (<span class="ruby-value str">&quot;%.6f&quot;</span> <span class="ruby-operator">%</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">to_f</span>)
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">test</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+              <span class="ruby-identifier">params</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;tests=#{test[:testcases]}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">test</span>[<span class="ruby-identifier">:testcases</span>]
+              <span class="ruby-identifier">test</span> = <span class="ruby-identifier">test</span>[<span class="ruby-identifier">:url</span>]
+            <span class="ruby-keyword kw">end</span>
+            <span class="ruby-identifier">browser</span>.<span class="ruby-identifier">visit</span>(<span class="ruby-node">&quot;http://localhost:4711#{test}?#{params}&quot;</span>)
+ 
+            <span class="ruby-identifier">result</span> = <span class="ruby-ivar">@queue</span>.<span class="ruby-identifier">pop</span>
+            <span class="ruby-identifier">result</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">k</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">results</span>[<span class="ruby-identifier">k</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">v</span> }
+            <span class="ruby-identifier">value</span> = <span class="ruby-value str">&quot;.&quot;</span>
+            
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>[<span class="ruby-identifier">:failures</span>] <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+              <span class="ruby-identifier">value</span> = <span class="ruby-value str">&quot;F&quot;</span>
+              <span class="ruby-identifier">failures</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">test</span>)
+            <span class="ruby-keyword kw">end</span>
+            
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>[<span class="ruby-identifier">:errors</span>] <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+              <span class="ruby-identifier">value</span> = <span class="ruby-value str">&quot;E&quot;</span>
+              <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">test</span>)
+            <span class="ruby-keyword kw">end</span>
+            
+            <span class="ruby-identifier">print</span> <span class="ruby-identifier">value</span>
+          <span class="ruby-keyword kw">end</span>
+          
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\nFinished in #{(Time.now - t0).round.to_s} seconds.&quot;</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;  Failures: #{failures.join(', ')}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">failures</span>.<span class="ruby-identifier">empty?</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;  Errors:   #{errors.join(', ')}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">empty?</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{results[:tests]} tests, #{results[:assertions]} assertions, #{results[:failures]} failures, #{results[:errors]} errors&quot;</span>
+          <span class="ruby-identifier">browser</span>.<span class="ruby-identifier">teardown</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\nSkipping #{browser}, not supported on this OS&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-ivar">@server</span>.<span class="ruby-identifier">shutdown</span>
+      <span class="ruby-identifier">t</span>.<span class="ruby-identifier">join</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
