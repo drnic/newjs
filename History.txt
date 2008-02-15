@@ -1,3 +1,7 @@
+== 1.0.2 2008-02-15
+
+* newjs:
+  * rake release VERSION=X.Y.Z to push dist+pkg to rubyforge
 * website:
   * added 'how to configure website upload'
 

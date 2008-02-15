@@ -44,6 +44,7 @@ class TestNewjsGenerator < Test::Unit::TestCase
     assert_generated_file   "script/js_autotest"
     assert_generated_file   "tasks/javascript_test_autotest_tasks.rake"
     assert_generated_file   "tasks/environment.rake"
+    assert_generated_file   "tasks/deploy.rake"
     assert_generated_file   "config/javascript_test_autotest.yml.sample"
     assert_generated_file   "src/myproject.js"
     assert_generated_file   "src/HEADER"
