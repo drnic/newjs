@@ -34,6 +34,7 @@ lib/newjs/autotest/javascript_test_autotest.rb
 lib/newjs/autotest/javascript_test_autotest/config.rb
 lib/newjs/autotest/javascript_test_ext.rb
 lib/newjs/jstest.rb
+lib/newjs/rubyforge.rb
 lib/newjs/version.rb
 log/debug.log
 newjs_generators/install_website/USAGE

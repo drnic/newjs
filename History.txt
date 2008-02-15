@@ -1,3 +1,7 @@
+== 1.0.4 2008-02-16
+
+* newjs - added missing newjs/rubyforge.rb file
+
 == 1.0.3 2008-02-15
 
 * install_website:

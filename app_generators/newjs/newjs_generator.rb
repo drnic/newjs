@@ -93,8 +93,8 @@ EOS
       @author            = options[:author]
       @email             = options[:email]
       unless @author && @email
-        require 'newgem/rubyforge'
-        rubyforge_config = Newgem::Rubyforge.new
+        require 'newjs/rubyforge'
+        rubyforge_config = Newjs::Rubyforge.new
         @author ||= rubyforge_config.full_name
         @email  ||= rubyforge_config.email
       end
