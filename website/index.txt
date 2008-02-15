@@ -65,9 +65,11 @@ To kick-off your new project/library, run the command-line app <code>newjs</code
         create    script/destroy
 </pre>
 
-Look at all that! In there is unit test support (using the <code>unittest.js</code> library 
-developed within "prototypejs":http://www.prototypejs.org/, but should
-support JavaScript development using any non-prototype.js libraries).
+Look at all that!
+
+Unit testing uses the <code>unittest.js</code> library 
+developed within "prototypejs":http://www.prototypejs.org/. It should
+also support JavaScript development using any non-prototype.js libraries.
 
 Your raw, unconcatenated library/source files go in <code>src/</code>
 
@@ -75,6 +77,8 @@ Your unit test HTML files, go in <code>test/</code> (see test generator below).
 
 When you've got a new version to release, edit <code>Rakefile</code> and modify the
 <code>APP_VERSION</code> string (see Distribution section below).
+
+To merge your <code>src/</code> files into a distribution file, see below.
 
 h2. Generating test HTML files
 
