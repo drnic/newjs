@@ -220,15 +220,53 @@ The project&#8217;s version number is automatically inserted into the page
 (change version numbers via <code>APP_VERSION</code> in <code>Rakefile</code>).</p>
 
 
+	<h3>Configuration of website upload</h3>
+
+
+	<p>It is assumed you will upload your website files to rubyforge.org server.
+To push files to an alternate server, modify the <code>tasks/website.rake</code> file.</p>
+
+
+	<p>To configure which rubyforge project to upload to, create <code>config/website.yml</code>.
+There is an example in <code>code/website.yml.sample</code>.</p>
+
+
+	<p>An example might be:</p>
+
+
+<pre>host: nicwilliams@rubyforge.org
+remote_dir: /var/www/gforge-projects/drnicutilities/drnic_js_test_helpers
+</pre>
+
+	<p>Here, the files will be uploaded into the <code>drnicutilities</code> rubyforge
+project, under a sub-directory <code>drnic_js_test_helpers</code>. This site
+would be visible at <a href="http://drnicutilities.rubyforge.org/drnic_js_test_helpers">http://drnicutilities.rubyforge.org/drnic_js_test_helpers</a></p>
+
+
+	<p>If your website lives in its own rubyforge project, then just specify the project
+name, and the website will be uploaded into the root folder.</p>
+
+
+	<p>For example, the website would be available at <a href="http://drnicutilities.rubyforge.org/">http://drnicutilities.rubyforge.org/</a> if your
+configuration was:</p>
+
+
+<pre>host: nicwilliams@rubyforge.org
+remote_dir: /var/www/gforge-projects/drnicutilities
+</pre>
+
+	<h3>Uploading website to server</h3>
+
+
 	<p>To upload the website (and its <span class="caps">CSS</span> etc) run:</p>
 
 
+<pre>rake website_upload</pre>
+
+	<p>More commonly, to generate and upload the website:</p>
+
+
 <pre>rake website</pre>
-
-	<p>The default <code>tasks/website.rake</code> file pushes the files
-to a <a href="http://rubyforge.org">rubyforge.org</a> project account. Modify it
-to rsync files elsewhere.</p>
-
 
 	<h2>Screencast coming soon</h2>
 
