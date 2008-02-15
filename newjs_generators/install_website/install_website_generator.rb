@@ -11,7 +11,7 @@ class InstallWebsiteGenerator < RubiGen::Base
   
   attr_reader :name, :module_name
   attr_reader :author, :email
-  attr_reader :username, :path
+  attr_reader :username, :rubyforge_path
   
   def initialize(runtime_args, runtime_options = {})
     super
@@ -74,8 +74,8 @@ EOS
       opts.on("-u", "--username=rubyforge_username", String,
               "RubyForge username (if required)",
               "Default: nil") { |x| options[:username] = x }
-      opts.on("-p", "--path=project_name", String,
-              "Default: nil") { |x| options[:path] = x }
+      opts.on("--rubyforge_path=project_name", String,
+              "Default: nil") { |x| options[:rubyforge_path] = x }
     end
     
     def extract_options
@@ -85,6 +85,6 @@ EOS
       @author = options[:author]
       @email  = options[:email]
       @username = options[:username] || "your_username"
-      @path   = options[:path] || name
+      @rubyforge_path   = options[:rubyforge_path] || name
     end
 end

@@ -37,6 +37,7 @@ lib/newjs/version.rb
 log/debug.log
 newjs_generators/install_website/USAGE
 newjs_generators/install_website/install_website_generator.rb
+newjs_generators/install_website/templates/config/website.yml.sample.erb
 newjs_generators/install_website/templates/script/txt2html
 newjs_generators/install_website/templates/script/win_script.cmd
 newjs_generators/install_website/templates/tasks/website.rake
