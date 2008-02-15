@@ -82,12 +82,13 @@ To merge your <code>src/</code> files into a distribution file, see below.
 
 h2. Generating test HTML files
 
-If you have a <code>src/some_lib.js</code> file, then you'll want a unit
+If you are going to have a <code>src/some_lib.js</code> file, then you'll want a unit
 test file(s). By default you'd call it <code>test/some_lib_test.html</code>.
 
 And then what? Personally, I can never remember what basic HTML + JavaScript
 goes in the test HTML files. I quite like the "javascript_test plugin":http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/ for "Ruby 
-on Rails":http://www.rubyonrails.org/ so I've included a version of it
+on Rails":http://www.rubyonrails.org/, which allows you to generate a
+test HTML stub. So I've included a version of it
 here. That is, your JavaScript project comes with a generator to create new
 test HTML files, ready to rock and roll.
 
