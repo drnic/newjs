@@ -1,3 +1,6 @@
+* website:
+  * added 'how to configure website upload'
+
 == 1.0.1 2008-02-15
 
 * 1 major bugfix:
