@@ -48,6 +48,7 @@ class TestNewjsGenerator < Test::Unit::TestCase
     assert_generated_file   "src/myproject.js"
     assert_generated_file   "src/HEADER"
     assert_generated_file   "lib/protodoc.rb"
+    assert_generated_file   "lib/jstest.rb"
   end
   
   private

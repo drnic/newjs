@@ -10,6 +10,7 @@ app_generators/newjs/templates/License.txt.erb
 app_generators/newjs/templates/README.txt
 app_generators/newjs/templates/Rakefile.erb
 app_generators/newjs/templates/config/javascript_test_autotest.yml.sample
+app_generators/newjs/templates/lib/jstest.rb
 app_generators/newjs/templates/lib/protodoc.rb
 app_generators/newjs/templates/script/js_autotest
 app_generators/newjs/templates/script/rstakeout
@@ -23,9 +24,9 @@ app_generators/newjs/templates/test/assets/unittest.js
 bin/newjs
 config/hoe.rb
 config/requirements.rb
-javascript_generators/javascript_test/USAGE
-javascript_generators/javascript_test/javascript_test_generator.rb
-javascript_generators/javascript_test/templates/test/test.html.erb
+javascript_test_generators/javascript_test/USAGE
+javascript_test_generators/javascript_test/javascript_test_generator.rb
+javascript_test_generators/javascript_test/templates/test/test.html.erb
 lib/newjs.rb
 lib/newjs/autotest.rb
 lib/newjs/autotest/javascript_test_autotest.rb
