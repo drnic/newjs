@@ -20,6 +20,7 @@ class TestInstallWebsiteGenerator < Test::Unit::TestCase
     end
     assert_generated_file("script/txt2html")
     assert_generated_file("tasks/website.rake")
+    assert_generated_file("config/website.yml.sample")
   end
   
   private

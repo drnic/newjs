@@ -11,6 +11,7 @@ class InstallWebsiteGenerator < RubiGen::Base
   
   attr_reader :name, :module_name
   attr_reader :author, :email
+  attr_reader :username, :path
   
   def initialize(runtime_args, runtime_options = {})
     super
@@ -29,11 +30,15 @@ class InstallWebsiteGenerator < RubiGen::Base
       # Ensure appropriate folder(s) exists
       m.directory 'website/javascripts'
       m.directory 'website/stylesheets'
+      m.directory 'config'
       m.directory 'script'
       m.directory 'tasks'
 
       # Website
       m.template_copy_each %w( index.txt index.html ), "website"
+      m.template "config/website.yml.sample.erb", "config/website.yml.sample"
+      
+      m.file_copy_each %w( website.rake ), "tasks"
       
       %w( txt2html ).each do |file|
         m.template "script/#{file}",        "script/#{file}", script_options
@@ -41,7 +46,6 @@ class InstallWebsiteGenerator < RubiGen::Base
           :assigns => { :filename => file } if windows
       end
       
-      m.file_copy_each %w[ website.rake ], "tasks"
       
       m.dependency "plain_theme", [], :destination => destination_root
     end
@@ -75,5 +79,7 @@ EOS
       # raw instance variable value.
       @author = options[:author]
       @email  = options[:email]
+      @username = options[:username] || "your_username"
+      @path   = options[:path] || name
     end
 end
