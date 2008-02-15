@@ -11,6 +11,7 @@ end
 require 'redcloth'
 require 'syntax/convertors/html'
 require 'erb'
+ENV['rakefile_just_config'] = "true"
 load File.dirname(__FILE__) + '/../Rakefile'
 
 version  = APP_VERSION

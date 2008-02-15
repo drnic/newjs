@@ -18,6 +18,9 @@ APP_DIST_DIR = File.join(APP_ROOT, 'dist')
 APP_PKG_DIR  = File.join(APP_ROOT, 'pkg')
 APP_VERSION  = '<%= version_str %>'
 
+
+unless ENV['rakefile_just_config']
+
 task :default => [:dist, :package, :clean_package_source]
 
 desc "Builds the distribution"
@@ -80,3 +83,5 @@ task :clean_package_source do
 end
 
 Dir['tasks/**/*.rake'].each { |rake| load rake }
+
+end
