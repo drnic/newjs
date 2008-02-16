@@ -7,3 +7,9 @@ Example:
 
     This generates a skeletal JavaScript project/application
     installation in path/to/my-app-name
+
+More information:
+    http://newjs.rubyforge.org
+    
+Author:
+    Dr Nic Williams, http://drnicwilliams.com, drnicwilliams@gmail.com 
