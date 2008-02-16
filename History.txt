@@ -1,3 +1,4 @@
+* unit_test: Added specific unit_test generator placing tests in test/unit folder
 * install_website: index.txt has Git repo instructions too - just delete svn/git if unnecessary
 * rake dist: distribution files stored to website/dist (if folder website exists)
 * newjs: url option now works
