@@ -6,7 +6,8 @@ This JavaScript project ...
 
 h2. Downloading
 
-TODO - where to download the library file?
+<a href="dist/<%= name %>.js"><%= name %>.js</a>
+
 
 h2. The basics
 

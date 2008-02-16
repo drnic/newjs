@@ -40,8 +40,7 @@ class NewjsGenerator < RubiGen::Base
       m.file_copy_each %w[javascript_test_autotest_tasks.rake environment.rake deploy.rake], "tasks"
       m.file_copy_each %w[javascript_test_autotest.yml.sample], "config"
       m.file_copy_each %w[protodoc.rb jstest.rb], "lib"
-      m.file_copy_each %w[README.txt]
-      m.template_copy_each %w[Rakefile.erb History.txt.erb License.txt.erb]
+      m.template_copy_each %w[Rakefile.erb README.txt History.txt.erb License.txt.erb]
       m.template_copy_each %w[HEADER.erb], "src"
       m.template "src/library.js.erb", "src/#{name}.js"
       
@@ -98,6 +97,7 @@ EOS
         @author ||= rubyforge_config.full_name
         @email  ||= rubyforge_config.email
       end
+      @url               = options[:url]
     end
 
     # Installation skeleton.  Intermediate directories are automatically
