@@ -1,5 +1,5 @@
 body {
-  background-color: #8DBD82;
+  background-color: #E9C000;
   font-family: "Georgia", sans-serif;
   font-size: 16px;
   line-height: 1.6em;
@@ -24,7 +24,7 @@ li {
 }
 a {
   color: #5E5AFF;
-	background-color: #A1DDB1;
+	background-color: #DDDA89;
   font-weight: normal;
   text-decoration: underline;
 }
@@ -39,7 +39,7 @@ blockquote {
 }
 
 #main {
-  width: 50em;
+  width: 45em;
   padding: 0;
   margin: 0 auto;
 }
