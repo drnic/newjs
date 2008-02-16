@@ -1,4 +1,4 @@
-class JavascriptTestGenerator < RubiGen::Base
+class FunctionalTestGenerator < RubiGen::Base
   
   attr_reader :name, :library_name
   
@@ -13,10 +13,10 @@ class JavascriptTestGenerator < RubiGen::Base
   def manifest
     record do |m|
       # Ensure appropriate folder(s) exists
-      m.directory 'test'
+      m.directory 'test/functional'
 
       # Create stubs
-      m.template "test/test.html.erb",  "test/#{name}_test.html"
+      m.template "test/test.html.erb",  "test/functional/#{name}_test.html"
     end
   end
 

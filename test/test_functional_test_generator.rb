@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), "test_generator_helper.rb")
 
-class TestJavascriptTestGenerator < Test::Unit::TestCase
+class TestFunctionalTestGenerator < Test::Unit::TestCase
   include RubiGen::GeneratorTestHelper
 
   def setup
@@ -27,8 +27,8 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
   
   def test_generator_without_options
     name = "library"
-    run_generator('javascript_test', [name], sources)
-    assert_generated_file("test/library_test.html")
+    run_generator('functional_test', [name], sources)
+    assert_generated_file("test/functional/library_test.html")
   end
   
   private

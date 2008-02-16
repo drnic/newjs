@@ -92,19 +92,19 @@ test HTML stub. So I've included a version of it
 here. That is, your JavaScript project comes with a generator to create new
 test HTML files, ready to rock and roll.
 
-<pre>$ script/generate javascript_test some_lib
+<pre>$ script/generate unit_test some_lib
   exists  test
-  create  test/some_lib_test.html</pre>
+  create  test/unit/some_lib_test.html</pre>
   
-Now edit <code>test/some_lib_test.html</code> and follow the comments
+Now edit <code>test/unit/some_lib_test.html</code> and follow the comments
 that tell you what to do to write your unit tests.
 
 Want to name your test file something different? Specify the target
 library as an additional parameter.
 
-<pre>$ script/generate javascript_test my_library_tests some_lib
+<pre>$ script/generate unit_test my_library_tests some_lib
   exists  test
-  create  test/my_library_tests_test.html</pre>
+  create  test/unit/my_library_tests_test.html</pre>
 
 h2. Running unit tests
 
