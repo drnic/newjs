@@ -27,6 +27,11 @@ Read the "8 steps for fixing other people's code":http://drnicwilliams.com/2007/
 
 The trunk repository is <code>svn://rubyforge.org/var/svn/<%= name %>/trunk</code> for anonymous access.
 
+OR
+
+The source project is a "Git":http://git.or.cz/ repository. See <%= author %>'s "master branch":http://github.com/<%= username %>/<%= name %>/tree/master for clone/checkout details.
+
+
 h2. License
 
 This code is free to use under the terms of the MIT license. 
