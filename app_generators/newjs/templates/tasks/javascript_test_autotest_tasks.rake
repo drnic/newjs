@@ -10,7 +10,7 @@ namespace :test do
 
       since = TEST_CHANGES_SINCE
       touched = FileList[
-        'test/*_test.html', 
+        'test/unit/*_test.html', 
         'src/*.js'].select { |path| File.mtime(path) > since }
       next if touched.blank?
       
@@ -20,7 +20,7 @@ namespace :test do
       
       touched.each do |file|
         if file =~ /\/([^\/]+)\.js$/
-          file = "test/#{$1}_test.html"
+          file = "test/unit/#{$1}_test.html"
         end
         file = "#{APP_ROOT}/#{file}"
         unless File.exists?(file)
