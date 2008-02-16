@@ -1,12 +1,12 @@
 class FunctionalTestGenerator < RubiGen::Base
   
-  attr_reader :name, :library_name
+  attr_reader :name, :dist_name
   
   def initialize(runtime_args, runtime_options = {})
     super
     usage if args.empty?
     @name = args.shift
-    @library_name = args.shift || name
+    @dist_name = args.shift || base_name
     extract_options
   end
 
@@ -23,13 +23,13 @@ class FunctionalTestGenerator < RubiGen::Base
   protected
     def banner
       <<-EOS
-Creates an HTML test file for a JavaScript library.
+Creates a functional test file for the final distribution JavaScript file(s).
 
-USAGE: #{$0} #{spec.name} name [library_name]"
+USAGE: #{$0} #{spec.name} name [dist_name]"
 
 NOTES:
-* name - creates a file test/name_test.html
-* library_name - is for a file src/library_name.js
+* name - creates a file test/functional/name_test.html
+* dist_name - is for a file dist/base_name.js or dist/dist_name.js
 
 EOS
     end
