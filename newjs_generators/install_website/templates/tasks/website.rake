@@ -17,7 +17,7 @@ EOS
 end
 
 desc 'Generate website files'
-task :website_generate => :ruby_env do
+task :website_generate => [:ruby_env, :dist] do
   (Dir['website/**/*.txt'] - Dir['website/version*.txt']).each do |txt|
     sh %{ #{RUBY_APP} script/txt2html #{txt} > #{txt.gsub(/txt$/,'html')} }
   end

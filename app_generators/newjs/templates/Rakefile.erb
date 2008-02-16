@@ -42,6 +42,11 @@ task :dist do
   Dir.chdir(APP_DIST_DIR) do
     FileUtils.copy_file APP_FILE_NAME, "#{APP_NAME}-#{APP_VERSION}.js"
   end
+  if File.directory?("website")
+    FileUtils.mkdir_p "website/dist"
+    FileUtils.copy_file "dist/#{APP_FILE_NAME}",       "website/dist/#{APP_FILE_NAME}"
+    FileUtils.copy_file "dist/#{APP_FILE_NAME}",       "website/dist/#{APP_NAME}-#{APP_VERSION}.js"
+  end
 end
 
 Rake::PackageTask.new(APP_NAME, APP_VERSION) do |package|
