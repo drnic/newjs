@@ -25,10 +25,23 @@ class TestUnitTestGenerator < Test::Unit::TestCase
   #   bare_setup - place this in setup method to create the APP_ROOT folder for each test
   #   bare_teardown - place this in teardown method to destroy the TMP_ROOT or APP_ROOT folder after each test
   
-  def test_generator_without_options
+  def test_generator_without_arguments
     name = "library"
     run_generator('unit_test', [name], sources)
-    assert_generated_file("test/unit/library_test.html")
+    assert_generated_file("test/unit/library_test.html") do |body|
+      expected = %Q{src="../../src/library.js"}
+      assert_match(expected, body)
+    end
+  end
+  
+  def test_generator_with_library
+    name = "default_library"
+    library = "library"
+    run_generator('unit_test', [name, library], sources)
+    assert_generated_file("test/unit/default_library_test.html") do |body|
+      expected = %Q{src="../../src/library.js"}
+      assert_match(expected, body)
+    end
   end
   
   private
