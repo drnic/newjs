@@ -1,4 +1,5 @@
 * install_website: index.txt has Git repo instructions too - just delete svn/git if unnecessary
+* rake dist: distribution files stored to website/dist (if folder website exists)
 
 == 1.0.4 2008-02-16
 
