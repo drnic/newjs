@@ -268,14 +268,14 @@ end
 
 class JavaScriptTestTask < ::Rake::TaskLib
 
-  def initialize(name=:test)
+  def initialize(name=:test, port=4711)
     @name = name
     @tests = []
     @browsers = []
-
+    @port = port
     @queue = Queue.new
 
-    @server = WEBrick::HTTPServer.new(:Port => 4711) # TODO: make port configurable
+    @server = WEBrick::HTTPServer.new(:Port => @port) # TODO: make port configurable
     @server.mount_proc("/results") do |req, res|
       @queue.push({
         :tests => req.query['tests'].to_i,
@@ -308,12 +308,12 @@ class JavaScriptTestTask < ::Rake::TaskLib
           browser.setup
           puts "\nStarted tests in #{browser}"
           @tests.each do |test|
-            params = "resultsURL=http://localhost:4711/results&t=" + ("%.6f" % Time.now.to_f)
+            params = "resultsURL=http://localhost:#{@port}/results&t=" + ("%.6f" % Time.now.to_f)
             if test.is_a?(Hash)
               params << "&tests=#{test[:testcases]}" if test[:testcases]
               test = test[:url]
             end
-            browser.visit("http://localhost:4711#{test}?#{params}")
+            browser.visit("http://localhost:#{@port}#{test}?#{params}")
  
             result = @queue.pop
             result.each { |k, v| results[k] += v }
