@@ -5,6 +5,7 @@ class FunctionalTestGenerator < RubiGen::Base
   def initialize(runtime_args, runtime_options = {})
     super
     usage if args.empty?
+    @destination_root = File.expand_path(".")
     @name = args.shift
     @dist_name = args.shift || base_name
     extract_options
