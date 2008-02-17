@@ -109,5 +109,7 @@ EOS
       script
       tasks
       test/assets
+      test/unit
+      test/functional
     )
 end
