@@ -31,7 +31,7 @@
     <h1>JavaScript Project Generator</h1>
     <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/newjs"; return false'>
       <p>Get Version</p>
-      <a href="http://rubyforge.org/projects/newjs" class="numbers">1.0.4</a>
+      <a href="http://rubyforge.org/projects/newjs" class="numbers">1.1.0</a>
     </div>
     <h1>&#x2192; &#8216;newjs&#8217;</h1>
 
@@ -81,32 +81,34 @@ for any operating system (except the &#8216;sudo&#8217; part &#8211; use as nece
 	<p>To kick-off your new project/library, run the command-line app <code>newjs</code>:</p>
 
 
-<pre>$ newjs mylib
-        create  config
-        create  lib
-        create  src
-        create  script
-        create  tasks
-        create  test/assets
-        create  test/assets/unittest.css
-        create  test/assets/unittest.js
-        create  test/assets/prototype.js
-        create  tasks/javascript_test_autotest_tasks.rake
-        create  tasks/environment.rake
-        create  config/javascript_test_autotest.yml.sample
-        create  lib/protodoc.rb
-        create  README.txt
-        create  Rakefile
-        create  History.txt
-        create  License.txt
-        create  src/HEADER
-        create  src/mylib.js
-        create  script/rstakeout
-        create  script/js_autotest
-    dependency  install_rubigen_scripts
-        exists    script
-        create    script/generate
-        create    script/destroy
+<pre>$ newjs mylib -a "Dr Nic" -e "drnicwilliams@gmail.com" -u "http://mylib.rubyforge.org" 
+      create  config
+      create  lib
+      create  src
+      create  script
+      create  tasks
+      create  test/assets
+      create  test/assets/unittest.css
+      create  test/assets/unittest.js
+      create  test/assets/prototype.js
+      create  tasks/javascript_test_autotest_tasks.rake
+      create  tasks/environment.rake
+      create  tasks/deploy.rake
+      create  config/javascript_test_autotest.yml.sample
+      create  lib/protodoc.rb
+      create  lib/jstest.rb
+      create  Rakefile
+      create  README.txt
+      create  History.txt
+      create  License.txt
+      create  src/HEADER
+      create  src/mylib.js
+      create  script/rstakeout
+      create  script/js_autotest
+  dependency  install_rubigen_scripts
+      exists    script
+      create    script/generate
+      create    script/destroy
 </pre>
 
 	<p>Look at all that!</p>
@@ -120,7 +122,10 @@ also support JavaScript development using any non-prototype.js libraries.</p>
 	<p>Your raw, unconcatenated library/source files go in <code>src/</code></p>
 
 
-	<p>Your unit test <span class="caps">HTML</span> files, go in <code>test/</code> (see test generator below).</p>
+	<p>Your unit test <span class="caps">HTML</span> files, go in <code>test/unit/</code> (see test generator below).</p>
+
+
+	<p>Your functional test <span class="caps">HTML</span> files, go in <code>test/functional/</code> (see test generator below).</p>
 
 
 When you&#8217;ve got a new version to release, edit <code>Rakefile</code> and modify the
@@ -129,11 +134,14 @@ When you&#8217;ve got a new version to release, edit <code>Rakefile</code> and m
 	<p>To merge your <code>src/</code> files into a distribution file, see below.</p>
 
 
-	<h2>Generating test <span class="caps">HTML</span> files</h2>
+	<h2>Unit testing</h2>
 
 
 	<p>If you are going to have a <code>src/some_lib.js</code> file, then you&#8217;ll want a unit
 test file(s). By default you&#8217;d call it <code>test/some_lib_test.html</code>.</p>
+
+
+	<h3>Generating test <span class="caps">HTML</span> files</h3>
 
 
 	<p>And then what? Personally, I can never remember what basic <span class="caps">HTML</span> + JavaScript
@@ -145,7 +153,7 @@ test <span class="caps">HTML</span> files, ready to rock and roll.</p>
 
 
 <pre>$ script/generate unit_test some_lib
-  exists  test
+  create  test/unit
   create  test/unit/some_lib_test.html</pre>
 
 	<p>Now edit <code>test/unit/some_lib_test.html</code> and follow the comments
@@ -157,10 +165,10 @@ library as an additional parameter.</p>
 
 
 <pre>$ script/generate unit_test my_library_tests some_lib
-  exists  test
+  exists  test/unit
   create  test/unit/my_library_tests_test.html</pre>
 
-	<h2>Running unit tests</h2>
+	<h3>Running unit tests</h3>
 
 
 	<p>Each test <span class="caps">HTML</span> file should be self-executable: just open it in a target
@@ -172,6 +180,37 @@ in Firefox, open the file in Firefox.</p>
 
 
 	<p><img src="images/example-unittest-log.jpg" width="647" height="427" alt="Example Unittest Log"></p>
+
+
+	<h2>Functional tests</h2>
+
+
+	<p>End-to-end functional tests will test the final distribution file(s), rather than
+the <code>src/</code> files.</p>
+
+
+	<p>As shown below, your <code>src/</code> files will be merged into (commonly) one 
+distribution file &#8211; a merging of your source files.</p>
+
+
+	<h3>Generating test <span class="caps">HTML</span> files</h3>
+
+
+	<p>To create functional tests, there is another generator:</p>
+
+
+<pre>$ script/generate functional_test basic_usage
+  create  test/functional
+  create  test/functional/basic_usage_test.html</pre>
+
+	<h3>Running functional tests</h3>
+
+
+<pre>rake test_functionals</pre>
+
+	<p>The generated <span class="caps">HTML</span> file uses the <code>dist/mylib.js</code> file. So, if
+you are running these tests it is best to use the <code>rake test_functionals</code>
+as it pre-builds the distribution files first.</p>
 
 
 	<h2>Distribution of library</h2>

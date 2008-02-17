@@ -75,7 +75,9 @@ also support JavaScript development using any non-prototype.js libraries.
 
 Your raw, unconcatenated library/source files go in <code>src/</code>
 
-Your unit test HTML files, go in <code>test/</code> (see test generator below).
+Your unit test HTML files, go in <code>test/unit/</code> (see test generator below).
+
+Your functional test HTML files, go in <code>test/functional/</code> (see test generator below).
 
 When you've got a new version to release, edit <code>Rakefile</code> and modify the
 <code>APP_VERSION</code> string (see Distribution section below).
