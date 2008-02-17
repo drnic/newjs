@@ -1,9 +1,18 @@
-* unit_test: Added specific unit_test generator placing tests in test/unit folder
-* functional_test: Added specific functional_test generator for tests of dist/xxx.js
-* javascript_test: REMOVED - replaced by unit_test + functional_test
-* install_website: index.txt has Git repo instructions too - just delete svn/git if unnecessary
-* rake dist: distribution files stored to website/dist (if folder website exists)
-* newjs: url option now works
+== 1.1.0 2008-02-17
+
+MAJOR CHANGE - test files in test/unit
+HOWTO UPGRADE:
+  * Run 'newjs .' within your project
+  * Take note of differences and apply them to your files
+  * Move all tests to test/unit and add '../' to all <script> + <link> in test HTML
+  * Use 'script/generate unit_test' instead of 'script/generate javascript_test'
+CHANGES
+  * unit_test: Added specific unit_test generator placing tests in test/unit folder
+  * functional_test: Added specific functional_test generator for tests of dist/xxx.js
+  * javascript_test: REMOVED - replaced by unit_test + functional_test
+  * install_website: index.txt has Git repo instructions too - just delete svn/git if unnecessary
+  * rake dist: distribution files stored to website/dist (if folder website exists)
+  * newjs: url option now works
 
 == 1.0.4 2008-02-16
 
