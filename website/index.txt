@@ -37,32 +37,34 @@ h2. Getting started
 
 To kick-off your new project/library, run the command-line app <code>newjs</code>:
 
-<pre>$ newjs mylib
-        create  config
-        create  lib
-        create  src
-        create  script
-        create  tasks
-        create  test/assets
-        create  test/assets/unittest.css
-        create  test/assets/unittest.js
-        create  test/assets/prototype.js
-        create  tasks/javascript_test_autotest_tasks.rake
-        create  tasks/environment.rake
-        create  config/javascript_test_autotest.yml.sample
-        create  lib/protodoc.rb
-        create  README.txt
-        create  Rakefile
-        create  History.txt
-        create  License.txt
-        create  src/HEADER
-        create  src/mylib.js
-        create  script/rstakeout
-        create  script/js_autotest
-    dependency  install_rubigen_scripts
-        exists    script
-        create    script/generate
-        create    script/destroy
+<pre>$ newjs mylib -a "Dr Nic" -e "drnicwilliams@gmail.com" -u "http://mylib.rubyforge.org"
+      create  config
+      create  lib
+      create  src
+      create  script
+      create  tasks
+      create  test/assets
+      create  test/assets/unittest.css
+      create  test/assets/unittest.js
+      create  test/assets/prototype.js
+      create  tasks/javascript_test_autotest_tasks.rake
+      create  tasks/environment.rake
+      create  tasks/deploy.rake
+      create  config/javascript_test_autotest.yml.sample
+      create  lib/protodoc.rb
+      create  lib/jstest.rb
+      create  Rakefile
+      create  README.txt
+      create  History.txt
+      create  License.txt
+      create  src/HEADER
+      create  src/mylib.js
+      create  script/rstakeout
+      create  script/js_autotest
+  dependency  install_rubigen_scripts
+      exists    script
+      create    script/generate
+      create    script/destroy
 </pre>
 
 Look at all that!
@@ -80,10 +82,12 @@ When you've got a new version to release, edit <code>Rakefile</code> and modify 
 
 To merge your <code>src/</code> files into a distribution file, see below.
 
-h2. Generating test HTML files
+h2. Unit testing
 
 If you are going to have a <code>src/some_lib.js</code> file, then you'll want a unit
 test file(s). By default you'd call it <code>test/some_lib_test.html</code>.
+
+h3. Generating test HTML files
 
 And then what? Personally, I can never remember what basic HTML + JavaScript
 goes in the test HTML files. I quite like the "javascript_test plugin":http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/ for "Ruby 
@@ -93,7 +97,7 @@ here. That is, your JavaScript project comes with a generator to create new
 test HTML files, ready to rock and roll.
 
 <pre>$ script/generate unit_test some_lib
-  exists  test
+  create  test/unit
   create  test/unit/some_lib_test.html</pre>
   
 Now edit <code>test/unit/some_lib_test.html</code> and follow the comments
@@ -103,10 +107,10 @@ Want to name your test file something different? Specify the target
 library as an additional parameter.
 
 <pre>$ script/generate unit_test my_library_tests some_lib
-  exists  test
+  exists  test/unit
   create  test/unit/my_library_tests_test.html</pre>
 
-h2. Running unit tests
+h3. Running unit tests
 
 Each test HTML file should be self-executable: just open it in a target
 browser. That is, to run the <code>test/some_lib_test.html</code> tests
@@ -115,6 +119,30 @@ in Firefox, open the file in Firefox.
 It will print out a beautiful log success/error messages for each test.
 
 <img src="images/example-unittest-log.jpg" width="647" height="427" alt="Example Unittest Log">
+
+h2. Functional tests
+
+End-to-end functional tests will test the final distribution file(s), rather than
+the <code>src/</code> files.
+
+As shown below, your <code>src/</code> files will be merged into (commonly) one 
+distribution file - a merging of your source files.
+
+h3. Generating test HTML files
+
+To create functional tests, there is another generator:
+
+<pre>$ script/generate functional_test basic_usage
+  create  test/functional
+  create  test/functional/basic_usage_test.html</pre>
+
+h3. Running functional tests
+
+<pre>rake test_functionals</pre>
+
+The generated HTML file uses the <code>dist/mylib.js</code> file. So, if
+you are running these tests it is best to use the <code>rake test_functionals</code>
+as it pre-builds the distribution files first.
 
 h2. Distribution of library
 
