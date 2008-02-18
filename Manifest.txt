@@ -19,6 +19,7 @@ app_generators/newjs/templates/src/library.js.erb
 app_generators/newjs/templates/tasks/deploy.rake
 app_generators/newjs/templates/tasks/environment.rake
 app_generators/newjs/templates/tasks/javascript_test_autotest_tasks.rake
+app_generators/newjs/templates/test/assets/jsunittest.js
 app_generators/newjs/templates/test/assets/prototype.js
 app_generators/newjs/templates/test/assets/unittest.css
 app_generators/newjs/templates/test/assets/unittest.js

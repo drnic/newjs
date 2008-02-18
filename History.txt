@@ -1,3 +1,9 @@
+== 1.2.0 2008-02-18
+
+MAJOR CHANGE
+  * using jsunittest (http://drnicjavascript.rubyforge.org/jsunittest/)
+  * no prototypejs dependencies
+
 == 1.1.0 2008-02-17
 
 MAJOR CHANGE - test files in test/unit
