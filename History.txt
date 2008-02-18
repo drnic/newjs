@@ -1,3 +1,7 @@
+== 1.2.1 2008-02-18
+
+* install_website: txt2html uses RUBYFORGE_PROJECT for downloads url
+
 == 1.2.0 2008-02-18
 
 MAJOR CHANGE
