@@ -24,9 +24,10 @@ namespace :test do
         end
         file = "#{APP_ROOT}/#{file}"
         unless File.exists?(file)
-          puts "Notice: Test file does not exist: #{file}"
+          # puts "Notice: Test file does not exist: #{file}"
           next
         end
+        puts "Launching test: #{file}"
         browsers = JavascriptTestAutotest::Config.get :browsers
         if browsers.blank?
           puts "WARNING: No browsers setup in config/javascript_test_autotest.yml"
