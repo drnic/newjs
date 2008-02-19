@@ -1,0 +1,10 @@
+javascript_unittest plugin
+
+This plugin was installed by newjs' javascript_test generator for Rails 2.0+ applications.
+
+Its purpose is to provide the 'rake test:javascripts' test runner.
+
+See http://newjs.rubyforge.org for more details.
+
+Author:
+    Dr Nic Williams, drnicwilliams@gmail.com
