@@ -25,7 +25,7 @@ class FunctionalTestGenerator < RubiGen::Base
       <<-EOS
 Creates a functional test file for the final distribution JavaScript file(s).
 
-USAGE: #{$0} #{spec.name} name [dist_name]"
+USAGE: #{$0} #{spec.name} name [dist_name]
 
 NOTES:
 * name - creates a file test/functional/name_test.html

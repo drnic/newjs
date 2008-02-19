@@ -25,7 +25,7 @@ class UnitTestGenerator < RubiGen::Base
       <<-EOS
 Creates an HTML unit test file for a JavaScript library.
 
-USAGE: #{$0} #{spec.name} name [library_name]"
+USAGE: #{$0} #{spec.name} name [library_name]
 
 NOTES:
 * name - creates a file test/unit/name_test.html
