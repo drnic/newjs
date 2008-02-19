@@ -30,7 +30,8 @@ class JavascriptTestGenerator < Rails::Generator::Base
       m.file     "assets/jsunittest.js", "test/javascript/assets/jsunittest.js"
       m.file     "assets/unittest.css",  "test/javascript/assets/unittest.css"
       
-      m.file_copy_each %w[javascript_test_autotest.yml.sample], "config"
+      m.file     "config/javascript_test_autotest.yml.sample",
+                  "config/javascript_test_autotest.yml.sample"
 
       m.file     "plugins/javascript_unittest/lib/jstest.rb",
                   "vendor/plugins/javascript_unittest/lib/jstest.rb"
