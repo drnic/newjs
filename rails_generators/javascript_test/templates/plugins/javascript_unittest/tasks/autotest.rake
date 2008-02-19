@@ -2,7 +2,7 @@ namespace :test do
   namespace :recent do
     desc "Open recently modified files into browser"
     task :javascript => :environment do
-      
+      APP_ROOT = RAILS_ROOT unless Object.const_defined?("APP_ROOT")
       since = TEST_CHANGES_SINCE
       touched = FileList[
         'test/javascript/*_test.html', 
