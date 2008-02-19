@@ -54,6 +54,10 @@ newjs_theme_generators/plain_theme/plain_theme_generator.rb
 newjs_theme_generators/plain_theme/templates/website/javascripts/rounded_corners_lite.inc.js
 newjs_theme_generators/plain_theme/templates/website/stylesheets/screen.css
 newjs_theme_generators/plain_theme/templates/website/template.html.erb
+rails_generators/javascript_test/USAGE
+rails_generators/javascript_test/javascript_test_generator.rb
+rails_generators/javascript_test/templates/assets/jsunittest.js
+rails_generators/javascript_test/templates/test.html.erb
 script/destroy
 script/generate
 script/txt2html
@@ -65,6 +69,7 @@ test/test_functional_test_generator.rb
 test/test_generator_helper.rb
 test/test_helper.rb
 test/test_install_website_generator.rb
+test/test_javascript_test_generator.rb
 test/test_newjs_generator.rb
 test/test_plain_theme_generator.rb
 test/test_unit_test_generator.rb
