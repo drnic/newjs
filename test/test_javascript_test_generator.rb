@@ -36,12 +36,15 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
     name = "mylib"
     run_generator('javascript_test', [name], sources)
     assert_directory_exists "test/javascript/assets"
+    assert_directory_exists "vendor/plugins/javascript_unittest"
     assert_generated_file "test/javascript/assets/jsunittest.js"
     assert_generated_file "test/javascript/assets/unittest.css"
     assert_generated_file "test/javascript/#{name}_test.html" do |body|
       expected = %Q{src="assets/jsunittest.js"}
       assert_match(expected, body)
     end
+    assert_generated_file "vendor/plugins/javascript_unittest/lib/jstest.rb"
+    assert_generated_file "vendor/plugins/javascript_unittest/tasks/runner.rake"
   end
   
   private

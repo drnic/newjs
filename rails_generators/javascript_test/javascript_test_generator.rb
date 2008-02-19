@@ -16,10 +16,16 @@ class JavascriptTestGenerator < Rails::Generator::Base
     record do |m|
       # Ensure appropriate folder(s) exists
       m.directory 'test/javascript/assets'
+      m.directory 'vendor/plugins/javascript_unittest/lib'
+      m.directory 'vendor/plugins/javascript_unittest/tasks'
 
       # Create stubs
       m.file     "assets/jsunittest.js", "test/javascript/assets/jsunittest.js"
-      m.file     "assets/unittest.css", "test/javascript/assets/unittest.css"
+      m.file     "assets/unittest.css",  "test/javascript/assets/unittest.css"
+      m.file     "plugins/javascript_unittest/lib/jstest.rb",
+                  "vendor/plugins/javascript_unittest/lib/jstest.rb"
+      m.file     "plugins/javascript_unittest/tasks/runner.rake", 
+                  "vendor/plugins/javascript_unittest/tasks/runner.rake"
       m.template "test.html.erb",  "test/javascript/#{name}_test.html"
     end
   end
