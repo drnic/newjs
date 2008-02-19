@@ -14,6 +14,7 @@ app_generators/newjs/templates/lib/jstest.rb
 app_generators/newjs/templates/lib/protodoc.rb
 app_generators/newjs/templates/script/js_autotest
 app_generators/newjs/templates/script/rstakeout
+app_generators/newjs/templates/script/win_script.cmd
 app_generators/newjs/templates/src/HEADER.erb
 app_generators/newjs/templates/src/library.js.erb
 app_generators/newjs/templates/tasks/deploy.rake
@@ -58,9 +59,17 @@ rails_generators/javascript_test/USAGE
 rails_generators/javascript_test/javascript_test_generator.rb
 rails_generators/javascript_test/templates/assets/jsunittest.js
 rails_generators/javascript_test/templates/assets/unittest.css
+rails_generators/javascript_test/templates/config/javascript_test_autotest.yml.sample
 rails_generators/javascript_test/templates/plugins/javascript_unittest/README
+rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/autotest/javascript_test_autotest.rb
+rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/autotest/javascript_test_autotest/config.rb
+rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/autotest/javascript_test_ext.rb
 rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/jstest.rb
+rails_generators/javascript_test/templates/plugins/javascript_unittest/tasks/autotest.rake
 rails_generators/javascript_test/templates/plugins/javascript_unittest/tasks/runner.rake
+rails_generators/javascript_test/templates/script/js_autotest
+rails_generators/javascript_test/templates/script/rstakeout
+rails_generators/javascript_test/templates/script/win_script.cmd
 rails_generators/javascript_test/templates/test.html.erb
 script/destroy
 script/generate

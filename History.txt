@@ -1,3 +1,7 @@
+== 1.3.1 2008-02-18 NOT RELEASED YET
+
+* rails/javascript_test: unpacks rstakeout/js_autotest too
+
 == 1.3.0 2008-02-18
 
 * rails: javascript_test generator - creates HTML test, plus installs assets + rake tasks

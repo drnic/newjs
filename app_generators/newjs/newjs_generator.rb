@@ -33,9 +33,6 @@ class NewjsGenerator < RubiGen::Base
       m.directory ''
       BASEDIRS.each { |path| m.directory path }
 
-      # Create stubs
-      # m.template "template.rb",  "some_file_after_erb.rb"
-      # m.file     "file",         "some_file_copied"
       m.file_copy_each %w[unittest.css jsunittest.js], "test/assets"
       m.file_copy_each %w[javascript_test_autotest_tasks.rake environment.rake deploy.rake], "tasks"
       m.file_copy_each %w[javascript_test_autotest.yml.sample], "config"
