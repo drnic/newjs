@@ -26,6 +26,8 @@ class JavascriptTestGenerator < Rails::Generator::Base
                   "vendor/plugins/javascript_unittest/lib/jstest.rb"
       m.file     "plugins/javascript_unittest/tasks/runner.rake", 
                   "vendor/plugins/javascript_unittest/tasks/runner.rake"
+      m.file     "plugins/javascript_unittest/README", 
+                  "vendor/plugins/javascript_unittest/README"
       m.template "test.html.erb",  "test/javascript/#{name}_test.html"
     end
   end

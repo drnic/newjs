@@ -45,6 +45,7 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
     end
     assert_generated_file "vendor/plugins/javascript_unittest/lib/jstest.rb"
     assert_generated_file "vendor/plugins/javascript_unittest/tasks/runner.rake"
+    assert_generated_file "vendor/plugins/javascript_unittest/README"
   end
   
   private

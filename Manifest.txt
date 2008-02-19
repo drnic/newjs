@@ -58,6 +58,9 @@ rails_generators/javascript_test/USAGE
 rails_generators/javascript_test/javascript_test_generator.rb
 rails_generators/javascript_test/templates/assets/jsunittest.js
 rails_generators/javascript_test/templates/assets/unittest.css
+rails_generators/javascript_test/templates/plugins/javascript_unittest/README
+rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/jstest.rb
+rails_generators/javascript_test/templates/plugins/javascript_unittest/tasks/runner.rake
 rails_generators/javascript_test/templates/test.html.erb
 script/destroy
 script/generate
