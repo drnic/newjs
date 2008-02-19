@@ -17,7 +17,7 @@ namespace :test do
         if file =~ /\/([^\/]+)\.js$/
           file = "test/unit/#{$1}_test.html"
         end
-        file = "#{APP_ROOT}/#{file}"
+        file = "#{RAILS_ROOT}/#{file}"
         unless File.exists?(file)
           puts "Notice: Test file does not exist: #{file}"
           next
