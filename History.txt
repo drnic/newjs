@@ -1,5 +1,6 @@
-== 1.2.1 2008-02-18
+== 1.3.0 2008-02-18
 
+* rails: javascript_test generator - creates HTML test, plus installs assets + rake tasks
 * install_website: txt2html uses RUBYFORGE_PROJECT for downloads url
 
 == 1.2.0 2008-02-18
