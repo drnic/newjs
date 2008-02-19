@@ -19,6 +19,7 @@ class JavascriptTestGenerator < Rails::Generator::Base
 
       # Create stubs
       m.file     "assets/jsunittest.js", "test/javascript/assets/jsunittest.js"
+      m.file     "assets/unittest.css", "test/javascript/assets/unittest.css"
       m.template "test.html.erb",  "test/javascript/#{name}_test.html"
     end
   end

@@ -37,6 +37,7 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
     run_generator('javascript_test', [name], sources)
     assert_directory_exists "test/javascript/assets"
     assert_generated_file "test/javascript/assets/jsunittest.js"
+    assert_generated_file "test/javascript/assets/unittest.css"
     assert_generated_file "test/javascript/#{name}_test.html" do |body|
       expected = %Q{src="assets/jsunittest.js"}
       assert_match(expected, body)
