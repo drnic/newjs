@@ -1,3 +1,8 @@
+== 1.3.3 2008-02-20
+
+* Push out rubigen 1.2.1 with its bug fixes for APP_ROOT
+* generate/destroy apply expand_path to APP_ROOT
+
 == 1.3.2 2008-02-20
 
 * remove options from 'env ruby' in newjs bin
