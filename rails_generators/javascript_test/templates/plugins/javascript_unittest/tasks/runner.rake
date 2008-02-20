@@ -8,7 +8,7 @@ namespace :test do
     browsers_to_test = ENV['BROWSERS'] && ENV['BROWSERS'].split(',')
 
     t.mount("/dist")
-    t.mount("/src")
+    t.mount("/public/javascripts")
     t.mount("/test")
 
     Dir["test/javascript/*_test.html"].sort.each do |test_file|
