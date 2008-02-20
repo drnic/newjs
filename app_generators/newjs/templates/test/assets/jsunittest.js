@@ -1,4 +1,4 @@
-/*  Jsunittest, version 0.6.0
+/*  Jsunittest, version 0.6.1
  *  (c) 2008 Dr Nic Williams
  *
  *  Jsunittest is freely distributable under
@@ -8,7 +8,7 @@
  *--------------------------------------------------------------------------*/
 
 var JsUnitTest = {
-  Version: '0.6.0',
+  Version: '0.6.1',
 };
 
 var DrNicTest = {
@@ -472,7 +472,7 @@ DrNicTest.ajax = function( options ) {
     };
 
     // Establish the connection to the server
-    xml.send();
+    xml.send(null);
 
     // Determine the success of the HTTP response
     function httpSuccess(r) {
