@@ -1,4 +1,4 @@
-/*  Jsunittest, version 0.6.1
+/*  Jsunittest, version 0.6.3
  *  (c) 2008 Dr Nic Williams
  *
  *  Jsunittest is freely distributable under
@@ -8,10 +8,6 @@
  *--------------------------------------------------------------------------*/
 
 var JsUnitTest = {
-  Version: '0.6.1',
-};
-
-var DrNicTest = {
   Unit: {},
   inspect: function(object) {
     try {
@@ -49,7 +45,7 @@ var DrNicTest = {
     while (source.length > 0) {
       if (match = source.match(pattern)) {
         result += source.slice(0, match.index);
-        result += DrNicTest.String.interpret(replacement(match));
+        result += JsUnitTest.String.interpret(replacement(match));
         source  = source.slice(match.index + match[0].length);
       } else {
         result += source, source = '';
@@ -197,22 +193,24 @@ var DrNicTest = {
   }
 };
 
-DrNicTest.gsub.prepareReplacement = function(replacement) {
+JsUnitTest.gsub.prepareReplacement = function(replacement) {
   if (typeof replacement == "function") return replacement;
   var template = new Template(replacement);
   return function(match) { return template.evaluate(match) };
 };
 
-DrNicTest.Template = function(template, pattern) {
+JsUnitTest.Version = '0.6.3';
+
+JsUnitTest.Template = function(template, pattern) {
   this.template = template; //template.toString();
-  this.pattern = pattern || DrNicTest.Template.Pattern;
+  this.pattern = pattern || JsUnitTest.Template.Pattern;
 };
 
-DrNicTest.Template.prototype.evaluate = function(object) {
+JsUnitTest.Template.prototype.evaluate = function(object) {
   if (typeof object.toTemplateReplacements == "function")
     object = object.toTemplateReplacements();
 
-  return DrNicTest.gsub(this.template, this.pattern, function(match) {
+  return JsUnitTest.gsub(this.template, this.pattern, function(match) {
     if (object == null) return '';
 
     var before = match[1] || '';
@@ -231,24 +229,24 @@ DrNicTest.Template.prototype.evaluate = function(object) {
       match = pattern.exec(expr);
     }
 
-    return before + DrNicTest.String.interpret(ctx);
+    return before + JsUnitTest.String.interpret(ctx);
   });
 }
 
-DrNicTest.Template.Pattern = /(^|.|\r|\n)(#\{(.*?)\})/;
-DrNicTest.Event = {};
+JsUnitTest.Template.Pattern = /(^|.|\r|\n)(#\{(.*?)\})/;
+JsUnitTest.Event = {};
 // written by Dean Edwards, 2005
 // with input from Tino Zijdel, Matthias Miller, Diego Perini
 // namespaced by Dr Nic Williams 2008
 
 // http://dean.edwards.name/weblog/2005/10/add-event/
 // http://dean.edwards.name/weblog/2005/10/add-event2/
-DrNicTest.Event.addEvent = function(element, type, handler) {
+JsUnitTest.Event.addEvent = function(element, type, handler) {
 	if (element.addEventListener) {
 		element.addEventListener(type, handler, false);
 	} else {
 		// assign each event handler a unique ID
-		if (!handler.$$guid) handler.$$guid = addEvent.guid++;
+		if (!handler.$$guid) handler.$$guid = JsUnitTest.Event.addEvent.guid++;
 		// create a hash table of event types for the element
 		if (!element.events) element.events = {};
 		// create a hash table of event handlers for each element/event pair
@@ -263,13 +261,13 @@ DrNicTest.Event.addEvent = function(element, type, handler) {
 		// store the event handler in the hash table
 		handlers[handler.$$guid] = handler;
 		// assign a global event handler to do all the work
-		element["on" + type] = handleEvent;
+		element["on" + type] = this.handleEvent;
 	}
 };
 // a counter used to create unique IDs
-DrNicTest.Event.addEvent.guid = 1;
+JsUnitTest.Event.addEvent.guid = 1;
 
-DrNicTest.Event.removeEvent = function(element, type, handler) {
+JsUnitTest.Event.removeEvent = function(element, type, handler) {
 	if (element.removeEventListener) {
 		element.removeEventListener(type, handler, false);
 	} else {
@@ -280,10 +278,10 @@ DrNicTest.Event.removeEvent = function(element, type, handler) {
 	}
 };
 
-DrNicTest.Event.handleEvent = function(event) {
+JsUnitTest.Event.handleEvent = function(event) {
 	var returnValue = true;
 	// grab the event object (IE uses a global event object)
-	event = event || fixEvent(((this.ownerDocument || this.document || this).parentWindow || window).event);
+	event = event || JsUnitTest.Event.fixEvent(((this.ownerDocument || this.document || this).parentWindow || window).event);
 	// get a reference to the hash table of event handlers
 	var handlers = this.events[event.type];
 	// execute each event handler
@@ -296,67 +294,81 @@ DrNicTest.Event.handleEvent = function(event) {
 	return returnValue;
 };
 
-DrNicTest.Event.fixEvent = function(event) {
+JsUnitTest.Event.fixEvent = function(event) {
 	// add W3C standard event methods
-	event.preventDefault = fixEvent.preventDefault;
-	event.stopPropagation = fixEvent.stopPropagation;
+	event.preventDefault = this.fixEvent.preventDefault;
+	event.stopPropagation = this.fixEvent.stopPropagation;
 	return event;
 };
-DrNicTest.Event.fixEvent.preventDefault = function() {
+JsUnitTest.Event.fixEvent.preventDefault = function() {
 	this.returnValue = false;
 };
-DrNicTest.Event.fixEvent.stopPropagation = function() {
+JsUnitTest.Event.fixEvent.stopPropagation = function() {
 	this.cancelBubble = true;
 };
 
-DrNicTest.Unit.Logger = function(element) {
-  this.element = DrNicTest.$(element);
+JsUnitTest.Unit.Logger = function(element) {
+  this.element = JsUnitTest.$(element);
   if (this.element) this._createLogTable();
 };
 
-DrNicTest.Unit.Logger.prototype.start = function(testName) {
+JsUnitTest.Unit.Logger.prototype.start = function(testName) {
   if (!this.element) return;
   var tbody = this.element.getElementsByTagName('tbody')[0];
-  tbody.innerHTML = tbody.innerHTML + '<tr><td>' + testName + '</td><td></td><td></td></tr>';
+
+  var tr = document.createElement('tr');
+  var td;
+
+  //testname
+  td = document.createElement('td');
+  td.appendChild(document.createTextNode(testName));
+  tr.appendChild(td)
+
+  tr.appendChild(document.createElement('td'));//status
+  tr.appendChild(document.createElement('td'));//message
+
+  tbody.appendChild(tr);
 };
 
-DrNicTest.Unit.Logger.prototype.setStatus = function(status) {
+JsUnitTest.Unit.Logger.prototype.setStatus = function(status) {
   var logline = this.getLastLogLine();
   logline.className = status;
   var statusCell = logline.getElementsByTagName('td')[1];
-  statusCell.innerHTML = status;
+  statusCell.appendChild(document.createTextNode(status));
 };
 
-DrNicTest.Unit.Logger.prototype.finish = function(status, summary) {
+JsUnitTest.Unit.Logger.prototype.finish = function(status, summary) {
   if (!this.element) return;
   this.setStatus(status);
   this.message(summary);
 };
 
-DrNicTest.Unit.Logger.prototype.message = function(message) {
+JsUnitTest.Unit.Logger.prototype.message = function(message) {
   if (!this.element) return;
   var cell = this.getMessageCell();
+
+  // cell.appendChild(document.createTextNode(this._toHTML(message)));
   cell.innerHTML = this._toHTML(message);
 };
 
-DrNicTest.Unit.Logger.prototype.summary = function(summary) {
+JsUnitTest.Unit.Logger.prototype.summary = function(summary) {
   if (!this.element) return;
   var div = this.element.getElementsByTagName('div')[0];
   div.innerHTML = this._toHTML(summary);
 };
 
-DrNicTest.Unit.Logger.prototype.getLastLogLine = function() {
+JsUnitTest.Unit.Logger.prototype.getLastLogLine = function() {
   var tbody = this.element.getElementsByTagName('tbody')[0];
   var loglines = tbody.getElementsByTagName('tr');
   return loglines[loglines.length - 1];
 };
 
-DrNicTest.Unit.Logger.prototype.getMessageCell = function() {
+JsUnitTest.Unit.Logger.prototype.getMessageCell = function() {
   var logline = this.getLastLogLine();
   return logline.getElementsByTagName('td')[2];
 };
 
-DrNicTest.Unit.Logger.prototype._createLogTable = function() {
+JsUnitTest.Unit.Logger.prototype._createLogTable = function() {
   var html = '<div class="logsummary">running...</div>' +
   '<table class="logtable">' +
   '<thead><tr><th>Status</th><th>Test</th><th>Message</th></tr></thead>' +
@@ -365,7 +377,7 @@ DrNicTest.Unit.Logger.prototype._createLogTable = function() {
   this.element.innerHTML = html;
 };
 
-DrNicTest.Unit.Logger.prototype.appendActionButtons = function(actions) {
+JsUnitTest.Unit.Logger.prototype.appendActionButtons = function(actions) {
   // actions = $H(actions);
   // if (!actions.any()) return;
   // var div = new Element("div", {className: 'action_buttons'});
@@ -377,22 +389,22 @@ DrNicTest.Unit.Logger.prototype.appendActionButtons = function(actions) {
   // this.getMessageCell().insert(div);
 };
 
-DrNicTest.Unit.Logger.prototype._toHTML = function(txt) {
-  return DrNicTest.escapeHTML(txt).replace(/\n/g,"<br/>");
+JsUnitTest.Unit.Logger.prototype._toHTML = function(txt) {
+  return JsUnitTest.escapeHTML(txt).replace(/\n/g,"<br/>");
 };
-DrNicTest.Unit.MessageTemplate = function(string) {
+JsUnitTest.Unit.MessageTemplate = function(string) {
   var parts = [];
-  var str = DrNicTest.scan((string || ''), /(?=[^\\])\?|(?:\\\?|[^\?])+/, function(part) {
+  var str = JsUnitTest.scan((string || ''), /(?=[^\\])\?|(?:\\\?|[^\?])+/, function(part) {
     parts.push(part[0]);
   });
   this.parts = parts;
 };
 
-DrNicTest.Unit.MessageTemplate.prototype.evaluate = function(params) {
+JsUnitTest.Unit.MessageTemplate.prototype.evaluate = function(params) {
   var results = [];
   for (var i=0; i < this.parts.length; i++) {
     var part = this.parts[i];
-    var result = (part == '?') ? DrNicTest.inspect(params.shift()) : part.replace(/\\\?/, '?');
+    var result = (part == '?') ? JsUnitTest.inspect(params.shift()) : part.replace(/\\\?/, '?');
     results.push(result);
   };
   return results.join('');
@@ -402,7 +414,7 @@ DrNicTest.Unit.MessageTemplate.prototype.evaluate = function(params) {
 // All of which are outline in the comments, below
 // From John Resig's book Pro JavaScript Techniques
 // published by Apress, 2006-8
-DrNicTest.ajax = function( options ) {
+JsUnitTest.ajax = function( options ) {
 
     // Load the options object with defaults, if no
     // values were provided by the user
@@ -518,11 +530,11 @@ DrNicTest.ajax = function( options ) {
     }
 
 }
-DrNicTest.Unit.Assertions = {
+JsUnitTest.Unit.Assertions = {
   buildMessage: function(message, template) {
-    var args = DrNicTest.arrayfromargs(arguments).slice(2);
+    var args = JsUnitTest.arrayfromargs(arguments).slice(2);
     return (message ? message + '\n' : '') +
-      new DrNicTest.Unit.MessageTemplate(template).evaluate(args);
+      new JsUnitTest.Unit.MessageTemplate(template).evaluate(args);
   },
 
   flunk: function(message) {
@@ -552,8 +564,8 @@ DrNicTest.Unit.Assertions = {
 
   assertEnumEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertEnumEqual', 'expected <?>, actual: <?>', expected, actual);
-    var expected_array = DrNicTest.flattenArray(expected);
-    var actual_array   = DrNicTest.flattenArray(actual);
+    var expected_array = JsUnitTest.flattenArray(expected);
+    var actual_array   = JsUnitTest.flattenArray(actual);
     this.assertBlock(message, function() {
       if (expected_array.length == actual_array.length) {
         for (var i=0; i < expected_array.length; i++) {
@@ -567,8 +579,8 @@ DrNicTest.Unit.Assertions = {
 
   assertEnumNotEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertEnumNotEqual', '<?> was the same as <?>', expected, actual);
-    var expected_array = DrNicTest.flattenArray(expected);
-    var actual_array   = DrNicTest.flattenArray(actual);
+    var expected_array = JsUnitTest.flattenArray(expected);
+    var actual_array   = JsUnitTest.flattenArray(actual);
     this.assertBlock(message, function() {
       if (expected_array.length == actual_array.length) {
         for (var i=0; i < expected_array.length; i++) {
@@ -582,8 +594,8 @@ DrNicTest.Unit.Assertions = {
 
   assertHashEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertHashEqual', 'expected <?>, actual: <?>', expected, actual);
-    var expected_array = DrNicTest.flattenArray(DrNicTest.hashToSortedArray(expected));
-    var actual_array   = DrNicTest.flattenArray(DrNicTest.hashToSortedArray(actual));
+    var expected_array = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(expected));
+    var actual_array   = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(actual));
     var block = function() {
       if (expected_array.length == actual_array.length) {
         for (var i=0; i < expected_array.length; i++) {
@@ -598,8 +610,8 @@ DrNicTest.Unit.Assertions = {
 
   assertHashNotEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertHashNotEqual', '<?> was the same as <?>', expected, actual);
-    var expected_array = DrNicTest.flattenArray(DrNicTest.hashToSortedArray(expected));
-    var actual_array   = DrNicTest.flattenArray(DrNicTest.hashToSortedArray(actual));
+    var expected_array = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(expected));
+    var actual_array   = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(actual));
     // from now we recursively zip & compare nested arrays
     var block = function() {
       if (expected_array.length == actual_array.length) {
@@ -665,7 +677,7 @@ DrNicTest.Unit.Assertions = {
 
   assertHidden: function(element, message) {
     message = this.buildMessage(message || 'assertHidden', '? isn\'t hidden.', element);
-    this.assertBlock(message, function() { return element.style.display == 'none' });
+    this.assertBlock(message, function() { return !element.style.display || element.style.display == 'none' });
   },
 
   assertInstanceOf: function(expected, actual, message) {
@@ -708,10 +720,10 @@ DrNicTest.Unit.Assertions = {
   },
 
   _isVisible: function(element) {
-    element = DrNicTest.$(element);
+    element = JsUnitTest.$(element);
     if(!element.parentNode) return true;
     this.assertNotNull(element);
-    if(element.style && element.style.display == 'none')
+    if(element.style && (element.style.display == 'none'))
       return false;
 
     return arguments.callee.call(this, element.parentNode);
@@ -728,7 +740,7 @@ DrNicTest.Unit.Assertions = {
   },
 
   assertElementsMatch: function() {
-    var pass = true, expressions = DrNicTest.arrayfromargs(arguments);
+    var pass = true, expressions = JsUnitTest.arrayfromargs(arguments);
     var elements = expressions.shift();
     if (elements.length != expressions.length) {
       message = this.buildMessage('assertElementsMatch', 'size mismatch: ? elements, ? expressions (?).', elements.length, expressions.length, expressions);
@@ -737,8 +749,8 @@ DrNicTest.Unit.Assertions = {
     }
     for (var i=0; i < expressions.length; i++) {
       var expression = expressions[i];
-      var element    = DrNicTest.$(elements[i]);
-      if (DrNicTest.selectorMatch(expression, element)) {
+      var element    = JsUnitTest.$(elements[i]);
+      if (JsUnitTest.selectorMatch(expression, element)) {
         pass = true;
         break;
       }
@@ -753,28 +765,28 @@ DrNicTest.Unit.Assertions = {
     this.assertElementsMatch([element], expression);
   }
 };
-DrNicTest.Unit.Runner = function(testcases) {
+JsUnitTest.Unit.Runner = function(testcases) {
   var argumentOptions = arguments[1] || {};
   var options = this.options = {};
   options.testLog = ('testLog' in argumentOptions) ? argumentOptions.testLog : 'testlog';
   options.resultsURL = this.queryParams.resultsURL;
-  options.testLog = DrNicTest.$(options.testLog);
+  options.testLog = JsUnitTest.$(options.testLog);
 
   this.tests = this.getTests(testcases);
   this.currentTest = 0;
-  this.logger = new DrNicTest.Unit.Logger(options.testLog);
+  this.logger = new JsUnitTest.Unit.Logger(options.testLog);
 
   var self = this;
-  DrNicTest.Event.addEvent(window, "load", function() {
+  JsUnitTest.Event.addEvent(window, "load", function() {
     setTimeout(function() {
       self.runTests();
     }, 0.1);
   });
 };
 
-DrNicTest.Unit.Runner.prototype.queryParams = DrNicTest.toQueryParams();
+JsUnitTest.Unit.Runner.prototype.queryParams = JsUnitTest.toQueryParams();
 
-DrNicTest.Unit.Runner.prototype.portNumber = function() {
+JsUnitTest.Unit.Runner.prototype.portNumber = function() {
   if (window.location.search.length > 0) {
     var matches = window.location.search.match(/\:(\d{3,5})\//);
     if (matches) {
@@ -784,7 +796,7 @@ DrNicTest.Unit.Runner.prototype.portNumber = function() {
   return null;
 };
 
-DrNicTest.Unit.Runner.prototype.getTests = function(testcases) {
+JsUnitTest.Unit.Runner.prototype.getTests = function(testcases) {
   var tests = [], options = this.options;
   if (this.queryParams.tests) tests = this.queryParams.tests.split(',');
   else if (options.tests) tests = options.tests;
@@ -799,13 +811,13 @@ DrNicTest.Unit.Runner.prototype.getTests = function(testcases) {
     var test = tests[i];
     if (testcases[test])
       results.push(
-        new DrNicTest.Unit.Testcase(test, testcases[test], testcases.setup, testcases.teardown)
+        new JsUnitTest.Unit.Testcase(test, testcases[test], testcases.setup, testcases.teardown)
       );
   };
   return results;
 };
 
-DrNicTest.Unit.Runner.prototype.getResult = function() {
+JsUnitTest.Unit.Runner.prototype.getResult = function() {
   var results = {
     tests: this.tests.length,
     assertions: 0,
@@ -822,7 +834,7 @@ DrNicTest.Unit.Runner.prototype.getResult = function() {
   return results;
 };
 
-DrNicTest.Unit.Runner.prototype.postResults = function() {
+JsUnitTest.Unit.Runner.prototype.postResults = function() {
   if (this.options.resultsURL) {
     // new Ajax.Request(this.options.resultsURL,
     //   { method: 'get', parameters: this.getResult(), asynchronous: false });
@@ -831,14 +843,14 @@ DrNicTest.Unit.Runner.prototype.postResults = function() {
     url += "assertions="+ results.assertions + "&";
     url += "failures="  + results.failures + "&";
     url += "errors="    + results.errors;
-    DrNicTest.ajax({
+    JsUnitTest.ajax({
       url: url,
       type: 'GET'
     })
   }
 };
 
-DrNicTest.Unit.Runner.prototype.runTests = function() {
+JsUnitTest.Unit.Runner.prototype.runTests = function() {
   var test = this.tests[this.currentTest], actions;
 
   if (!test) return this.finish();
@@ -861,15 +873,15 @@ DrNicTest.Unit.Runner.prototype.runTests = function() {
   this.runTests();
 };
 
-DrNicTest.Unit.Runner.prototype.finish = function() {
+JsUnitTest.Unit.Runner.prototype.finish = function() {
   this.postResults();
   this.logger.summary(this.summary());
 };
 
-DrNicTest.Unit.Runner.prototype.summary = function() {
-  return new DrNicTest.Template('#{tests} tests, #{assertions} assertions, #{failures} failures, #{errors} errors').evaluate(this.getResult());
+JsUnitTest.Unit.Runner.prototype.summary = function() {
+  return new JsUnitTest.Template('#{tests} tests, #{assertions} assertions, #{failures} failures, #{errors} errors').evaluate(this.getResult());
 };
-DrNicTest.Unit.Testcase = function(name, test, setup, teardown) {
+JsUnitTest.Unit.Testcase = function(name, test, setup, teardown) {
   this.name           = name;
   this.test           = test     || function() {};
   this.setup          = setup    || function() {};
@@ -877,27 +889,27 @@ DrNicTest.Unit.Testcase = function(name, test, setup, teardown) {
   this.messages       = [];
   this.actions        = {};
 };
-// import DrNicTest.Unit.Assertions
+// import JsUnitTest.Unit.Assertions
 
-for (method in DrNicTest.Unit.Assertions) {
-  DrNicTest.Unit.Testcase.prototype[method] = DrNicTest.Unit.Assertions[method];
+for (method in JsUnitTest.Unit.Assertions) {
+  JsUnitTest.Unit.Testcase.prototype[method] = JsUnitTest.Unit.Assertions[method];
 }
 
-DrNicTest.Unit.Testcase.prototype.isWaiting  = false;
-DrNicTest.Unit.Testcase.prototype.timeToWait = 1000;
-DrNicTest.Unit.Testcase.prototype.assertions = 0;
-DrNicTest.Unit.Testcase.prototype.failures   = 0;
-DrNicTest.Unit.Testcase.prototype.errors     = 0;
-// DrNicTest.Unit.Testcase.prototype.isRunningFromRake = window.location.port == 4711;
-DrNicTest.Unit.Testcase.prototype.isRunningFromRake = window.location.port;
+JsUnitTest.Unit.Testcase.prototype.isWaiting  = false;
+JsUnitTest.Unit.Testcase.prototype.timeToWait = 1000;
+JsUnitTest.Unit.Testcase.prototype.assertions = 0;
+JsUnitTest.Unit.Testcase.prototype.failures   = 0;
+JsUnitTest.Unit.Testcase.prototype.errors     = 0;
+// JsUnitTest.Unit.Testcase.prototype.isRunningFromRake = window.location.port == 4711;
+JsUnitTest.Unit.Testcase.prototype.isRunningFromRake = window.location.port;
 
-DrNicTest.Unit.Testcase.prototype.wait = function(time, nextPart) {
+JsUnitTest.Unit.Testcase.prototype.wait = function(time, nextPart) {
   this.isWaiting = true;
   this.test = nextPart;
   this.timeToWait = time;
 };
 
-DrNicTest.Unit.Testcase.prototype.run = function(rethrow) {
+JsUnitTest.Unit.Testcase.prototype.run = function(rethrow) {
   try {
     try {
       if (!this.isWaiting) this.setup();
@@ -915,17 +927,17 @@ DrNicTest.Unit.Testcase.prototype.run = function(rethrow) {
   }
 };
 
-DrNicTest.Unit.Testcase.prototype.summary = function() {
+JsUnitTest.Unit.Testcase.prototype.summary = function() {
   var msg = '#{assertions} assertions, #{failures} failures, #{errors} errors\n';
-  return new DrNicTest.Template(msg).evaluate(this) +
+  return new JsUnitTest.Template(msg).evaluate(this) +
     this.messages.join("\n");
 };
 
-DrNicTest.Unit.Testcase.prototype.pass = function() {
+JsUnitTest.Unit.Testcase.prototype.pass = function() {
   this.assertions++;
 };
 
-DrNicTest.Unit.Testcase.prototype.fail = function(message) {
+JsUnitTest.Unit.Testcase.prototype.fail = function(message) {
   this.failures++;
   var line = "";
   try {
@@ -936,23 +948,23 @@ DrNicTest.Unit.Testcase.prototype.fail = function(message) {
   this.messages.push("Failure: " + message + (line ? " Line #" + line : ""));
 };
 
-DrNicTest.Unit.Testcase.prototype.info = function(message) {
+JsUnitTest.Unit.Testcase.prototype.info = function(message) {
   this.messages.push("Info: " + message);
 };
 
-DrNicTest.Unit.Testcase.prototype.error = function(error, test) {
+JsUnitTest.Unit.Testcase.prototype.error = function(error, test) {
   this.errors++;
   this.actions['retry with throw'] = function() { test.run(true) };
-  this.messages.push(error.name + ": "+ error.message + "(" + DrNicTest.inspect(error) + ")");
+  this.messages.push(error.name + ": "+ error.message + "(" + JsUnitTest.inspect(error) + ")");
 };
 
-DrNicTest.Unit.Testcase.prototype.status = function() {
+JsUnitTest.Unit.Testcase.prototype.status = function() {
   if (this.failures > 0) return 'failed';
   if (this.errors > 0) return 'error';
   return 'passed';
 };
 
-DrNicTest.Unit.Testcase.prototype.benchmark = function(operation, iterations) {
+JsUnitTest.Unit.Testcase.prototype.benchmark = function(operation, iterations) {
   var startAt = new Date();
   (iterations || 1).times(operation);
   var timeTaken = ((new Date())-startAt);
@@ -961,4 +973,4 @@ DrNicTest.Unit.Testcase.prototype.benchmark = function(operation, iterations) {
   return timeTaken;
 };
 
-Test = DrNicTest
+Test = JsUnitTest
