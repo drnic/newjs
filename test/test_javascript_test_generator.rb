@@ -75,6 +75,54 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
     assert_generated_file "vendor/plugins/javascript_unittest/README"
   end
 
+  def test_generator_with_framework_jquery
+    name = "mylib"
+    run_generator('javascript_test', [name], sources, :framework => 'jquery')
+    assert_directory_exists "test/javascript/assets"
+    assert_directory_exists "public/javascripts/ext"
+    assert_directory_exists "vendor/plugins/javascript_unittest"
+    assert_directory_exists "script"
+    assert_generated_file "public/javascripts/ext/jquery.js"
+    assert_generated_file "test/javascript/assets/jsunittest.js"
+    assert_generated_file "test/javascript/assets/unittest.css"
+    assert_generated_file "test/javascript/#{name}_test.html" do |body|
+      assert_match(%Q{src="assets/jsunittest.js"}, body)
+      assert_match(%Q{src="../../public/javascripts/ext/jquery.js"}, body)
+      assert_match(%Q{src="../../public/javascripts/mylib.js"}, body)
+    end
+    assert_generated_file "script/rstakeout"
+    assert_generated_file "script/js_autotest"
+    assert_generated_file "config/javascript_test_autotest.yml.sample"
+    assert_generated_file "vendor/plugins/javascript_unittest/lib/jstest.rb"
+    assert_generated_file "vendor/plugins/javascript_unittest/tasks/runner.rake"
+    assert_generated_file "vendor/plugins/javascript_unittest/tasks/autotest.rake"
+    assert_generated_file "vendor/plugins/javascript_unittest/README"
+  end
+
+  def test_generator_with_framework_prototypejs
+    name = "mylib"
+    run_generator('javascript_test', [name], sources, :framework => 'prototype')
+    assert_directory_exists "test/javascript/assets"
+    assert_directory_exists "public/javascripts/ext"
+    assert_directory_exists "vendor/plugins/javascript_unittest"
+    assert_directory_exists "script"
+    assert_generated_file "public/javascripts/ext/prototype.js"
+    assert_generated_file "test/javascript/assets/jsunittest.js"
+    assert_generated_file "test/javascript/assets/unittest.css"
+    assert_generated_file "test/javascript/#{name}_test.html" do |body|
+      assert_match(%Q{src="assets/jsunittest.js"}, body)
+      assert_match(%Q{src="../../public/javascripts/ext/prototype.js"}, body)
+      assert_match(%Q{src="../../public/javascripts/mylib.js"}, body)
+    end
+    assert_generated_file "script/rstakeout"
+    assert_generated_file "script/js_autotest"
+    assert_generated_file "config/javascript_test_autotest.yml.sample"
+    assert_generated_file "vendor/plugins/javascript_unittest/lib/jstest.rb"
+    assert_generated_file "vendor/plugins/javascript_unittest/tasks/runner.rake"
+    assert_generated_file "vendor/plugins/javascript_unittest/tasks/autotest.rake"
+    assert_generated_file "vendor/plugins/javascript_unittest/README"
+  end
+
   private
   def sources
     [RubiGen::PathSource.new(:test, File.join(File.dirname(__FILE__),"..", generator_path))

@@ -2,10 +2,11 @@ class JavascriptTestGenerator < Rails::Generator::Base
   DEFAULT_SHEBANG = File.join(Config::CONFIG['bindir'],
                               Config::CONFIG['ruby_install_name'])
 
-  default_options :author => nil
+  default_options :framework => nil
 
   attr_reader :path, :name, :library_name
   attr_reader :nested_folder, :reverse_nested_folder
+  attr_reader :framework
 
   def initialize(runtime_args, runtime_options = {})
     super
@@ -31,10 +32,12 @@ class JavascriptTestGenerator < Rails::Generator::Base
       m.directory 'vendor/plugins/javascript_unittest/lib'
       m.directory 'vendor/plugins/javascript_unittest/tasks'
       m.directory "test/javascript/#{nested_folder}" if nested_folder
+      m.directory "public/javascripts/ext" if framework
 
       # Create stubs
       m.file     "assets/jsunittest.js", "test/javascript/assets/jsunittest.js"
       m.file     "assets/unittest.css",  "test/javascript/assets/unittest.css"
+      m.file     "ext/#{framework}.js", "public/javascripts/ext/#{framework}.js" if framework
 
       m.file     "config/javascript_test_autotest.yml.sample",
                   "config/javascript_test_autotest.yml.sample"
@@ -65,26 +68,21 @@ Creates an HTML unit test file for a JavaScript library.
 USAGE: #{$0} #{spec.name} name [library_name]
 
 NOTES:
-* name - creates a file test/javascript/name_test.html
+* name - creates a file test/javascript/name_test.html; can have subfolders: models/name
 * library_name - is for a file public/javascripts/library_name.js
 EOS
     end
 
     def add_options!(opts)
-      # opts.separator ''
-      # opts.separator 'Options:'
-      # For each option below, place the default
-      # at the top of the file next to "default_options"
-      # opts.on("-a", "--author=\"Your Name\"", String,
-      #         "Some comment about this option",
-      #         "Default: none") { |options[:author]| }
-      # opts.on("-v", "--version", "Show the #{File.basename($0)} version number and quit.")
+      opts.separator ''
+      opts.separator 'Options:'
+      opts.on("-f", "--framework=FRAMEWORK", String,
+              "Include jquery or prototypejs libraries",
+              "Options: jquery, prototype",
+              "Default: none") { |x| options[:framework] = x }
     end
 
     def extract_options
-      # for each option, extract it into a local variable (and create an "attr_reader :author" at the top)
-      # Templates can access these value via the attr_reader-generated methods, but not the
-      # raw instance variable value.
-      # @author = options[:author]
+      @framework = options[:framework]
     end
 end
