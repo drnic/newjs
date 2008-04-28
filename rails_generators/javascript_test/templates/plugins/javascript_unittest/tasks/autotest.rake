@@ -5,17 +5,17 @@ namespace :test do
       APP_ROOT = RAILS_ROOT unless Object.const_defined?("APP_ROOT")
       since = TEST_CHANGES_SINCE
       touched = FileList[
-        'test/javascript/*_test.html', 
-        'public/javascripts/*.js'].select { |path| File.mtime(path) > since }
+        'test/javascript/**/*_test.html',
+        'public/javascripts/**/*.js'].select { |path| File.mtime(path) > since }
       next if touched.blank?
-      
+
       gem 'newjs'
       require 'newjs'
       require 'newjs/autotest'
-      
+
       touched.each do |file|
-        if file =~ /\/([^\/]+)\.js$/
-          file = "test/unit/#{$1}_test.html"
+        if file =~ /\/(.+)\.js$/
+          file = "test/javascript/#{$1}_test.html"
         end
         file = "#{RAILS_ROOT}/#{file}"
         unless File.exists?(file)
@@ -32,7 +32,7 @@ namespace :test do
           browser = JavascriptTestAutotest::Browser.browser(name, path)
           browser.setup
           browser.visit(file)
-          browser.teardown          
+          browser.teardown
         end
       end
     end
