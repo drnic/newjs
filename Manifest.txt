@@ -41,7 +41,6 @@ lib/newjs/autotest/javascript_test_ext.rb
 lib/newjs/jstest.rb
 lib/newjs/rubyforge.rb
 lib/newjs/version.rb
-log/debug.log
 newjs_generators/install_website/USAGE
 newjs_generators/install_website/install_website_generator.rb
 newjs_generators/install_website/templates/config/website.yml.sample.erb
@@ -60,6 +59,8 @@ rails_generators/javascript_test/javascript_test_generator.rb
 rails_generators/javascript_test/templates/assets/jsunittest.js
 rails_generators/javascript_test/templates/assets/unittest.css
 rails_generators/javascript_test/templates/config/javascript_test_autotest.yml.sample
+rails_generators/javascript_test/templates/ext/jquery.js
+rails_generators/javascript_test/templates/ext/prototype.js
 rails_generators/javascript_test/templates/plugins/javascript_unittest/README
 rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/autotest/javascript_test_autotest.rb
 rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/autotest/javascript_test_autotest/config.rb

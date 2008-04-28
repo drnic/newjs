@@ -76,7 +76,7 @@ EOS
     def add_options!(opts)
       opts.separator ''
       opts.separator 'Options:'
-      opts.on("-f", "--framework=FRAMEWORK", String,
+      opts.on("-F", "--framework=FRAMEWORK", String,
               "Include jquery or prototypejs libraries",
               "Options: jquery, prototype",
               "Default: none") { |x| options[:framework] = x }
