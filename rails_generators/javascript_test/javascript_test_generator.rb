@@ -2,11 +2,11 @@ class JavascriptTestGenerator < Rails::Generator::Base
   DEFAULT_SHEBANG = File.join(Config::CONFIG['bindir'],
                               Config::CONFIG['ruby_install_name'])
 
-  default_options :framework => nil
+  default_options :framework => nil, :library => false
 
-  attr_reader :path, :name, :library_name
+  attr_reader :path, :name, :library_name, :module_name
   attr_reader :nested_folder, :reverse_nested_folder
-  attr_reader :framework
+  attr_reader :framework, :create_library
 
   def initialize(runtime_args, runtime_options = {})
     super
@@ -17,6 +17,7 @@ class JavascriptTestGenerator < Rails::Generator::Base
     @nested_folder = name_parts.first # could be nil if not nested
     @reverse_nested_folder = (@nested_folder || "").split('/').map { |folder| "../" }.join
     @library_name = args.shift || name
+    @module_name = name.camelcase
     extract_options
   end
 
@@ -32,9 +33,13 @@ class JavascriptTestGenerator < Rails::Generator::Base
       m.directory 'vendor/plugins/javascript_unittest/lib'
       m.directory 'vendor/plugins/javascript_unittest/tasks'
       m.directory "test/javascript/#{nested_folder}" if nested_folder
+      m.directory "public/javascripts" if create_library
       m.directory "public/javascripts/ext" if framework
 
       # Create stubs
+      m.template "test.html.erb",  "test/javascript/#{path}_test.html"
+      m.template "library.js.erb",  "public/javascripts/#{path}.js" if create_library
+
       m.file     "assets/jsunittest.js", "test/javascript/assets/jsunittest.js"
       m.file     "assets/unittest.css",  "test/javascript/assets/unittest.css"
       m.file     "ext/#{framework}.js", "public/javascripts/ext/#{framework}.js" if framework
@@ -50,7 +55,6 @@ class JavascriptTestGenerator < Rails::Generator::Base
                   "vendor/plugins/javascript_unittest/tasks/autotest.rake"
       m.file     "plugins/javascript_unittest/README",
                   "vendor/plugins/javascript_unittest/README"
-      m.template "test.html.erb",  "test/javascript/#{path}_test.html"
 
       %w[rstakeout js_autotest].each do |file|
         m.template "script/#{file}",        "script/#{file}", script_options
@@ -76,6 +80,10 @@ EOS
     def add_options!(opts)
       opts.separator ''
       opts.separator 'Options:'
+      opts.on("-l", "--library",
+              "Create the base JS file under test",
+              "e.g. public/javascripts/name.js",
+              "Default: none") { |x| options[:library] = x }
       opts.on("-F", "--framework=FRAMEWORK", String,
               "Include jquery or prototypejs libraries",
               "Options: jquery, prototype",
@@ -84,5 +92,6 @@ EOS
 
     def extract_options
       @framework = options[:framework]
+      @create_library = options[:library]
     end
 end

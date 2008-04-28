@@ -61,6 +61,7 @@ rails_generators/javascript_test/templates/assets/unittest.css
 rails_generators/javascript_test/templates/config/javascript_test_autotest.yml.sample
 rails_generators/javascript_test/templates/ext/jquery.js
 rails_generators/javascript_test/templates/ext/prototype.js
+rails_generators/javascript_test/templates/library.js.erb
 rails_generators/javascript_test/templates/plugins/javascript_unittest/README
 rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/autotest/javascript_test_autotest.rb
 rails_generators/javascript_test/templates/plugins/javascript_unittest/lib/autotest/javascript_test_autotest/config.rb
