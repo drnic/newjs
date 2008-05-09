@@ -1,3 +1,7 @@
+* newjs: creates src/proj_name.js.erb to show its a template, not a js file
+
+== 1.4.0 2008-05-03
+
 * javascript_test: nested folders for tests; e.g. javascript_test models/game -> test/javascript/models/game_test.html
 * javascript_test: rake tasks/js_autotest - support nested folders for tests
 * javascript_test: -f/--framework=[jquery|prototype] - deploys + includes external framework

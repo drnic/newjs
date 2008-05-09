@@ -1,18 +1,18 @@
 class NewjsGenerator < RubiGen::Base
   DEFAULT_SHEBANG = File.join(Config::CONFIG['bindir'],
                               Config::CONFIG['ruby_install_name'])
-  
+
   default_options :shebang => DEFAULT_SHEBANG,
                   :author => nil,
                   :email       => nil,
                   :version     => '0.0.1'
-  
-  
+
+
   attr_reader :name, :module_name
   attr_reader :version, :version_str, :author, :email
   attr_reader :title, :url
-  
-  
+
+
   def initialize(runtime_args, runtime_options = {})
     super
     usage if args.empty?
@@ -27,7 +27,7 @@ class NewjsGenerator < RubiGen::Base
   def manifest
     script_options = { :chmod => 0755, :shebang => options[:shebang] == DEFAULT_SHEBANG ? nil : options[:shebang] }
     windows        = (RUBY_PLATFORM =~ /dos|win32|cygwin/i) || (RUBY_PLATFORM =~ /(:?mswin|mingw)/)
-    
+
     record do |m|
       # Ensure appropriate folder(s) exists
       m.directory ''
@@ -39,16 +39,16 @@ class NewjsGenerator < RubiGen::Base
       m.file_copy_each %w[protodoc.rb jstest.rb], "lib"
       m.template_copy_each %w[Rakefile.erb README.txt.erb History.txt.erb License.txt.erb]
       m.template_copy_each %w[HEADER.erb], "src"
-      m.template "src/library.js.erb", "src/#{name}.js"
-      
+      m.template "src/library.js.erb", "src/#{name}.js.erb"
+
       %w[rstakeout js_autotest].each do |file|
         m.template "script/#{file}",        "script/#{file}", script_options
-        m.template "script/win_script.cmd", "script/#{file}.cmd", 
+        m.template "script/win_script.cmd", "script/#{file}.cmd",
           :assigns => { :filename => file } if windows
       end
-      
-      m.dependency "install_rubigen_scripts", 
-        [destination_root, 'javascript', 'javascript_test', 'newjs', 'newjs_theme'], 
+
+      m.dependency "install_rubigen_scripts",
+        [destination_root, 'javascript', 'javascript_test', 'newjs', 'newjs_theme'],
         :shebang => options[:shebang], :collision => :force
     end
   end
@@ -82,7 +82,7 @@ EOS
               "Initial version of the project you are creating.",
               "Default: 0.0.1") { |x| options[:version] = x }
     end
-    
+
     def extract_options
       @version           = options[:version].to_s.split(/\./)
       @version_str       = @version.join('.')
