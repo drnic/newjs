@@ -1,3 +1,6 @@
+== 1.4.1 2008-06-21 NOT RELEASED
+
+* rstakeout: fixed !# ruby
 * newjs: creates src/proj_name.js.erb to show its a template, not a js file
 
 == 1.4.0 2008-05-03
