@@ -58,11 +58,11 @@ hoe = Hoe.new(GEM_NAME, VERS) do |p|
   # == Optional
   p.changes = p.paragraphs_of("History.txt", 0..1).join("\n\n")
   p.extra_deps = [
-    ['hoe', '>=1.5.0'],
-    ['RedCloth','>=3.0.4'],
-    ['syntax','>=1.0.0'],
-    ['activesupport','>=2.0.2'],
-    ['rubigen','>=1.2.2']
+    # ['hoe', '>=1.7.0'],
+    # ['RedCloth'],
+    # ['syntax','>=1.0.0'],
+    # # ['activesupport'],
+    # ['rubigen','>=1.3.2']
   ]
   
   #p.spec_extras = {}    # A hash of extra values to set in the gemspec.
