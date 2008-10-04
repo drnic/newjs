@@ -1,3 +1,8 @@
+== 1.5.0 2008-10-05
+
+* newjs_iphone: installs variant of newjs in Html/ subfolder of an Xcode project
+    This includes Html/Rakefile, Html/script/generate etc.
+
 == 1.4.2 2008-07-08
 
 * Updated the gem dependencies
