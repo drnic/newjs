@@ -1,4 +1,4 @@
-class NewjsGenerator < RubiGen::Base
+class NewjsIphoneGenerator < RubiGen::Base
   DEFAULT_SHEBANG = File.join(Config::CONFIG['bindir'],
                               Config::CONFIG['ruby_install_name'])
 
@@ -33,23 +33,23 @@ class NewjsGenerator < RubiGen::Base
       m.directory ''
       BASEDIRS.each { |path| m.directory path }
 
-      m.file_copy_each %w[unittest.css jsunittest.js], "test/assets"
-      m.file_copy_each %w[javascript_test_autotest_tasks.rake environment.rake deploy.rake], "tasks"
-      m.file_copy_each %w[javascript_test_autotest.yml.sample], "config"
-      m.file_copy_each %w[protodoc.rb jstest.rb], "lib"
-      m.template_copy_each %w[Rakefile.erb README.txt.erb History.txt.erb License.txt.erb]
-      m.template_copy_each %w[HEADER.erb], "src"
-      m.template "src/library.js.erb", "src/#{name}.js.erb"
+      m.file_copy_each %w[unittest.css jsunittest.js], "Html/test/assets"
+      m.file_copy_each %w[javascript_test_autotest_tasks.rake], "Html/tasks"
+      m.file_copy_each %w[javascript_test_autotest.yml.sample], "Html/config"
+      m.file_copy_each %w[protodoc.rb jstest.rb], "Html/lib"
+      m.template_copy_each %w[Rakefile.erb], "Html"
+      m.template "Html/src/library.js.erb", "Html/src/#{name}.js.erb"
 
       %w[rstakeout js_autotest].each do |file|
-        m.template "script/#{file}",        "script/#{file}", script_options
-        m.template "script/win_script.cmd", "script/#{file}.cmd",
+        m.template "Html/script/#{file}",        "Html/script/#{file}", script_options
+        m.template "Html/script/win_script.cmd", "Html/script/#{file}.cmd",
           :assigns => { :filename => file } if windows
       end
 
       m.dependency "install_rubigen_scripts",
-        [destination_root, 'javascript', 'javascript_test', 'newjs', 'newjs_theme'],
-        :shebang => options[:shebang], :collision => :force
+        [File.join(destination_root, "Html"), 
+          'javascript', 'javascript_test', 'newjs_iphone', 'newjs_theme'],
+          :shebang => options[:shebang], :collision => :force
     end
   end
 
@@ -100,13 +100,12 @@ EOS
     # Installation skeleton.  Intermediate directories are automatically
     # created so don't sweat their absence here.
     BASEDIRS = %w(
-      config
-      lib
-      src
-      script
-      tasks
-      test/assets
-      test/unit
-      test/functional
+      Html/config
+      Html/lib
+      Html/src
+      Html/script
+      Html/tasks
+      Html/test/assets
+      Html/test/unit
     )
 end
