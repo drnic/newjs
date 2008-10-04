@@ -3,7 +3,7 @@ begin
   require 'rake'
 rescue LoadError
   puts 'This script should only be accessed via the "rake" command.'
-  puts 'Installation: gem install rake -y'
+  puts 'Installation: gem install rake'
   exit
 end
 require 'rake'
@@ -12,62 +12,13 @@ require 'rake/packagetask'
 
 $:.unshift File.dirname(__FILE__) + "/lib"
 
-APP_VERSION  = '<%= version_str %>'
-APP_NAME     = '<%= name %>'
-RUBYFORGE_PROJECT = APP_NAME
-APP_TEMPLATE = "#{APP_NAME}.js.erb"
-APP_FILE_NAME= "#{APP_NAME}.js"
-
-APP_ROOT     = File.expand_path(File.dirname(__FILE__))
-APP_SRC_DIR  = File.join(APP_ROOT, 'src')
-APP_DIST_DIR = File.join(APP_ROOT, 'dist')
-APP_PKG_DIR  = File.join(APP_ROOT, 'pkg')
-
-
 unless ENV['rakefile_just_config']
 
-task :default => [:dist, :package, :clean_package_source]
+task :default => :test_units
 
-desc "Builds the distribution"
-task :dist do
-  $:.unshift File.join(APP_ROOT, 'lib')
-  require 'protodoc'
-  require 'fileutils'
-  FileUtils.mkdir_p APP_DIST_DIR
-
-  Dir.chdir(APP_SRC_DIR) do
-    File.open(File.join(APP_DIST_DIR, APP_FILE_NAME), 'w+') do |dist|
-      dist << Protodoc::Preprocessor.new(APP_TEMPLATE)
-    end
-  end
-  Dir.chdir(APP_DIST_DIR) do
-    FileUtils.copy_file APP_FILE_NAME, "#{APP_NAME}-#{APP_VERSION}.js"
-  end
-  if File.directory?("website")
-    FileUtils.mkdir_p "website/dist"
-    FileUtils.copy_file "dist/#{APP_FILE_NAME}",       "website/dist/#{APP_FILE_NAME}"
-    FileUtils.copy_file "dist/#{APP_FILE_NAME}",       "website/dist/#{APP_NAME}-#{APP_VERSION}.js"
-  end
-end
-
-Rake::PackageTask.new(APP_NAME, APP_VERSION) do |package|
-  package.need_tar_gz = true
-  package.package_dir = APP_PKG_DIR
-  package.package_files.include(
-    '[A-Z]*',
-    'config/*.sample',
-    "dist/#{APP_FILE_NAME}",
-    'lib/**',
-    'src/**',
-    'script/**',
-    'tasks/**',
-    'test/**',
-    'website/**'
-  )
-end
 
 desc "Builds the distribution, runs the JavaScript unit + functional tests and collects their results."
-task :test => [:dist, :test_units, :test_functionals]
+task :test => [:test_units, :test_functionals]
 
 require 'jstest'
 desc "Runs all the JavaScript unit tests and collects the results"
@@ -112,10 +63,6 @@ JavaScriptTestTask.new(:test_functionals, 4712) do |t|
   end
 end
 
-
-task :clean_package_source do
-  rm_rf File.join(APP_PKG_DIR, "#{APP_NAME}-#{APP_VERSION}")
-end
 
 Dir['tasks/**/*.rake'].each { |rake| load rake }
 
