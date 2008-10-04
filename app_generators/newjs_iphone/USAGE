@@ -1,0 +1,8 @@
+Description:
+    The 'newjs_iphone' should only be executed in the root of an Xcode project for an iPhone app that contains a WebKit view.
+    
+    All assets must be in the Html/src file, and not use sub-folders as Xcode doesn't like them in its Targets.
+
+Example:
+    cd my_iphone_project
+    newjs_iphone .
