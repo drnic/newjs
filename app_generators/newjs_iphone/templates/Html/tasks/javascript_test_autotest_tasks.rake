@@ -8,6 +8,7 @@ namespace :test do
       gem 'activesupport'
       require 'active_support'
 
+      APP_ROOT = File.dirname(__FILE__) + "/../"
       since = TEST_CHANGES_SINCE
       touched = FileList[
         'test/unit/*_test.html', 
