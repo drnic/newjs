@@ -31,57 +31,32 @@
     <h1>JavaScript Project Generator</h1>
     <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/newjs"; return false'>
       <p>Get Version</p>
-      <a href="http://rubyforge.org/projects/newjs" class="numbers">1.4.1</a>
+      <a href="http://rubyforge.org/projects/newjs" class="numbers">1.5.0</a>
     </div>
-    <h1>&#x2192; &#8216;newjs&#8217;</h1>
-
-
-	<h2>What</h2>
-
-
-	<p>A simple command-line tool to create the folders and helper files
-for a new JavaScript project/library. As a bonus, you can quickly
+    <h1>&amp;#x2192; &#8216;newjs&#8217;</h1>
+<h2>What</h2>
+<p>A simple command-line tool to create the folders and helper files<br />
+for a new JavaScript project/library. As a bonus, you can quickly<br />
 create a website to promote your project.</p>
-
-
-	<p>When you start a new JavaScript library, how do you layout the source files,
-the tests, the distribution files? Do you have support scripts to
-generate distributions from source files? Run your JavaScript unit tests?
+<p>When you start a new JavaScript library, how do you layout the source files,<br />
+the tests, the distribution files? Do you have support scripts to<br />
+generate distributions from source files? Run your JavaScript unit tests?<br />
 Generators to create new unit test <span class="caps">HTML</span> files?</p>
-
-
-	<p><strong>No? Me neither</strong>, so I created the JavaScript Project Generator.</p>
-
-
-	<p>Once <code>newjs</code> has finished helping you write your source libraries,
-write test <span class="caps">HTML</span> files, providing autotesting scripts to make <span class="caps">TDD</span> a piece of cake,
-it finally helps you bundle all your source files into a single JavaScript file
+<p><strong>No? Me neither</strong>, so I created the JavaScript Project Generator.</p>
+<p>Once <code>newjs</code> has finished helping you write your source libraries,<br />
+write test <span class="caps">HTML</span> files, providing autotesting scripts to make <span class="caps">TDD</span> a piece of cake,<br />
+it finally helps you bundle all your source files into a single JavaScript file<br />
 for distribution.</p>
-
-
-	<p>What a nice helpful tool it is!</p>
-
-
-	<h2>Installing</h2>
-
-
-	<p>Installation and maintenance of generated JavaScript projects
+<p>What a nice helpful tool it is!</p>
+<h2>Installing</h2>
+<p>Installation and maintenance of generated JavaScript projects<br />
 requires the installation of <a href="http://www.ruby-lang.org/">Ruby</a> and <a href="http://rubygems.org/">RubyGems</a>.</p>
-
-
-	<p>The command-line application <code>newjs</code> is installed as below, 
+<p>The command-line application <code>newjs</code> is installed as below, <br />
 for any operating system (except the &#8216;sudo&#8217; part &#8211; use as necessary):</p>
-
-
 <pre>sudo gem install newjs</pre>
-
-	<h2>Getting started</h2>
-
-
-	<p>To kick-off your new project/library, run the command-line app <code>newjs</code>:</p>
-
-
-<pre>$ newjs mylib -a "Dr Nic" -e "drnicwilliams@gmail.com" -u "http://mylib.rubyforge.org" 
+<h2>Getting started</h2>
+<p>To kick-off your new project/library, run the command-line app <code>newjs</code>:</p>
+<pre>$ newjs mylib -a "Dr Nic" -e "drnicwilliams@gmail.com" -u "http://mylib.rubyforge.org"
       create  config
       create  lib
       create  src
@@ -110,310 +85,156 @@ for any operating system (except the &#8216;sudo&#8217; part &#8211; use as nece
       create    script/generate
       create    script/destroy
 </pre>
-
-	<p>Look at all that!</p>
-
-
-	<p>Unit testing uses the <code>unittest.js</code> library 
-developed within <a href="http://www.prototypejs.org/">prototypejs</a>. It should
+<p>Look at all that!</p>
+<p>Unit testing uses the <code>unittest.js</code> library <br />
+developed within <a href="http://www.prototypejs.org/">prototypejs</a>. It should<br />
 also support JavaScript development using any non-prototype.js libraries.</p>
-
-
-	<p>Your raw, unconcatenated library/source files go in <code>src/</code></p>
-
-
-	<p>Your unit test <span class="caps">HTML</span> files, go in <code>test/unit/</code> (see test generator below).</p>
-
-
-	<p>Your functional test <span class="caps">HTML</span> files, go in <code>test/functional/</code> (see test generator below).</p>
-
-
-When you&#8217;ve got a new version to release, edit <code>Rakefile</code> and modify the
-<code>APP_VERSION</code> string (see Distribution section below).
-
-	<p>To merge your <code>src/</code> files into a distribution file, see below.</p>
-
-
-	<h2>Unit testing</h2>
-
-
-	<p>If you are going to have a <code>src/some_lib.js</code> file, then you&#8217;ll want a unit
+<p>Your raw, unconcatenated library/source files go in <code>src/</code></p>
+<p>Your unit test <span class="caps">HTML</span> files, go in <code>test/unit/</code> (see test generator below).</p>
+<p>Your functional test <span class="caps">HTML</span> files, go in <code>test/functional/</code> (see test generator below).</p>
+<p>When you&#8217;ve got a new version to release, edit <code>Rakefile</code> and modify the<br />
+<code>APP_VERSION</code> string (see Distribution section below).</p>
+<p>To merge your <code>src/</code> files into a distribution file, see below.</p>
+<h2>Unit testing</h2>
+<p>If you are going to have a <code>src/some_lib.js</code> file, then you&#8217;ll want a unit<br />
 test file(s). By default you&#8217;d call it <code>test/some_lib_test.html</code>.</p>
-
-
-	<h3>Generating test <span class="caps">HTML</span> files</h3>
-
-
-	<p>And then what? Personally, I can never remember what basic <span class="caps">HTML </span>+ JavaScript
-goes in the test <span class="caps">HTML</span> files. I quite like the <a href="http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/">javascript_test plugin</a> for <a href="http://www.rubyonrails.org/">Ruby 
-on Rails</a>, which allows you to generate a
-test <span class="caps">HTML</span> stub. So I&#8217;ve included a version of it
-here. That is, your JavaScript project comes with a generator to create new
+<h3>Generating test <span class="caps">HTML</span> files</h3>
+<p>And then what? Personally, I can never remember what basic <span class="caps">HTML</span> + JavaScript<br />
+goes in the test <span class="caps">HTML</span> files. I quite like the <a href="http://drnicwilliams.com/2008/01/04/autotesting-javascript-in-rails/">javascript_test plugin</a> for <a href="http://www.rubyonrails.org/">Ruby <br />
+on Rails</a>, which allows you to generate a<br />
+test <span class="caps">HTML</span> stub. So I&#8217;ve included a version of it<br />
+here. That is, your JavaScript project comes with a generator to create new<br />
 test <span class="caps">HTML</span> files, ready to rock and roll.</p>
-
-
 <pre>$ script/generate unit_test some_lib
   create  test/unit
   create  test/unit/some_lib_test.html</pre>
-
-	<p>Now edit <code>test/unit/some_lib_test.html</code> and follow the comments
+<p>Now edit <code>test/unit/some_lib_test.html</code> and follow the comments<br />
 that tell you what to do to write your unit tests.</p>
-
-
-	<p>Want to name your test file something different? Specify the target
+<p>Want to name your test file something different? Specify the target<br />
 library as an additional parameter.</p>
-
-
 <pre>$ script/generate unit_test my_library_tests some_lib
   exists  test/unit
   create  test/unit/my_library_tests_test.html</pre>
-
-	<h3>Running unit tests</h3>
-
-
-	<p>Each test <span class="caps">HTML</span> file should be self-executable: just open it in a target
-browser. That is, to run the <code>test/some_lib_test.html</code> tests
+<h3>Running unit tests</h3>
+<p>Each test <span class="caps">HTML</span> file should be self-executable: just open it in a target<br />
+browser. That is, to run the <code>test/some_lib_test.html</code> tests<br />
 in Firefox, open the file in Firefox.</p>
-
-
-	<p>It will print out a beautiful log success/error messages for each test.</p>
-
-
-	<p><img src="images/example-unittest-log.jpg" width="647" height="427" alt="Example Unittest Log"></p>
-
-
-	<h2>Functional tests</h2>
-
-
-	<p>End-to-end functional tests will test the final distribution file(s), rather than
+<p>It will print out a beautiful log success/error messages for each test.</p>
+<p><img src="images/example-unittest-log.jpg" width="647" height="427" alt="Example Unittest Log"></p>
+<h2>Functional tests</h2>
+<p>End-to-end functional tests will test the final distribution file(s), rather than<br />
 the <code>src/</code> files.</p>
-
-
-	<p>As shown below, your <code>src/</code> files will be merged into (commonly) one 
+<p>As shown below, your <code>src/</code> files will be merged into (commonly) one <br />
 distribution file &#8211; a merging of your source files.</p>
-
-
-	<h3>Generating test <span class="caps">HTML</span> files</h3>
-
-
-	<p>To create functional tests, there is another generator:</p>
-
-
+<h3>Generating test <span class="caps">HTML</span> files</h3>
+<p>To create functional tests, there is another generator:</p>
 <pre>$ script/generate functional_test basic_usage
   create  test/functional
   create  test/functional/basic_usage_test.html</pre>
-
-	<h3>Running functional tests</h3>
-
-
+<h3>Running functional tests</h3>
 <pre>rake test_functionals</pre>
-
-	<p>The generated <span class="caps">HTML</span> file uses the <code>dist/mylib.js</code> file. So, if
-you are running these tests it is best to use the <code>rake test_functionals</code>
+<p>The generated <span class="caps">HTML</span> file uses the <code>dist/mylib.js</code> file. So, if<br />
+you are running these tests it is best to use the <code>rake test_functionals</code><br />
 as it pre-builds the distribution files first.</p>
-
-
-	<h2>Distribution of library</h2>
-
-
-	<p>Your project comes with the ability to concatenate all your <code>src/*.js</code>
+<h2>Distribution of library</h2>
+<p>Your project comes with the ability to concatenate all your <code>src/*.js</code><br />
 files into a single file for distribution, as <code>dist/project_name.js</code>.</p>
-
-
-	<p>First, edit <code>src/HEADER</code> with information that will be included
+<p>First, edit <code>src/HEADER</code> with information that will be included<br />
 at the top of the generated distribution file.</p>
-
-
-	<p>Second, edit <code>src/project_name.js</code> to include the names of
-all the <code>src/</code> files that will be concatenated together
+<p>Second, edit <code>src/project_name.js</code> to include the names of<br />
+all the <code>src/</code> files that will be concatenated together<br />
 in your required order.</p>
-
-
-	<p>Finally, run the command:</p>
-
-
+<p>Finally, run the command:</p>
 <pre>rake dist</pre>
-
-	<p>Two files are added into the <code>dist/</code> folder:</p>
-
-
+<p>Two files are added into the <code>dist/</code> folder:</p>
 <pre>$ ls dist/
 drnic_js_test_helpers-0.5.0.js  drnic_js_test_helpers.js</pre>
-
-	<p>One with a version number, and one without.</p>
-
-
-	<h3>Upload library to rubyforge</h3>
-
-
-	<p>Assuming you don&#8217;t really care where your package/library is uploaded
-and made available for downloading, <code>newjs</code> projects comes
+<p>One with a version number, and one without.</p>
+<h3>Upload library to rubyforge</h3>
+<p>Assuming you don&#8217;t really care where your package/library is uploaded<br />
+and made available for downloading, <code>newjs</code> projects comes<br />
 pre-built ready to upload them to <code>rubyforge</code>.</p>
-
-
-	<p>First, you&#8217;ll need a rubyforge account.</p>
-
-
-	<p>Second, create a rubyforge project. It can take 12-48hrs for confirmation
+<p>First, you&#8217;ll need a rubyforge account.</p>
+<p>Second, create a rubyforge project. It can take 12-48hrs for confirmation<br />
 to come back.</p>
-
-
-	<p>Third, use the <code>rubyforge</code> command-line app to 
+<p>Third, use the <code>rubyforge</code> command-line app to <br />
 store your rubyforge project information locally.</p>
-
-
 <pre>$ rubyforge setup  # first time only
 $ rubyforge login
 $ rubyforge config
 $ rubyforge create_package project_name project_name
 </pre>
-
-	<p>Note, if you are placing your JavaScript project within an existing
-rubyforge project, then the two <code>project_name</code> values
+<p>Note, if you are placing your JavaScript project within an existing<br />
+rubyforge project, then the two <code>project_name</code> values<br />
 are different:</p>
-
-
-	<ol>
-	<li>The rubyforge project name (e.g. drnicutilities) </li>
-		<li>The JavaScript project/library name (e.g. drnic_js_test_helpers)</li>
-	</ol>
-
-
-	<p>Finally, each time you want to release a new version of your library you do 
+<ol>
+	<li>The rubyforge project name (e.g. drnicutilities)</li>
+	<li>The JavaScript project/library name (e.g. drnic_js_test_helpers)</li>
+</ol>
+<p>Finally, each time you want to release a new version of your library you do <br />
 two things:</p>
-
-
-	<ol>
+<ol>
 	<li>Update Rakefile&#8217;s <code>APP_VERSION</code> value to the new version number</li>
-		<li>Run <code>rake release VERSION=X.Y.Z</code></li>
-	</ol>
-
-
-	<p>Your files are now available for download via rubyforge.org.</p>
-
-
-	<p>If you use the generated website (below), it comes with a link to these
+	<li>Run <code>rake release VERSION=X.Y.Z</code></li>
+</ol>
+<p>Your files are now available for download via rubyforge.org.</p>
+<p>If you use the generated website (below), it comes with a link to these<br />
 files when you click the large version number (e.g. &#8220;Get Version X.Y.Z&#8221;).</p>
-
-
-	<h2>Create a website for your project</h2>
-
-
-	<p>You can quickly create a clean, readable website for your project
-that prominently displays the current version number (which is a 
+<h2>Create a website for your project</h2>
+<p>You can quickly create a clean, readable website for your project<br />
+that prominently displays the current version number (which is a <br />
 clickable link through to the download page), just like this page.</p>
-
-
 <pre>script/generate install_website</pre>
-
-	<p>Now edit the generated <code>website/index.txt</code> file (<a href="http://www.textism.com/tools/textile/">Textile</a> format).</p>
-
-
-	<p>To convert it to <span class="caps">HTML</span>, run:</p>
-
-
+<p>Now edit the generated <code>website/index.txt</code> file (<a href="http://www.textism.com/tools/textile/">Textile</a> format).</p>
+<p>To convert it to <span class="caps">HTML</span>, run:</p>
 <pre>rake website_generate</pre>
-
-	<p>And open <code>website/index.html</code> in your browser to preview.
-The project&#8217;s version number is automatically inserted into the page
+<p>And open <code>website/index.html</code> in your browser to preview.<br />
+The project&#8217;s version number is automatically inserted into the page<br />
 (change version numbers via <code>APP_VERSION</code> in <code>Rakefile</code>).</p>
-
-
-	<h3>Configuration of website upload</h3>
-
-
-	<p>It is assumed you will upload your website files to rubyforge.org server.
+<h3>Configuration of website upload</h3>
+<p>It is assumed you will upload your website files to rubyforge.org server.<br />
 To push files to an alternate server, modify the <code>tasks/website.rake</code> file.</p>
-
-
-	<p>To configure which rubyforge project to upload to, create <code>config/website.yml</code>.
+<p>To configure which rubyforge project to upload to, create <code>config/website.yml</code>.<br />
 There is an example in <code>code/website.yml.sample</code>.</p>
-
-
-	<p>An example might be:</p>
-
-
+<p>An example might be:</p>
 <pre>host: nicwilliams@rubyforge.org
 remote_dir: /var/www/gforge-projects/drnicutilities/drnic_js_test_helpers
 </pre>
-
-	<p>Here, the files will be uploaded into the <code>drnicutilities</code> rubyforge
-project, under a sub-directory <code>drnic_js_test_helpers</code>. This site
-would be visible at <a href="http://drnicutilities.rubyforge.org/drnic_js_test_helpers">http://drnicutilities.rubyforge.org/drnic_js_test_helpers</a></p>
-
-
-	<p>If your website lives in its own rubyforge project, then just specify the project
+<p>Here, the files will be uploaded into the <code>drnicutilities</code> rubyforge<br />
+project, under a sub-directory <code>drnic_js_test_helpers</code>. This site<br />
+would be visible at <a href="http://drnicutilities.rubyforge.org/drnic_js_test_helpers">http://drnicutilities.rubyforge.org/drnic_js_test_helpers</a><br />
+  <br />
+If your website lives in its own rubyforge project, then just specify the project<br />
 name, and the website will be uploaded into the root folder.</p>
-
-
-	<p>For example, the website would be available at <a href="http://drnicutilities.rubyforge.org/">http://drnicutilities.rubyforge.org/</a> if your
+<p>For example, the website would be available at <a href="http://drnicutilities.rubyforge.org/">http://drnicutilities.rubyforge.org/</a> if your<br />
 configuration was:</p>
-
-
 <pre>host: nicwilliams@rubyforge.org
 remote_dir: /var/www/gforge-projects/drnicutilities
 </pre>
-
-	<h3>Uploading website to server</h3>
-
-
-	<p>To upload the website (and its <span class="caps">CSS</span> etc) run:</p>
-
-
+<h3>Uploading website to server</h3>
+<p>To upload the website (and its <span class="caps">CSS</span> etc) run:</p>
 <pre>rake website_upload</pre>
-
-	<p>More commonly, to generate and upload the website:</p>
-
-
+<p>More commonly, to generate and upload the website:</p>
 <pre>rake website</pre>
-
-	<h2>Screencast coming soon</h2>
-
-
-	<p>A hard-core, &#8220;how to do JavaScript unit testing&#8221; screencast will
-soon be published by <a href="http://peepcode.com/">PeepCode</a>. It will cost $9
+<h2>Screencast coming soon</h2>
+<p>A hard-core, &#8220;how to do JavaScript unit testing&#8221; screencast will<br />
+soon be published by <a href="http://peepcode.com/">PeepCode</a>. It will cost $9<br />
 and you&#8217;ll love every minute of it.</p>
-
-
-	<p>Subscribe to PeepCode&#8217;s blog for announcement details.</p>
-
-
-	<h2>Examples</h2>
-
-
-	<p>The development of <code>newjs</code> was done in parallel with
-<a href="http://drnicutilities.rubyforge.org/drnic_js_test_helpers/">Dr Nic&#8217;s JavaScript Test Helpers</a>
+<p>Subscribe to PeepCode&#8217;s blog for announcement details.</p>
+<h2>Examples</h2>
+<p>The development of <code>newjs</code> was done in parallel with<br />
+<a href="http://drnicutilities.rubyforge.org/drnic_js_test_helpers/">Dr Nic&#8217;s JavaScript Test Helpers</a><br />
 (source: <a href="http://github.com/drnic/drnic_js_test_helpers/tree/master">git</a>).</p>
-
-
-	<p>Checkout this project to see examples of unit tests, configuration etc.</p>
-
-
-	<h2>Forum</h2>
-
-
-	<p><a href="http://groups.google.com/group/javascript-project-generator">http://groups.google.com/group/javascript-project-generator</a></p>
-
-
-	<h2>How to submit patches</h2>
-
-
-	<p>Read the <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/">8 steps for fixing other people&#8217;s code</a> and for section <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/#8b-google-groups">8b: Submit patch to Google Groups</a>, use the Google Group above.</p>
-
-
-	<p>The source project is a <a href="http://git.or.cz/">Git</a> repository. See Dr Nic&#8217;s <a href="http://github.com/drnic/newjs/tree/master">master branch</a> for clone/checkout details.</p>
-
-
-	<h2>License</h2>
-
-
-	<p>This code is free to use under the terms of the <span class="caps">MIT</span> license.</p>
-
-
-	<h2>Contact</h2>
-
-
-	<p>Comments are welcome. Send an email to <a href="mailto:drnicwilliams@gmail.com">Dr Nic Williams</a> via the <a href="http://groups.google.com/group/javascript-project-generator">forum</a></p>
+<p>Checkout this project to see examples of unit tests, configuration etc.</p>
+<h2>Forum</h2>
+<p><a href="http://groups.google.com/group/javascript-project-generator">http://groups.google.com/group/javascript-project-generator</a></p>
+<h2>How to submit patches</h2>
+<p>Read the <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/">8 steps for fixing other people&#8217;s code</a> and for section <a href="http://drnicwilliams.com/2007/06/01/8-steps-for-fixing-other-peoples-code/#8b-google-groups">8b: Submit patch to Google Groups</a>, use the Google Group above.</p>
+<p>The source project is a <a href="http://git.or.cz/">Git</a> repository. See Dr Nic&#8217;s <a href="http://github.com/drnic/newjs/tree/master">master branch</a> for clone/checkout details.</p>
+<h2>License</h2>
+<p>This code is free to use under the terms of the <span class="caps">MIT</span> license.</p>
+<h2>Contact</h2>
+<p>Comments are welcome. Send an email to <a href="mailto:drnicwilliams@gmail.com">Dr Nic Williams</a> via the <a href="http://groups.google.com/group/javascript-project-generator">forum</a></p>
     <p class="coda">
       <a href="drnicwilliams@gmail.com">Dr Nic Williams</a>, 21st June 2008<br>
       Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>

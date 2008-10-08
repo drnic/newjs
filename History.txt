@@ -2,6 +2,8 @@
 
 * newjs_iphone: installs variant of newjs in Html/ subfolder of an Xcode project
     This includes Html/Rakefile, Html/script/generate etc.
+    It is still a work in progress, e.g. do we need specific generators etc.
+* Update jsunittest files for 0.7.2
 
 == 1.4.2 2008-07-08
 
