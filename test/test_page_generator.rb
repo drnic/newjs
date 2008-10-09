@@ -34,7 +34,8 @@ class TestPageGenerator < Test::Unit::TestCase
     assert_generated_file "src/#{name}.html"
     assert_generated_file "src/#{name}.js"
     assert_generated_file "src/#{name}.css"
-    assert_generated_file "test/test_#{name}.html"
+    assert_generated_file "test/unit/#{name}_test.html"
+    assert_generated_file "test/fixtures/#{name}.js"
   end
 
   private

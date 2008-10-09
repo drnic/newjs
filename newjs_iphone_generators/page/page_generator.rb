@@ -11,20 +11,15 @@ class PageGenerator < RubiGen::Base
 
   def manifest
     record do |m|
-      # Ensure appropriate folder(s) exists
       m.directory 'src'
-      m.directory 'test'
+      m.directory 'test/unit'
+      m.directory 'test/fixtures'
 
-      # Create stubs
       ["src/name.css.erb", "src/name.html.erb", "src/name.js.erb",
-        "test/test_name.html.erb"].each do |file|
+        "test/unit/name_test.html.erb", "test/fixtures/name.js.erb"].each do |file|
         target_name = file.gsub(/name/, name).gsub(/.erb/,'')
         m.template file, target_name
       end
-      # m.template "template.rb",  "some_file_after_erb.rb"
-      # m.template_copy_each , "src"
-      # m.file     "file",         "some_file_copied"
-      # m.file_copy_each ["path/to/file", "path/to/file2"]
     end
   end
 
