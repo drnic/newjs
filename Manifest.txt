@@ -65,6 +65,13 @@ newjs_generators/install_website/templates/script/win_script.cmd
 newjs_generators/install_website/templates/tasks/website.rake
 newjs_generators/install_website/templates/website/index.html
 newjs_generators/install_website/templates/website/index.txt
+newjs_iphone_generators/page/USAGE
+newjs_iphone_generators/page/page_generator.rb
+newjs_iphone_generators/page/templates/src/name.css.erb
+newjs_iphone_generators/page/templates/src/name.html.erb
+newjs_iphone_generators/page/templates/src/name.js.erb
+newjs_iphone_generators/page/templates/test/fixtures/name.js.erb
+newjs_iphone_generators/page/templates/test/unit/name_test.html.erb
 newjs_theme_generators/plain_theme/USAGE
 newjs_theme_generators/plain_theme/plain_theme_generator.rb
 newjs_theme_generators/plain_theme/templates/website/javascripts/rounded_corners_lite.inc.js
@@ -104,6 +111,7 @@ test/test_install_website_generator.rb
 test/test_javascript_test_generator.rb
 test/test_newjs_generator.rb
 test/test_newjs_iphone_generator.rb
+test/test_page_generator.rb
 test/test_plain_theme_generator.rb
 test/test_unit_test_generator.rb
 website/images/example-unittest-log.jpg

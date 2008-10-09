@@ -38,7 +38,7 @@
     // replace this with your real tests
     setup: function() {
       this.fixtureData = initialFixtureData();
-      loadData(this.fixtureData);
+      <%= module_name %>.loadData(this.fixtureData);
     },
     
     "test that all is true": function() { with(this) {
