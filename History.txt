@@ -1,3 +1,8 @@
+== 1.6.0 2008-10-09
+
+* page generator (for newjs_iphone) - creates src/model.js,.css,.html 
+  and test/test_model.html
+
 == 1.5.1 2008-10-09
 
 * Added newsjs_iphone to Manifest for distribution
