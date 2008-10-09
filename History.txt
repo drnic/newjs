@@ -1,3 +1,7 @@
+== 1.5.1 2008-10-09
+
+* Added newsjs_iphone to Manifest for distribution
+
 == 1.5.0 2008-10-05
 
 * newjs_iphone: installs variant of newjs in Html/ subfolder of an Xcode project
