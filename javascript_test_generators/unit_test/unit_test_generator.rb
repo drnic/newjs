@@ -14,11 +14,12 @@ class UnitTestGenerator < RubiGen::Base
     record do |m|
       # Ensure appropriate folder(s) exists
       m.directory 'test/unit'
-     m.directory 'test/assets'
-     if testing_lib == 'jshoulda'
-       # Ensure jshoulda exists. TODO Should be moved to the newjs generator?
-       m.file 'test/assets/jshoulda.js', 'test/assets/jshoulda.js', :collision => :skip
-     end
+
+      if testing_lib == 'jshoulda'
+        # Ensure jshoulda exists. TODO Should be moved to the newjs generator?
+        m.directory 'test/assets'
+        m.file 'test/assets/jshoulda.js', 'test/assets/jshoulda.js', :collision => :skip
+      end
 
       # Create stubs
       m.template "test/test.html.erb",  "test/unit/#{name}_test.html"
