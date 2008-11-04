@@ -44,6 +44,19 @@ class TestFunctionalTestGenerator < Test::Unit::TestCase
     end
   end
   
+  def test_generator_with_jshoulda
+    name = "library"
+    run_generator('functional_test', [name, '--jshoulda'], sources)
+    assert_generated_file("test/assets/jshoulda.js")
+    assert_generated_file("test/functional/library_test.html") do |body|
+      expected = %Q{src="../assets/jshoulda.js"}
+      assert_match(expected, body)
+      expected = %Q{context("A context"}
+      assert_match(expected, body)
+    end
+  end
+  
+  
   private
   def sources
     [RubiGen::PathSource.new(:test, File.join(File.dirname(__FILE__),"..", generator_path))
