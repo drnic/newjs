@@ -1,6 +1,6 @@
 class UnitTestGenerator < RubiGen::Base
   
-  attr_reader :name, :library_name
+  attr_reader :name, :library_name, :testing_lib
   
   def initialize(runtime_args, runtime_options = {})
     super
@@ -14,6 +14,11 @@ class UnitTestGenerator < RubiGen::Base
     record do |m|
       # Ensure appropriate folder(s) exists
       m.directory 'test/unit'
+     m.directory 'test/assets'
+     if testing_lib == 'jshoulda'
+       # Ensure jshoulda exists. TODO Should be moved to the newjs generator?
+       m.file 'test/assets/jshoulda.js', 'test/assets/jshoulda.js', :collision => :skip
+     end
 
       # Create stubs
       m.template "test/test.html.erb",  "test/unit/#{name}_test.html"
@@ -43,6 +48,7 @@ EOS
       #         "Some comment about this option",
       #         "Default: none") { |options[:author]| }
       # opts.on("-v", "--version", "Show the #{File.basename($0)} version number and quit.")
+      opts.on("--jshoulda", "Use jShoulda to write the test") { |v| options[:testing_lib] = 'jshoulda'}
     end
     
     def extract_options
@@ -50,5 +56,6 @@ EOS
       # Templates can access these value via the attr_reader-generated methods, but not the
       # raw instance variable value.
       # @author = options[:author]
+      @testing_lib = options[:testing_lib]
     end
 end
