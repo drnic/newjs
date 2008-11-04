@@ -46,6 +46,7 @@ config/requirements.rb
 javascript_test_generators/functional_test/USAGE
 javascript_test_generators/functional_test/functional_test_generator.rb
 javascript_test_generators/functional_test/templates/test/test.html.erb
+javascript_test_generators/functional_test/templates/test/assets/jshoulda.js
 javascript_test_generators/unit_test/USAGE
 javascript_test_generators/unit_test/templates/test/test.html.erb
 javascript_test_generators/unit_test/templates/test/assets/jshoulda.js
