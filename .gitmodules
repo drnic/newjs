@@ -1,0 +1,6 @@
+[submodule "vendor/jshoulda"]
+	path = vendor/jshoulda
+	url = git://github.com/choan/jshoulda.git
+[submodule "vendor/jsunittest"]
+	path = vendor/jsunittest
+	url = git://github.com/drnic/jsunittest.git
