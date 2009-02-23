@@ -1,4 +1,4 @@
-/*  Jsunittest, version 0.6.3
+/*  Jsunittest, version 0.7.2
  *  (c) 2008 Dr Nic Williams
  *
  *  Jsunittest is freely distributable under
@@ -199,7 +199,7 @@ JsUnitTest.gsub.prepareReplacement = function(replacement) {
   return function(match) { return template.evaluate(match) };
 };
 
-JsUnitTest.Version = '0.6.3';
+JsUnitTest.Version = '0.7.2';
 
 JsUnitTest.Template = function(template, pattern) {
   this.template = template; //template.toString();
@@ -441,7 +441,7 @@ JsUnitTest.ajax = function( options ) {
     };
 
     // Create the request object
-    var xml = new XMLHttpRequest();
+    var xml = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
 
     // Open the asynchronous POST request
     xml.open(options.type, options.url, true);
@@ -529,7 +529,7 @@ JsUnitTest.ajax = function( options ) {
         return data;
     }
 
-}
+};
 JsUnitTest.Unit.Assertions = {
   buildMessage: function(message, template) {
     var args = JsUnitTest.arrayfromargs(arguments).slice(2);
@@ -675,7 +675,16 @@ JsUnitTest.Unit.Assertions = {
     this.assertBlock(message, function() { return !(new RegExp(expected).exec(actual)) });
   },
 
+  assertHasClass: function(element, klass, message) {
+    element = JsUnitTest.$(element);
+    message = this.buildMessage(message || 'assertHasClass', '? doesn\'t have class <?>.', element, klass);
+    this.assertBlock(message, function() {
+      return !!element.className.match(new RegExp(klass))
+    });
+  },
+
   assertHidden: function(element, message) {
+    element = JsUnitTest.$(element);
     message = this.buildMessage(message || 'assertHidden', '? isn\'t hidden.', element);
     this.assertBlock(message, function() { return !element.style.display || element.style.display == 'none' });
   },
@@ -822,7 +831,8 @@ JsUnitTest.Unit.Runner.prototype.getResult = function() {
     tests: this.tests.length,
     assertions: 0,
     failures: 0,
-    errors: 0
+    errors: 0,
+    warnings: 0
   };
 
   for (var i=0; i < this.tests.length; i++) {
@@ -830,6 +840,7 @@ JsUnitTest.Unit.Runner.prototype.getResult = function() {
     results.assertions += test.assertions;
     results.failures   += test.failures;
     results.errors     += test.errors;
+    results.warnings   += test.warnings;
   };
   return results;
 };
@@ -840,7 +851,9 @@ JsUnitTest.Unit.Runner.prototype.postResults = function() {
     //   { method: 'get', parameters: this.getResult(), asynchronous: false });
     var results = this.getResult();
     var url = this.options.resultsURL + "?";
+    url += "tests="+ this.tests.length + "&";
     url += "assertions="+ results.assertions + "&";
+    url += "warnings="  + results.warnings + "&";
     url += "failures="  + results.failures + "&";
     url += "errors="    + results.errors;
     JsUnitTest.ajax({
@@ -879,7 +892,7 @@ JsUnitTest.Unit.Runner.prototype.finish = function() {
 };
 
 JsUnitTest.Unit.Runner.prototype.summary = function() {
-  return new JsUnitTest.Template('#{tests} tests, #{assertions} assertions, #{failures} failures, #{errors} errors').evaluate(this.getResult());
+  return new JsUnitTest.Template('#{tests} tests, #{assertions} assertions, #{failures} failures, #{errors} errors, #{warnings} warnings').evaluate(this.getResult());
 };
 JsUnitTest.Unit.Testcase = function(name, test, setup, teardown) {
   this.name           = name;
@@ -895,13 +908,15 @@ for (method in JsUnitTest.Unit.Assertions) {
   JsUnitTest.Unit.Testcase.prototype[method] = JsUnitTest.Unit.Assertions[method];
 }
 
-JsUnitTest.Unit.Testcase.prototype.isWaiting  = false;
-JsUnitTest.Unit.Testcase.prototype.timeToWait = 1000;
-JsUnitTest.Unit.Testcase.prototype.assertions = 0;
-JsUnitTest.Unit.Testcase.prototype.failures   = 0;
-JsUnitTest.Unit.Testcase.prototype.errors     = 0;
-// JsUnitTest.Unit.Testcase.prototype.isRunningFromRake = window.location.port == 4711;
+JsUnitTest.Unit.Testcase.prototype.isWaiting         = false;
+JsUnitTest.Unit.Testcase.prototype.timeToWait        = 1000;
+JsUnitTest.Unit.Testcase.prototype.assertions        = 0;
+JsUnitTest.Unit.Testcase.prototype.failures          = 0;
+JsUnitTest.Unit.Testcase.prototype.errors            = 0;
+JsUnitTest.Unit.Testcase.prototype.warnings          = 0;
 JsUnitTest.Unit.Testcase.prototype.isRunningFromRake = window.location.port;
+
+// JsUnitTest.Unit.Testcase.prototype.isRunningFromRake = window.location.port == 4711;
 
 JsUnitTest.Unit.Testcase.prototype.wait = function(time, nextPart) {
   this.isWaiting = true;
@@ -928,7 +943,7 @@ JsUnitTest.Unit.Testcase.prototype.run = function(rethrow) {
 };
 
 JsUnitTest.Unit.Testcase.prototype.summary = function() {
-  var msg = '#{assertions} assertions, #{failures} failures, #{errors} errors\n';
+  var msg = '#{assertions} assertions, #{failures} failures, #{errors} errors, #{warnings} warnings\n';
   return new JsUnitTest.Template(msg).evaluate(this) +
     this.messages.join("\n");
 };
@@ -948,6 +963,18 @@ JsUnitTest.Unit.Testcase.prototype.fail = function(message) {
   this.messages.push("Failure: " + message + (line ? " Line #" + line : ""));
 };
 
+JsUnitTest.Unit.Testcase.prototype.warning = function(message) {
+  this.warnings++;
+  var line = "";
+  try {
+    throw new Error("stack");
+  } catch(e){
+    line = (/\.html:(\d+)/.exec(e.stack || '') || ['',''])[1];
+  }
+  this.messages.push("Warning: " + message + (line ? " Line #" + line : ""));
+};
+JsUnitTest.Unit.Testcase.prototype.warn = JsUnitTest.Unit.Testcase.prototype.warning;
+
 JsUnitTest.Unit.Testcase.prototype.info = function(message) {
   this.messages.push("Info: " + message);
 };
@@ -961,6 +988,7 @@ JsUnitTest.Unit.Testcase.prototype.error = function(error, test) {
 JsUnitTest.Unit.Testcase.prototype.status = function() {
   if (this.failures > 0) return 'failed';
   if (this.errors > 0) return 'error';
+  if (this.warnings > 0) return 'warning';
   return 'passed';
 };
 

@@ -106,6 +106,17 @@ Then %r{^file with name matching '(.*)' is created} do |pattern|
   end
 end
 
+Then %r{^file '(.*)' is same as file '(.*)'} do |file1, file2|
+  in_project_folder do
+    File.exists?(file1)
+    File.exists?(file2)
+    file1_contents = File.read(file1)
+    file2_contents = File.read(file2)
+    file1_contents.should == file2_contents
+  end
+end
+
+
 Then %r{gem file '(.*)' and generated file '(.*)' should be the same} do |gem_file, project_file|
   File.exists?(gem_file).should be_true
   File.exists?(project_file).should be_true
