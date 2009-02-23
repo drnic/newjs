@@ -20,9 +20,7 @@ app_generators/newjs/templates/tasks/deploy.rake
 app_generators/newjs/templates/tasks/environment.rake
 app_generators/newjs/templates/tasks/javascript_test_autotest_tasks.rake
 app_generators/newjs/templates/test/assets/jsunittest.js
-app_generators/newjs/templates/test/assets/prototype.js
 app_generators/newjs/templates/test/assets/unittest.css
-app_generators/newjs/templates/test/assets/unittest.js
 app_generators/newjs_iphone/USAGE
 app_generators/newjs_iphone/newjs_iphone_generator.rb
 app_generators/newjs_iphone/templates/Html/Rakefile.erb
@@ -35,9 +33,7 @@ app_generators/newjs_iphone/templates/Html/script/win_script.cmd
 app_generators/newjs_iphone/templates/Html/src/library.js.erb
 app_generators/newjs_iphone/templates/Html/tasks/javascript_test_autotest_tasks.rake
 app_generators/newjs_iphone/templates/Html/test/assets/jsunittest.js
-app_generators/newjs_iphone/templates/Html/test/assets/prototype.js
 app_generators/newjs_iphone/templates/Html/test/assets/unittest.css
-app_generators/newjs_iphone/templates/Html/test/assets/unittest.js
 bin/newjs
 bin/newjs_iphone
 features/development.feature
@@ -104,6 +100,7 @@ script/generate
 script/txt2html
 setup.rb
 tasks/jsunittest/update.rake
+tasks/vendor/update/jsunittest.rake
 test/test_functional_test_generator.rb
 test/test_generator_helper.rb
 test/test_helper.rb
@@ -185,6 +182,9 @@ vendor/jsunittest/README.txt
 vendor/jsunittest/Rakefile
 vendor/jsunittest/config/deploy.rb
 vendor/jsunittest/config/website.yml.sample
+vendor/jsunittest/dist/jsunittest-0.7.2.js
+vendor/jsunittest/dist/jsunittest.js
+vendor/jsunittest/dist/unittest.css
 vendor/jsunittest/lib/jstest.rb
 vendor/jsunittest/lib/protodoc.rb
 vendor/jsunittest/script/destroy
@@ -221,6 +221,13 @@ vendor/jsunittest/test/unit/message_template_test.html
 vendor/jsunittest/test/unit/runner_test.html
 vendor/jsunittest/test/unit/template_test.html
 vendor/jsunittest/test/unit/test_case_test.html
+vendor/jsunittest/website/dist/jsunittest-0.7.2.js
+vendor/jsunittest/website/dist/jsunittest-getting-started.tar.gz
+vendor/jsunittest/website/dist/jsunittest-getting-started.zip
+vendor/jsunittest/website/dist/jsunittest-getting-started/assets/jsunittest.js
+vendor/jsunittest/website/dist/jsunittest-getting-started/assets/unittest.css
+vendor/jsunittest/website/dist/jsunittest-getting-started/example_test.html
+vendor/jsunittest/website/dist/jsunittest.js
 vendor/jsunittest/website/images/logo_bundle.png
 vendor/jsunittest/website/images/passing_prototypejs_unittest_tests.jpg
 vendor/jsunittest/website/index.html
