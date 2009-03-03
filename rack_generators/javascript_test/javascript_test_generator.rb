@@ -27,11 +27,7 @@ class JavascriptTestGenerator < RubiGen::Base
 
     record do |m|
       # Ensure appropriate folder(s) exists
-      m.directory 'config'
-      m.directory 'script'
       m.directory 'test/javascript/assets'
-      m.directory 'vendor/plugins/javascript_unittest/lib'
-      m.directory 'vendor/plugins/javascript_unittest/tasks'
       m.directory "test/javascript/#{nested_folder}" if nested_folder
       m.directory "public/javascripts" if create_library
       m.directory "public/javascripts/ext" if framework
@@ -49,23 +45,6 @@ class JavascriptTestGenerator < RubiGen::Base
       m.file     "assets/unittest.css",  "test/javascript/assets/unittest.css"
       m.file     "ext/#{framework}.js", "public/javascripts/ext/#{framework}.js" if framework
 
-      m.file     "config/javascript_test_autotest.yml.sample",
-                  "config/javascript_test_autotest.yml.sample"
-
-      m.file     "plugins/javascript_unittest/lib/jstest.rb",
-                  "vendor/plugins/javascript_unittest/lib/jstest.rb"
-      m.file     "plugins/javascript_unittest/tasks/runner.rake",
-                  "vendor/plugins/javascript_unittest/tasks/runner.rake"
-      m.file     "plugins/javascript_unittest/tasks/autotest.rake",
-                  "vendor/plugins/javascript_unittest/tasks/autotest.rake"
-      m.file     "plugins/javascript_unittest/README",
-                  "vendor/plugins/javascript_unittest/README"
-
-      %w[rstakeout js_autotest].each do |file|
-        m.template "script/#{file}",        "script/#{file}", script_options
-        m.template "script/win_script.cmd", "script/#{file}.cmd",
-          :assigns => { :filename => file } if windows
-      end
     end
   end
 
