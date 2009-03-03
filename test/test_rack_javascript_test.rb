@@ -1,13 +1,6 @@
 require File.join(File.dirname(__FILE__), "test_generator_helper.rb")
 
-module Rails
-  module Generator
-    class Base < RubiGen::Base
-    end
-  end
-end
-
-class TestJavascriptTestGenerator < Test::Unit::TestCase
+class TestRackJavascriptTestGenerator < Test::Unit::TestCase
   include RubiGen::GeneratorTestHelper
 
   def setup
@@ -168,6 +161,6 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
   end
 
   def generator_path
-    "rails_generators"
+    "rack_generators"
   end
 end
