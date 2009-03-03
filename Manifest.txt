@@ -47,6 +47,7 @@ javascript_test_generators/functional_test/templates/test/test.html.erb
 javascript_test_generators/unit_test/USAGE
 javascript_test_generators/unit_test/templates/test/assets/jshoulda.js
 javascript_test_generators/unit_test/templates/test/test.html.erb
+javascript_test_generators/unit_test/templates/test/test_jshoulda.html.erb
 javascript_test_generators/unit_test/unit_test_generator.rb
 lib/newjs.rb
 lib/newjs/autotest.rb
@@ -101,7 +102,7 @@ script/destroy
 script/generate
 script/txt2html
 setup.rb
-tasks/jsunittest/update.rake
+tasks/vendor/update/jshoulda.rake
 tasks/vendor/update/jsunittest.rake
 test/test_functional_test_generator.rb
 test/test_generator_helper.rb
@@ -125,6 +126,8 @@ vendor/jshoulda/dist/jshoulda-1.0.1.js
 vendor/jshoulda/dist/jshoulda-1.0.js
 vendor/jshoulda/dist/jshoulda-1.1.js
 vendor/jshoulda/dist/jshoulda-1.2.js
+vendor/jshoulda/dist/jshoulda-1.2.x.js
+vendor/jshoulda/dist/jshoulda.js
 vendor/jshoulda/jshoulda/test/basic_test.html
 vendor/jshoulda/lib/jstest.rb
 vendor/jshoulda/lib/protodoc.rb

@@ -51,7 +51,7 @@ class TestUnitTestGenerator < Test::Unit::TestCase
     assert_generated_file("test/unit/library_test.html") do |body|
       expected = %Q{src="../assets/jshoulda.js"}
       assert_match(expected, body)
-      expected = %Q{context("A context"}
+      expected = %Q{context("Library"}
       assert_match(expected, body)
     end
   end

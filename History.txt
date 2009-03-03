@@ -1,4 +1,7 @@
+== 1.7.0 2009-03-03
+
 * rails/javascript_test: -j/--jshoulda flag to use jshoulda instead of vanilla jsunittest
+* jshoulda is vendored and copied into project via "rake vendor:update:jshoulda"
 
 == 1.6.0 2008-10-09
 
