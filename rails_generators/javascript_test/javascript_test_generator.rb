@@ -93,6 +93,8 @@ EOS
               "Include jquery or prototypejs libraries",
               "Options: jquery, prototype",
               "Default: none") { |x| options[:framework] = x }
+      opts.on("-j", "--jshoulda", String,
+              "Use jshoulda test framework") { |x| options[:test_framework] = 'jshoulda' }
       opts.on("-T", "--test-framework=FRAMEWORK", String,
               "Use alternate/extension test framework",
               "Options: jshoulda",
