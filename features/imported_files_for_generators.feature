@@ -12,3 +12,8 @@ Feature: Apply the latest distribution files from vendored projects into generat
     Then file 'app_generators/newjs_iphone/templates/Html/test/assets/unittest.css' is same as file 'vendor/jsunittest/dist/unittest.css'  
     Then file 'rails_generators/javascript_test/templates/assets/jsunittest.js' is same as file 'vendor/jsunittest/dist/jsunittest.js'  
     Then file 'rails_generators/javascript_test/templates/assets/unittest.css' is same as file 'vendor/jsunittest/dist/unittest.css'  
+
+  Scenario: Copy across jshoulda into generators
+    Given this project is active project folder
+    When task 'rake vendor:update:jshoulda' is invoked
+    Then file 'rails_generators/javascript_test/templates/assets/jshoulda.js' is same as file 'vendor/jshoulda/dist/jshoulda.js'  

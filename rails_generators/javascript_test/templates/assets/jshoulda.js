@@ -1,10 +1,19 @@
+/*  jShoulda, version 1.2.x
+ *  (c) 2008 Choan Galvez
+ *
+ *  jShoulda is freely distributable under
+ *  the terms of an MIT-style license.
+ *  For details, see the web site: http://jshoulda.scriptia.net
+ *
+ *--------------------------------------------------------------------------*/
+
 var jShoulda = function() {
   // the test runner
   var tr, unique = false;
 
   function dummy() {
   };
-  
+
   function runQueue(queue, name, before, after, ext) {
     var i, tests;
     for (i = 0; i < queue.length; i += 1) {
@@ -44,7 +53,7 @@ var jShoulda = function() {
       var beforeQueue;
       var afterQueue;
       var extensions = merge({}, obj || {});
-    
+
       return function(outerName, before, after, ext) {
         // the root context gets no outerName or a configuration object
         // as its first argument
@@ -78,7 +87,7 @@ var jShoulda = function() {
     return sub;
   }
 
-  
+
   function getShouldAlias(connector) {
     return function (name, fn) {
       return function(prefix, before, after, extensions) {
@@ -87,10 +96,10 @@ var jShoulda = function() {
         var unit = new Test.Unit.Testcase([prefix, name].join(' ' + connector + ' '), fn, beforeBatch, afterBatch);
         merge(unit, extensions);
         return unit;
-      };    
+      };
     };
   }
-  
+
   function setShouldAlias(name, host) {
     var connector = name;
     if (typeof host == 'string') {
@@ -101,7 +110,7 @@ var jShoulda = function() {
     host[name] = getShouldAlias(connector);
     return jShoulda;
   }
-  
+
   function setContextAlias(name, host) {
     var prefix = '';
     if (typeof host == 'string') {
@@ -112,7 +121,7 @@ var jShoulda = function() {
     host[name] = getContextAlias(prefix);
     return jShoulda;
   }
-  
+
 
   return {
     setShouldAlias : setShouldAlias,
@@ -130,4 +139,4 @@ var jShoulda = function() {
 
 jShoulda
   .setShouldAlias('should')
-  .setContextAlias('context');  
+  .setContextAlias('context');
