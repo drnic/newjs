@@ -8,7 +8,7 @@ namespace 'vendor' do
 
       sh "cd vendor/jshoulda && rake dist"
 
-      %w[jshoulda.js unittest.css].each do |f|
+      %w[jshoulda.js].each do |f|
         target_folders.each do |folder|
           FileUtils.cp "vendor/jshoulda/dist/#{f}", folder
         end

@@ -1,4 +1,4 @@
-/*  jShoulda, version 1.2.x
+/*  jShoulda, version 1.2.1
  *  (c) 2008 Choan Galvez
  *
  *  jShoulda is freely distributable under
@@ -9,7 +9,11 @@
 
 var jShoulda = function() {
   // the test runner
-  var tr, unique = false;
+  var tr,
+  // handle all testcases with the same testrunner
+  unique = false,
+  // styles definitions
+  styles = {};
 
   function dummy() {
   };
@@ -33,6 +37,7 @@ var jShoulda = function() {
       }
     };
   }
+
   function getContextAlias(prefix) {
     if (prefix) prefix += ' ';
     return function (name, config, args) {
@@ -59,7 +64,6 @@ var jShoulda = function() {
         // as its first argument
         var prefix = outerName;
         var is_root = !!(outerName == undefined || typeof outerName == 'object');
-        // debugger;
         if (is_root) {
           tr = (tr && unique) ? tr : new Test.Unit.Runner({}, outerName || {});
           prefix = '';
@@ -122,21 +126,61 @@ var jShoulda = function() {
     return jShoulda;
   }
 
+  function useStyle(name) {
+    var style, i;
+    if (name in styles) {
+      style = styles[name];
+      if ('context' in style) {
+        for (i = 0; i < style.context.length; i += 2) {
+          setContextAlias(style.context[i], style.context[i+1]);
+        }
+      }
+      if ('should' in style) {
+        for (i = 0; i < style.should.length; i += 2) {
+          setShouldAlias(style.should[i], style.should[i+1]);
+        }
+      }
+      if (style.unify) unifyRunners();
+    }
+    else throw { name: 'UndefinedStyle', message: 'There is not "'+name+'" style defined' };
+    return jShoulda;
+  }
+
+  function defineStyle(name, opts, aliases) {
+    styles[name] = opts;
+    for (var i = 2; i < arguments.length; i += 1) {
+      styles[arguments[i]] = opts;
+    }
+    return jShoulda;
+  }
+
+  function unifyRunners (options) {
+    if (options) {
+      tr = options instanceof Test.Unit.Runner ? options : new Test.Unit.Runner({}, options || {});
+    }
+    unique = true;
+    return jShoulda;
+  }
 
   return {
     setShouldAlias : setShouldAlias,
     setContextAlias : setContextAlias,
-    unifyRunners : function(options) {
-      if (options) {
-        tr = options instanceof Test.Unit.Runner ? options : new Test.Unit.Runner({}, options || {});
-      }
-      unique = true;
-      return jShoulda;
-    }
+    unifyRunners : unifyRunners,
+    useStyle : useStyle,
+    defineStyle: defineStyle
   };
 
 }();
 
 jShoulda
-  .setShouldAlias('should')
-  .setContextAlias('context');
+  .defineStyle('describe', {
+    context: [ 'describe', '' ],
+    should: [ 'it', '' ],
+    unify: false
+  }, 'it')
+  .defineStyle('context', {
+    context : [ 'context', '' ],
+    should : [ 'should', 'should' ],
+    unify : false
+  }, 'should')
+  .useStyle('should');
