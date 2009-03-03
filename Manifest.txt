@@ -77,6 +77,7 @@ newjs_theme_generators/plain_theme/templates/website/stylesheets/screen.css
 newjs_theme_generators/plain_theme/templates/website/template.html.erb
 rails_generators/javascript_test/USAGE
 rails_generators/javascript_test/javascript_test_generator.rb
+rails_generators/javascript_test/templates/assets/jshoulda.js
 rails_generators/javascript_test/templates/assets/jsunittest.js
 rails_generators/javascript_test/templates/assets/unittest.css
 rails_generators/javascript_test/templates/config/javascript_test_autotest.yml.sample
@@ -94,6 +95,7 @@ rails_generators/javascript_test/templates/script/js_autotest
 rails_generators/javascript_test/templates/script/rstakeout
 rails_generators/javascript_test/templates/script/win_script.cmd
 rails_generators/javascript_test/templates/test.html.erb
+rails_generators/javascript_test/templates/test_jshoulda.html.erb
 script/console
 script/destroy
 script/generate
