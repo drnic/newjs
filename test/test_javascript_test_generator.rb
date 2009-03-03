@@ -123,6 +123,20 @@ class TestJavascriptTestGenerator < Test::Unit::TestCase
     assert_generated_file "vendor/plugins/javascript_unittest/README"
   end
 
+  def test_generator_with_jshoulda
+    name = "mylib"
+    run_generator('javascript_test', [name], sources, :test_framework => 'jshoulda')
+    assert_generated_file "test/javascript/assets/jsunittest.js"
+    assert_generated_file "test/javascript/assets/jshoulda.js"
+    assert_generated_file "test/javascript/assets/unittest.css"
+    assert_generated_file "test/javascript/#{name}_test.html" do |body|
+      assert_match(%Q{src="assets/jsunittest.js"}, body)
+      assert_match(%Q{src="assets/jshoulda.js"}, body)
+      assert_match(%Q{src="../../public/javascripts/mylib.js"}, body)
+      assert_match(%Q{context("Mylib", \{}, body)
+    end
+  end
+
   def test_generator_and_library
     name = "mylib"
     run_generator('javascript_test', [name], sources, :library => true)

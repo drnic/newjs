@@ -2,11 +2,11 @@ class JavascriptTestGenerator < Rails::Generator::Base
   DEFAULT_SHEBANG = File.join(Config::CONFIG['bindir'],
                               Config::CONFIG['ruby_install_name'])
 
-  default_options :framework => nil, :library => false
+  default_options :framework => nil, :test_framework => nil, :library => false
 
   attr_reader :path, :name, :library_name, :module_name
   attr_reader :nested_folder, :reverse_nested_folder
-  attr_reader :framework, :create_library
+  attr_reader :framework, :test_framework, :create_library
 
   def initialize(runtime_args, runtime_options = {})
     super
@@ -37,10 +37,15 @@ class JavascriptTestGenerator < Rails::Generator::Base
       m.directory "public/javascripts/ext" if framework
 
       # Create stubs
-      m.template "test.html.erb",  "test/javascript/#{path}_test.html"
+      if test_framework
+        m.template "test_#{test_framework}.html.erb",  "test/javascript/#{path}_test.html"
+      else
+        m.template "test.html.erb",  "test/javascript/#{path}_test.html"
+      end
       m.template "library.js.erb",  "public/javascripts/#{path}.js" if create_library
 
       m.file     "assets/jsunittest.js", "test/javascript/assets/jsunittest.js"
+      m.file     "assets/jshoulda.js", "test/javascript/assets/jshoulda.js" if test_framework
       m.file     "assets/unittest.css",  "test/javascript/assets/unittest.css"
       m.file     "ext/#{framework}.js", "public/javascripts/ext/#{framework}.js" if framework
 
@@ -88,10 +93,15 @@ EOS
               "Include jquery or prototypejs libraries",
               "Options: jquery, prototype",
               "Default: none") { |x| options[:framework] = x }
+      opts.on("-T", "--test-framework=FRAMEWORK", String,
+              "Use alternate/extension test framework",
+              "Options: jshoulda",
+              "Default: none") { |x| options[:test_framework] = x }
     end
 
     def extract_options
       @framework = options[:framework]
+      @test_framework = options[:test_framework]
       @create_library = options[:library]
     end
 end
