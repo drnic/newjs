@@ -11,9 +11,9 @@ end
 require 'redcloth'
 require 'syntax/convertors/html'
 require 'erb'
-require File.dirname(__FILE__) + '/../lib/newjs/version.rb'
+require File.dirname(__FILE__) + '/../lib/newjs.rb'
 
-version  = Newjs::VERSION::STRING
+version  = Newjs::VERSION
 download = 'http://rubyforge.org/projects/newjs'
 
 class Fixnum
