@@ -51,6 +51,34 @@ class TestNewjsGenerator < Test::Unit::TestCase
     assert_generated_file   "lib/jstest.rb"
   end
 
+  def test_generator_for_jshoulda_and_jquery
+    run_generator('newjs', [APP_ROOT], sources, {:test_framework => 'jshoulda', :framework => 'jquery'})
+    assert_directory_exists "lib"
+    assert_directory_exists "config"
+    assert_directory_exists "src"
+    assert_directory_exists "script"
+    assert_directory_exists "tasks"
+    assert_directory_exists "test/assets"
+    assert_generated_file   "test/assets/unittest.css"
+    assert_generated_file   "test/assets/jsunittest.js"
+    assert_generated_file   "test/assets/jshoulda.js"
+    assert_generated_file   "lib/ext/jquery.js"
+    assert_generated_file   "Rakefile"
+    assert_generated_file   "README.txt"
+    assert_generated_file   "License.txt"
+    assert_generated_file   "History.txt"
+    assert_generated_file   "script/rstakeout"
+    assert_generated_file   "script/js_autotest"
+    assert_generated_file   "tasks/javascript_test_autotest_tasks.rake"
+    assert_generated_file   "tasks/environment.rake"
+    assert_generated_file   "tasks/deploy.rake"
+    assert_generated_file   "config/javascript_test_autotest.yml.sample"
+    assert_generated_file   "src/myproject.js.erb"
+    assert_generated_file   "src/HEADER"
+    assert_generated_file   "lib/protodoc.rb"
+    assert_generated_file   "lib/jstest.rb"
+  end
+
   private
   def sources
     [RubiGen::PathSource.new(:test, File.join(File.dirname(__FILE__),"..", generator_path))
