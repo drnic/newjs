@@ -17,3 +17,4 @@ Feature: Apply the latest distribution files from vendored projects into generat
     Given this project is active project folder
     When task 'rake vendor:update:jshoulda' is invoked
     Then file 'rails_generators/javascript_test/templates/assets/jshoulda.js' is same as file 'vendor/jshoulda/dist/jshoulda.js'  
+
