@@ -58,5 +58,6 @@ EOS
       # raw instance variable value.
       # @author = options[:author]
       @test_framework = options[:test_framework]
+      @test_framework ||= 'jshoulda' if File.exists?('test/assets/jshoulda.js')
     end
 end

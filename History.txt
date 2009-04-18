@@ -1,3 +1,9 @@
+== 1.7.1 2009-04-18
+
+* newjs command: -j/--jshoulda flag to use jshoulda instead of vanilla jsunittest
+* newjs command: -F flag selects prototype or jquery
+* upgraded jquery to 1.3.2
+
 == 1.7.0 2009-03-03
 
 * rails/javascript_test: -j/--jshoulda flag to use jshoulda instead of vanilla jsunittest
