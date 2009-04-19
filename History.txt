@@ -1,3 +1,7 @@
+== 1.7.2 2009-04-18
+
+* newjs command: oops, jquery/prototype installed into src/ext instead of lib/ext
+
 == 1.7.1 2009-04-18
 
 * newjs command: -j/--jshoulda flag to use jshoulda instead of vanilla jsunittest

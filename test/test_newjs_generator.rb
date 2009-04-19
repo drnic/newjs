@@ -62,7 +62,6 @@ class TestNewjsGenerator < Test::Unit::TestCase
     assert_generated_file   "test/assets/unittest.css"
     assert_generated_file   "test/assets/jsunittest.js"
     assert_generated_file   "test/assets/jshoulda.js"
-    assert_generated_file   "lib/ext/jquery.js"
     assert_generated_file   "Rakefile"
     assert_generated_file   "README.txt"
     assert_generated_file   "License.txt"
@@ -75,6 +74,7 @@ class TestNewjsGenerator < Test::Unit::TestCase
     assert_generated_file   "config/javascript_test_autotest.yml.sample"
     assert_generated_file   "src/myproject.js.erb"
     assert_generated_file   "src/HEADER"
+    assert_generated_file   "src/ext/jquery.js"
     assert_generated_file   "lib/protodoc.rb"
     assert_generated_file   "lib/jstest.rb"
   end

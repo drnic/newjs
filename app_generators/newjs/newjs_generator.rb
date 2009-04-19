@@ -45,7 +45,7 @@ class NewjsGenerator < RubiGen::Base
       m.file     "test/assets/jsunittest.js",  "test/assets/jsunittest.js"
       m.file     "test/assets/jshoulda.js",    "test/assets/jshoulda.js" if test_framework
       m.file     "test/assets/unittest.css",   "test/assets/unittest.css"
-      m.file     "ext/#{framework}.js",   "lib/ext/#{framework}.js" if framework
+      m.file     "ext/#{framework}.js",        "src/ext/#{framework}.js" if framework
 
       %w[rstakeout js_autotest].each do |file|
         m.template "script/#{file}",        "script/#{file}", script_options
@@ -119,8 +119,8 @@ EOS
     # created so don't sweat their absence here.
     BASEDIRS = %w(
       config
-      lib/ext
-      src
+      lib
+      src/ext
       script
       tasks
       test/assets
