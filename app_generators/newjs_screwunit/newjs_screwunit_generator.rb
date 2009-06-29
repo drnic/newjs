@@ -21,7 +21,7 @@ class NewjsScrewunitGenerator < RubiGen::Base
     record do |m|
       m.directory '.'
       m.directory src_folder
-      m.directory 'spec'
+      m.directory 'spec/fixtures'
       m.directory 'vendor/plugins'
 
       # Create stubs

@@ -6,6 +6,7 @@ gem 'rspec'
 require 'spec'
 
 Before do
+  @lib_path = File.expand_path(File.dirname(__FILE__) + "/../../lib")
   @tmp_root = File.dirname(__FILE__) + "/../../tmp"
   @home_path = File.expand_path(File.join(@tmp_root, "home"))
   FileUtils.rm_rf   @tmp_root
