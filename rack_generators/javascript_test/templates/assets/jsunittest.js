@@ -1,4 +1,4 @@
-/*  Jsunittest, version 0.7.2
+/*  Jsunittest, version 0.7.3
  *  (c) 2008 Dr Nic Williams
  *
  *  Jsunittest is freely distributable under
@@ -11,34 +11,57 @@ var JsUnitTest = {
   Unit: {},
   inspect: function(object) {
     try {
-      if (typeof object == "undefined") return 'undefined';
-      if (object === null) return 'null';
+      if (typeof object == "undefined") {return 'undefined';}
+      if (object === null) {return 'null';}
       if (typeof object == "string") {
         var useDoubleQuotes = arguments[1];
         var escapedString = this.gsub(object, /[\x00-\x1f\\]/, function(match) {
-          var character = String.specialChar[match[0]];
-          return character ? character : '\\u00' + match[0].charCodeAt().toPaddedString(2, 16);
+          var character = {
+            '\b': '\\b',
+            '\t': '\\t',
+            '\n': '\\n',
+            '\f': '\\f',
+            '\r': '\\r',
+            '\\': '\\\\'
+          }[match[0]];
+          return character ? character : '\\u00' + JsUnitTest.toHexString(match[0].charCodeAt());
         });
-        if (useDoubleQuotes) return '"' + escapedString.replace(/"/g, '\\"') + '"';
+        if (useDoubleQuotes) {return '"' + escapedString.replace(/"/g, '\\"') + '"';}
         return "'" + escapedString.replace(/'/g, '\\\'') + "'";
-      };
+      }
+			if (JsUnitTest.getClass(object) === 'Object') {
+        var keys_values = new Array(), prefix = 'Object: { ';
+        for (property in object) {
+          keys_values.push(property + ': ' + object[property]);
+        }
+        return (prefix + keys_values.join(', ') + ' }');
+      }
       return String(object);
     } catch (e) {
-      if (e instanceof RangeError) return '...';
+      if (e instanceof RangeError) {return '...';}
       throw e;
     }
   },
-  $: function(element) {
+
+  getClass: function(object) {
+    return Object.prototype.toString.call(object)
+     .match(/^\[object\s(.*)\]$/)[1];
+  },
+
+	$: function(element) {
     if (arguments.length > 1) {
-      for (var i = 0, elements = [], length = arguments.length; i < length; i++)
+      for (var i = 0, elements = [], length = arguments.length; i < length; i++) {
         elements.push(this.$(arguments[i]));
+      }
       return elements;
     }
-    if (typeof element == "string")
+    if (typeof element == "string") {
       element = document.getElementById(element);
+    }
     return element;
   },
-  gsub: function(source, pattern, replacement) {
+
+	gsub: function(source, pattern, replacement) {
     var result = '', match;
     replacement = arguments.callee.prepareReplacement(replacement);
 
@@ -60,15 +83,48 @@ var JsUnitTest = {
   escapeHTML: function(data) {
     return data.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   },
+  toHexString : function(n) {
+    var string = n.toString(16);
+    return '00'.substring(string.length) + string;
+  },
   arrayfromargs: function(args) {
   	var myarray = new Array();
   	var i;
 
-  	for (i=0;i<args.length;i++)
-  		myarray[i] = args[i];
+  	for (i=0;i<args.length;i++) {
+  	  myarray[i] = args[i];
+  	}
 
   	return myarray;
   },
+
+  // from now we recursively zip & compare nested arrays
+  areArraysEqual: function(expected, actual) {
+    var expected_array = JsUnitTest.flattenArray(expected);
+    var actual_array   = JsUnitTest.flattenArray(actual);
+    if (expected_array.length == actual_array.length) {
+      for (var i=0; i < expected_array.length; i++) {
+        if (expected_array[i] != actual_array[i]) {return false;}
+      }
+      return true;
+    }
+    return false;
+  },
+
+  areArraysNotEqual: function(expected, actual) {
+    return !this.areArraysEqual(expected, actual);
+  },
+
+  areHashesEqual: function(expected, actual) {
+    var expected_array = JsUnitTest.hashToSortedArray(expected);
+    var actual_array   = JsUnitTest.hashToSortedArray(actual);
+    return this.areArraysEqual(expected_array, actual_array);
+  },
+
+  areHashesNotEqual: function(expected, actual) {
+    return !this.areHashesEqual(expected, actual);
+  },
+
   hashToSortedArray: function(hash) {
     var results = [];
     for (key in hash) {
@@ -86,7 +142,7 @@ var JsUnitTest = {
       } else {
         results.push(object);
       }
-    };
+    }
     return results;
   },
   selectorMatch: function(expression, element) {
@@ -151,7 +207,7 @@ var JsUnitTest = {
 
     var match = true, name, matches;
     for (var i = 0, token; token = tokens[i]; i++) {
-      name = token[0], matches = token[1];
+      name = token[0]; matches = token[1];
       if (!assertions[name](element, matches)) {
         match = false; break;
       }
@@ -159,10 +215,11 @@ var JsUnitTest = {
 
     return match;
   },
+
   toQueryParams: function(query, separator) {
     var query = query || window.location.search;
     var match = query.replace(/^\s+/, '').replace(/\s+$/, '').match(/([^?#]*)(#.*)?$/);
-    if (!match) return { };
+    if (!match) {return { };}
 
     var hash = {};
     var parts = match[1].split(separator || '&');
@@ -171,18 +228,20 @@ var JsUnitTest = {
       if (pair[0]) {
         var key = decodeURIComponent(pair.shift());
         var value = pair.length > 1 ? pair.join('=') : pair[0];
-        if (value != undefined) value = decodeURIComponent(value);
+        if (value != undefined) {value = decodeURIComponent(value);}
 
         if (key in hash) {
           var object = hash[key];
           var isArray = object != null && typeof object == "object" &&
-            'splice' in object && 'join' in object
-          if (!isArray) hash[key] = [hash[key]];
+            'splice' in object && 'join' in object;
+          if (!isArray) {hash[key] = [hash[key]];}
           hash[key].push(value);
         }
-        else hash[key] = value;
+        else {
+          hash[key] = value;
+        }
       }
-    };
+    }
     return hash;
   },
 
@@ -194,12 +253,12 @@ var JsUnitTest = {
 };
 
 JsUnitTest.gsub.prepareReplacement = function(replacement) {
-  if (typeof replacement == "function") return replacement;
+  if (typeof replacement == "function") {return replacement;}
   var template = new Template(replacement);
-  return function(match) { return template.evaluate(match) };
+  return function(match) { return template.evaluate(match); };
 };
 
-JsUnitTest.Version = '0.7.2';
+JsUnitTest.Version = '0.7.3';
 
 JsUnitTest.Template = function(template, pattern) {
   this.template = template; //template.toString();
@@ -207,31 +266,32 @@ JsUnitTest.Template = function(template, pattern) {
 };
 
 JsUnitTest.Template.prototype.evaluate = function(object) {
-  if (typeof object.toTemplateReplacements == "function")
+  if (typeof object.toTemplateReplacements == "function") {
     object = object.toTemplateReplacements();
+  }
 
   return JsUnitTest.gsub(this.template, this.pattern, function(match) {
-    if (object == null) return '';
+    if (object == null) {return '';}
 
     var before = match[1] || '';
-    if (before == '\\') return match[2];
+    if (before == '\\') {return match[2];}
 
     var ctx = object, expr = match[3];
     var pattern = /^([^.[]+|\[((?:.*?[^\\])?)\])(\.|\[|$)/;
     match = pattern.exec(expr);
-    if (match == null) return before;
+    if (match == null) {return before;}
 
     while (match != null) {
       var comp = (match[1].indexOf('[]') === 0) ? match[2].gsub('\\\\]', ']') : match[1];
       ctx = ctx[comp];
-      if (null == ctx || '' == match[3]) break;
+      if (null == ctx || '' == match[3]) {break;}
       expr = expr.substring('[' == match[3] ? match[1].length : match[0].length);
       match = pattern.exec(expr);
     }
 
     return before + JsUnitTest.String.interpret(ctx);
   });
-}
+};
 
 JsUnitTest.Template.Pattern = /(^|.|\r|\n)(#\{(.*?)\})/;
 JsUnitTest.Event = {};
@@ -246,9 +306,9 @@ JsUnitTest.Event.addEvent = function(element, type, handler) {
 		element.addEventListener(type, handler, false);
 	} else {
 		// assign each event handler a unique ID
-		if (!handler.$$guid) handler.$$guid = JsUnitTest.Event.addEvent.guid++;
+		if (!handler.$$guid) {handler.$$guid = JsUnitTest.Event.addEvent.guid++;}
 		// create a hash table of event types for the element
-		if (!element.events) element.events = {};
+		if (!element.events) {element.events = {};}
 		// create a hash table of event handlers for each element/event pair
 		var handlers = element.events[type];
 		if (!handlers) {
@@ -309,11 +369,11 @@ JsUnitTest.Event.fixEvent.stopPropagation = function() {
 
 JsUnitTest.Unit.Logger = function(element) {
   this.element = JsUnitTest.$(element);
-  if (this.element) this._createLogTable();
+  if (this.element) {this._createLogTable();}
 };
 
 JsUnitTest.Unit.Logger.prototype.start = function(testName) {
-  if (!this.element) return;
+  if (!this.element) {return;}
   var tbody = this.element.getElementsByTagName('tbody')[0];
 
   var tr = document.createElement('tr');
@@ -322,7 +382,7 @@ JsUnitTest.Unit.Logger.prototype.start = function(testName) {
   //testname
   td = document.createElement('td');
   td.appendChild(document.createTextNode(testName));
-  tr.appendChild(td)
+  tr.appendChild(td);
 
   tr.appendChild(document.createElement('td'));//status
   tr.appendChild(document.createElement('td'));//message
@@ -338,13 +398,13 @@ JsUnitTest.Unit.Logger.prototype.setStatus = function(status) {
 };
 
 JsUnitTest.Unit.Logger.prototype.finish = function(status, summary) {
-  if (!this.element) return;
+  if (!this.element) {return;}
   this.setStatus(status);
   this.message(summary);
 };
 
 JsUnitTest.Unit.Logger.prototype.message = function(message) {
-  if (!this.element) return;
+  if (!this.element) {return;}
   var cell = this.getMessageCell();
 
   // cell.appendChild(document.createTextNode(this._toHTML(message)));
@@ -352,7 +412,7 @@ JsUnitTest.Unit.Logger.prototype.message = function(message) {
 };
 
 JsUnitTest.Unit.Logger.prototype.summary = function(summary) {
-  if (!this.element) return;
+  if (!this.element) {return;}
   var div = this.element.getElementsByTagName('div')[0];
   div.innerHTML = this._toHTML(summary);
 };
@@ -406,7 +466,7 @@ JsUnitTest.Unit.MessageTemplate.prototype.evaluate = function(params) {
     var part = this.parts[i];
     var result = (part == '?') ? JsUnitTest.inspect(params.shift()) : part.replace(/\\\?/, '?');
     results.push(result);
-  };
+  }
   return results.join('');
 };
 // A generic function for performming AJAX requests
@@ -522,8 +582,9 @@ JsUnitTest.ajax = function( options ) {
 
         // If the specified type is "script", execute the returned text
         // response as if it was JavaScript
-        if ( type == "script" )
+        if ( type == "script" ) {
             eval.call( window, data );
+        }
 
         // Return the response data (either an XML Document or a text string)
         return data;
@@ -538,170 +599,140 @@ JsUnitTest.Unit.Assertions = {
   },
 
   flunk: function(message) {
-    this.assertBlock(message || 'Flunked', function() { return false });
+    this.assertBlock(message || 'Flunked', function() { return false; });
   },
 
   assertBlock: function(message, block) {
     try {
       block.call(this) ? this.pass() : this.fail(message);
-    } catch(e) { this.error(e) }
+    } catch(e) { this.error(e); }
   },
 
   assert: function(expression, message) {
     message = this.buildMessage(message || 'assert', 'got <?>', expression);
-    this.assertBlock(message, function() { return expression });
+    this.assertBlock(message, function() { return expression; });
   },
 
   assertEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertEqual', 'expected <?>, actual: <?>', expected, actual);
-    this.assertBlock(message, function() { return expected == actual });
+    this.assertBlock(message, function() { return expected == actual; });
   },
 
   assertNotEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertNotEqual', 'expected <?>, actual: <?>', expected, actual);
-    this.assertBlock(message, function() { return expected != actual });
+    this.assertBlock(message, function() { return expected != actual; });
   },
 
   assertEnumEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertEnumEqual', 'expected <?>, actual: <?>', expected, actual);
-    var expected_array = JsUnitTest.flattenArray(expected);
-    var actual_array   = JsUnitTest.flattenArray(actual);
-    this.assertBlock(message, function() {
-      if (expected_array.length == actual_array.length) {
-        for (var i=0; i < expected_array.length; i++) {
-          if (expected_array[i] != actual_array[i]) return false;
-        };
-        return true;
-      }
-      return false;
-    });
+    this.assertBlock(message, function() { return JsUnitTest.areArraysEqual(expected, actual); });
   },
 
   assertEnumNotEqual: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertEnumNotEqual', '<?> was the same as <?>', expected, actual);
-    var expected_array = JsUnitTest.flattenArray(expected);
-    var actual_array   = JsUnitTest.flattenArray(actual);
-    this.assertBlock(message, function() {
-      if (expected_array.length == actual_array.length) {
-        for (var i=0; i < expected_array.length; i++) {
-          if (expected_array[i] != actual_array[i]) return true;
-        };
-        return false;
-      }
-      return true;
-    });
+    this.assertBlock(message, function() { return JsUnitTest.areArraysNotEqual(expected, actual); });
   },
 
   assertHashEqual: function(expected, actual, message) {
-    message = this.buildMessage(message || 'assertHashEqual', 'expected <?>, actual: <?>', expected, actual);
-    var expected_array = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(expected));
-    var actual_array   = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(actual));
-    var block = function() {
-      if (expected_array.length == actual_array.length) {
-        for (var i=0; i < expected_array.length; i++) {
-          if (expected_array[i] != actual_array[i]) return false;
-        };
-        return true;
-      }
-      return false;
-    };
-    this.assertBlock(message, block);
+    message = this.buildMessage(message || 'assertHashEqual', 'expected <?>, actual: <?>', JsUnitTest.inspect(expected), JsUnitTest.inspect(actual));
+    this.assertBlock(message, function() { return JsUnitTest.areHashesEqual(expected, actual); });
   },
 
   assertHashNotEqual: function(expected, actual, message) {
-    message = this.buildMessage(message || 'assertHashNotEqual', '<?> was the same as <?>', expected, actual);
-    var expected_array = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(expected));
-    var actual_array   = JsUnitTest.flattenArray(JsUnitTest.hashToSortedArray(actual));
-    // from now we recursively zip & compare nested arrays
-    var block = function() {
-      if (expected_array.length == actual_array.length) {
-        for (var i=0; i < expected_array.length; i++) {
-          if (expected_array[i] != actual_array[i]) return true;
-        };
-        return false;
-      }
-      return true;
-    };
-    this.assertBlock(message, block);
+    message = this.buildMessage(message || 'assertHashNotEqual', '<?> was the same as <?>', JsUnitTest.inspect(expected), JsUnitTest.inspect(actual));
+    this.assertBlock(message, function() { return JsUnitTest.areHashesNotEqual(expected, actual); });
   },
 
   assertIdentical: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertIdentical', 'expected <?>, actual: <?>', expected, actual);
-    this.assertBlock(message, function() { return expected === actual });
+    this.assertBlock(message, function() { return expected === actual; });
   },
 
   assertNotIdentical: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertNotIdentical', 'expected <?>, actual: <?>', expected, actual);
-    this.assertBlock(message, function() { return expected !== actual });
+    this.assertBlock(message, function() { return expected !== actual; });
   },
 
   assertNull: function(obj, message) {
     message = this.buildMessage(message || 'assertNull', 'got <?>', obj);
-    this.assertBlock(message, function() { return obj === null });
+    this.assertBlock(message, function() { return obj === null; });
   },
 
   assertNotNull: function(obj, message) {
     message = this.buildMessage(message || 'assertNotNull', 'got <?>', obj);
-    this.assertBlock(message, function() { return obj !== null });
+    this.assertBlock(message, function() { return obj !== null; });
   },
 
   assertUndefined: function(obj, message) {
     message = this.buildMessage(message || 'assertUndefined', 'got <?>', obj);
-    this.assertBlock(message, function() { return typeof obj == "undefined" });
+    this.assertBlock(message, function() { return typeof obj == "undefined"; });
   },
 
   assertNotUndefined: function(obj, message) {
     message = this.buildMessage(message || 'assertNotUndefined', 'got <?>', obj);
-    this.assertBlock(message, function() { return typeof obj != "undefined" });
+    this.assertBlock(message, function() { return typeof obj != "undefined"; });
   },
 
   assertNullOrUndefined: function(obj, message) {
     message = this.buildMessage(message || 'assertNullOrUndefined', 'got <?>', obj);
-    this.assertBlock(message, function() { return obj == null });
+    this.assertBlock(message, function() { return obj == null; });
   },
 
   assertNotNullOrUndefined: function(obj, message) {
     message = this.buildMessage(message || 'assertNotNullOrUndefined', 'got <?>', obj);
-    this.assertBlock(message, function() { return obj != null });
+    this.assertBlock(message, function() { return obj != null; });
   },
 
   assertMatch: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertMatch', 'regex <?> did not match <?>', expected, actual);
-    this.assertBlock(message, function() { return new RegExp(expected).exec(actual) });
+    this.assertBlock(message, function() { return new RegExp(expected).exec(actual); });
   },
 
   assertNoMatch: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertNoMatch', 'regex <?> matched <?>', expected, actual);
-    this.assertBlock(message, function() { return !(new RegExp(expected).exec(actual)) });
+    this.assertBlock(message, function() { return !(new RegExp(expected).exec(actual)); });
   },
 
   assertHasClass: function(element, klass, message) {
     element = JsUnitTest.$(element);
     message = this.buildMessage(message || 'assertHasClass', '? doesn\'t have class <?>.', element, klass);
     this.assertBlock(message, function() {
-      return !!element.className.match(new RegExp(klass))
+      var elementClassName = element.className;
+      return (elementClassName.length > 0 && (elementClassName == klass ||
+        new RegExp("(^|\\s)" + klass + "(\\s|$)").test(elementClassName)));
+      // return !!element.className.match(new RegExp(klass))
+    });
+  },
+
+  assertNotHasClass: function(element, klass, message) {
+    element = JsUnitTest.$(element);
+    message = this.buildMessage(message || 'assertNotHasClass', '? does have class <?>.', element, klass);
+    this.assertBlock(message, function() {
+      var elementClassName = element.className;
+      return !(elementClassName.length > 0 && (elementClassName == klass ||
+        new RegExp("(^|\\s)" + klass + "(\\s|$)").test(elementClassName)));
     });
   },
 
   assertHidden: function(element, message) {
     element = JsUnitTest.$(element);
     message = this.buildMessage(message || 'assertHidden', '? isn\'t hidden.', element);
-    this.assertBlock(message, function() { return !element.style.display || element.style.display == 'none' });
+    this.assertBlock(message, function() { return !element.style.display || element.style.display == 'none'; });
   },
 
   assertInstanceOf: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertInstanceOf', '<?> was not an instance of the expected type', actual);
-    this.assertBlock(message, function() { return actual instanceof expected });
+    this.assertBlock(message, function() { return actual instanceof expected; });
   },
 
   assertNotInstanceOf: function(expected, actual, message) {
     message = this.buildMessage(message || 'assertNotInstanceOf', '<?> was an instance of the expected type', actual);
-    this.assertBlock(message, function() { return !(actual instanceof expected) });
+    this.assertBlock(message, function() { return !(actual instanceof expected); });
   },
 
   assertRespondsTo: function(method, obj, message) {
     message = this.buildMessage(message || 'assertRespondsTo', 'object doesn\'t respond to <?>', method);
-    this.assertBlock(message, function() { return (method in obj && typeof obj[method] == 'function') });
+    this.assertBlock(message, function() { return (method in obj && typeof obj[method] == 'function'); });
   },
 
   assertRaise: function(exceptionName, method, message) {
@@ -711,8 +742,8 @@ JsUnitTest.Unit.Assertions = {
         method();
         return false;
       } catch(e) {
-        if (e.name == exceptionName) return true;
-        else throw e;
+        if (e.name == exceptionName) {return true;}
+        else {throw e;}
       }
     };
     this.assertBlock(message, block);
@@ -730,22 +761,23 @@ JsUnitTest.Unit.Assertions = {
 
   _isVisible: function(element) {
     element = JsUnitTest.$(element);
-    if(!element.parentNode) return true;
+    if(!element.parentNode) {return true;}
     this.assertNotNull(element);
-    if(element.style && (element.style.display == 'none'))
+    if(element.style && (element.style.display == 'none')) {
       return false;
+    }
 
     return arguments.callee.call(this, element.parentNode);
   },
 
   assertVisible: function(element, message) {
     message = this.buildMessage(message, '? was not visible.', element);
-    this.assertBlock(message, function() { return this._isVisible(element) });
+    this.assertBlock(message, function() { return this._isVisible(element); });
   },
 
   assertNotVisible: function(element, message) {
     message = this.buildMessage(message, '? was not hidden and didn\'t have a hidden parent either.', element);
-    this.assertBlock(message, function() { return !this._isVisible(element) });
+    this.assertBlock(message, function() { return !this._isVisible(element); });
   },
 
   assertElementsMatch: function() {
@@ -766,7 +798,7 @@ JsUnitTest.Unit.Assertions = {
       message = this.buildMessage('assertElementsMatch', 'In index <?>: expected <?> but got ?', index, expression, element);
       this.flunk(message);
       pass = false;
-    };
+    }
     this.assert(pass, "Expected all elements to match.");
   },
 
@@ -799,7 +831,7 @@ JsUnitTest.Unit.Runner.prototype.portNumber = function() {
   if (window.location.search.length > 0) {
     var matches = window.location.search.match(/\:(\d{3,5})\//);
     if (matches) {
-      return parseInt(matches[1]);
+      return parseInt(matches[1], 10);
     }
   }
   return null;
@@ -807,22 +839,23 @@ JsUnitTest.Unit.Runner.prototype.portNumber = function() {
 
 JsUnitTest.Unit.Runner.prototype.getTests = function(testcases) {
   var tests = [], options = this.options;
-  if (this.queryParams.tests) tests = this.queryParams.tests.split(',');
-  else if (options.tests) tests = options.tests;
-  else if (options.test) tests = [option.test];
+  if (this.queryParams.tests) {tests = this.queryParams.tests.split(',');}
+  else if (options.tests) {tests = options.tests;}
+  else if (options.test) {tests = [option.test];}
   else {
     for (testname in testcases) {
-      if (testname.match(/^test/)) tests.push(testname);
+      if (testname.match(/^test/)) {tests.push(testname);}
     }
   }
   var results = [];
   for (var i=0; i < tests.length; i++) {
     var test = tests[i];
-    if (testcases[test])
+    if (testcases[test]) {
       results.push(
         new JsUnitTest.Unit.Testcase(test, testcases[test], testcases.setup, testcases.teardown)
       );
-  };
+    }
+  }
   return results;
 };
 
@@ -841,7 +874,7 @@ JsUnitTest.Unit.Runner.prototype.getResult = function() {
     results.failures   += test.failures;
     results.errors     += test.errors;
     results.warnings   += test.warnings;
-  };
+  }
   return results;
 };
 
@@ -859,15 +892,15 @@ JsUnitTest.Unit.Runner.prototype.postResults = function() {
     JsUnitTest.ajax({
       url: url,
       type: 'GET'
-    })
+    });
   }
 };
 
 JsUnitTest.Unit.Runner.prototype.runTests = function() {
   var test = this.tests[this.currentTest], actions;
 
-  if (!test) return this.finish();
-  if (!test.isWaiting) this.logger.start(test.name);
+  if (!test) {return this.finish();}
+  if (!test.isWaiting) {this.logger.start(test.name);}
   test.run();
   var self = this;
   if(test.isWaiting) {
@@ -880,7 +913,7 @@ JsUnitTest.Unit.Runner.prototype.runTests = function() {
   }
 
   this.logger.finish(test.status(), test.summary());
-  if (actions = test.actions) this.logger.appendActionButtons(actions);
+  if (actions = test.actions) {this.logger.appendActionButtons(actions);}
   this.currentTest++;
   // tail recursive, hopefully the browser will skip the stackframe
   this.runTests();
@@ -927,7 +960,7 @@ JsUnitTest.Unit.Testcase.prototype.wait = function(time, nextPart) {
 JsUnitTest.Unit.Testcase.prototype.run = function(rethrow) {
   try {
     try {
-      if (!this.isWaiting) this.setup();
+      if (!this.isWaiting) {this.setup();}
       this.isWaiting = false;
       this.test();
     } finally {
@@ -937,7 +970,7 @@ JsUnitTest.Unit.Testcase.prototype.run = function(rethrow) {
     }
   }
   catch(e) {
-    if (rethrow) throw e;
+    if (rethrow) {throw e;}
     this.error(e, this);
   }
 };
@@ -981,14 +1014,19 @@ JsUnitTest.Unit.Testcase.prototype.info = function(message) {
 
 JsUnitTest.Unit.Testcase.prototype.error = function(error, test) {
   this.errors++;
-  this.actions['retry with throw'] = function() { test.run(true) };
+  this.actions['retry with throw'] = function() { test.run(true); };
   this.messages.push(error.name + ": "+ error.message + "(" + JsUnitTest.inspect(error) + ")");
+  if( typeof console != "undefined" && console.error) {
+   console.error("Test '" + test.name + "' died, exception and test follows");
+   console.error(error);
+   console.error(test.test.toString());
+  }
 };
 
 JsUnitTest.Unit.Testcase.prototype.status = function() {
-  if (this.failures > 0) return 'failed';
-  if (this.errors > 0) return 'error';
-  if (this.warnings > 0) return 'warning';
+  if (this.failures > 0) {return 'failed';}
+  if (this.errors > 0) {return 'error';}
+  if (this.warnings > 0) {return 'warning';}
   return 'passed';
 };
 
