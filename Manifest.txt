@@ -1,6 +1,5 @@
 History.txt
 Manifest.txt
-PostInstall.txt
 README.rdoc
 Rakefile
 app_generators/newjs/USAGE
@@ -40,6 +39,7 @@ app_generators/newjs_iphone/templates/Html/test/assets/jsunittest.js
 app_generators/newjs_iphone/templates/Html/test/assets/unittest.css
 app_generators/newjs_screwunit/USAGE
 app_generators/newjs_screwunit/newjs_screwunit_generator.rb
+app_generators/newjs_screwunit/templates/Rakefile.erb
 bin/newjs
 bin/newjs_iphone
 bin/newjs_screwunit
@@ -48,7 +48,9 @@ config/website.yml.sample
 features/development.feature
 features/imported_files_for_generators.feature
 features/newjs_screwunit.feature
+features/step_definitions/cli_steps.rb
 features/step_definitions/common_steps.rb
+features/step_definitions/file_comparison_steps.rb
 features/support/common.rb
 features/support/env.rb
 features/support/matchers.rb
@@ -124,10 +126,6 @@ script/destroy
 script/generate
 script/txt2html
 setup.rb
-spec/newjs_spec.rb
-spec/spec.opts
-spec/spec_helper.rb
-tasks/rspec.rake
 tasks/vendor/update/jshoulda.rake
 tasks/vendor/update/jsunittest.rake
 test/test_functional_test_generator.rb
@@ -218,6 +216,7 @@ vendor/jsunittest/Rakefile
 vendor/jsunittest/config/deploy.rb
 vendor/jsunittest/config/website.yml.sample
 vendor/jsunittest/dist/jsunittest-0.7.2.js
+vendor/jsunittest/dist/jsunittest-0.7.3.js
 vendor/jsunittest/dist/jsunittest.js
 vendor/jsunittest/dist/unittest.css
 vendor/jsunittest/lib/jstest.rb
